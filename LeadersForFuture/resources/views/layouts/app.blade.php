@@ -14,7 +14,7 @@
     @powerGridStyles
 </head>
 <body>
-    <div class="flex w-full bg-zinc-50 dark:bg-zinc-800">
+    <div class="md:flex w-full bg-zinc-50 dark:bg-zinc-800">
         @include('livewire.sidebar')
         {{ $slot }}
     @livewireScripts
