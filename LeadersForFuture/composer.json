@@ -13,8 +13,8 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "livewire/livewire": "^2.9",
-        "power-components/livewire-powergrid": "^2.3",
+        "livewire/livewire": "^2.10",
+        "power-components/livewire-powergrid": "^2.4",
         "rappasoft/laravel-livewire-tables": "^1.24",
         "yajra/laravel-datatables-oracle": "^9.19"
     },
