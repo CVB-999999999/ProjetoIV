@@ -8,6 +8,7 @@
     <title>Leader for the Future</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ldf.css') }}" rel="stylesheet">
     <script defer src="https://unpkg.com/alpinejs@3.8.1/dist/cdn.min.js"></script>
 
     @livewireStyles
