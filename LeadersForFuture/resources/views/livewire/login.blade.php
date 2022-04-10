@@ -20,8 +20,8 @@
                         <input id="login" wire:model ="username" type="text"
                             class="border border-opacity-50 rounded border-gray-700 w-full form-control{{ $errors->has('username') ? ' is-invalid' : '' }}"
                         name="login" value="{{ old('username') }}" required autofocus>
-                        
-                        
+
+
                     </div>
                 </div>
 
@@ -30,16 +30,16 @@
                     <div class="mt-1">
                         <input id="password" wire:model = "password" class="border border-opacity-50 rounded border-gray-700 w-full" name="password" type="password"
                             autocomplete="current-password"  />
-                            
+
                     </div>
                 </div>
 
-                
+
                 @if (!$verifier)
                 <div class="">
                     <h1 class=" font-semibold text-red-500"> A password utilizada está errada</h1>
                 </div>
-                @endif                    
+                @endif
 
 
 
@@ -62,7 +62,7 @@
                     </button>
                  </div>
             </form>
-            
+
         </div>
     </div>
 </div>

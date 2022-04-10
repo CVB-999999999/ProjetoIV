@@ -9,27 +9,26 @@ use Illuminate\Support\Str;
 
 class Sidebar extends Component
 {
-   
+
 
     public function mount()
     {
-        
+
         /*$tipo = session()->get('tipo', function () {
             return 'default';
         });*/
 
 
-
     }
+
     public function render()
     {
-
-       
         return view('livewire.sidebar');
     }
-    public function logout(){
 
-      
+    public function logout()
+    {
+
 
     }
 }
