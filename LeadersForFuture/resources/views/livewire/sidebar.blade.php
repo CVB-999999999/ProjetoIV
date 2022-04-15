@@ -1,5 +1,4 @@
 @if($user)
-
     <div class="md:flex flex-col md:flex-row md:min-h-screen">
         <div @click.away="open = false"
              class="flex flex-col w-full md:w-64 text-gray-700 bg-zinc-200 dark:text-gray-200 dark:bg-zinc-900 flex-shrink-0"
@@ -34,14 +33,21 @@
                 <hr class="my-5" style="border-color: #e92739">
 
                 {{-- Sidebar Btns --}}
-                <a href="/menu"
-                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
-                    Formulários
-                </a>
-                <a href="/modelos"
-                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
-                    Modelos
-                </a>
+                {{-- Professor --}}
+                @if( Session::get('tipo') == 1)
+                    {{-- Para já não vai ter nada aqui --}}
+                @endif
+                {{-- Student --}}
+                @if( Session::get('tipo') == 2)
+                    <a href="/menu"
+                       class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
+                        Formulários
+                    </a>
+                    <a href="/modelos"
+                       class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
+                        Modelos
+                    </a>
+                @endif
                 <a href="/logout"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
                     Logout
