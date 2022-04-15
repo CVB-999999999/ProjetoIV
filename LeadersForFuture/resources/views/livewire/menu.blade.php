@@ -3,7 +3,7 @@
     <div class="flex flex-col">
         <div class="w-full h-10">
             {{-- Professor --}}
-            @if( Session::get('tipo') == 1)
+            @if($prof)
                 <div class="p-4 border-b border-gray-200 shadow ">
                     {{-- TODO: Make this table things dinamic | this top part will probably get removed?--}}
                     <div class="">
@@ -26,7 +26,7 @@
                 <livewire:form-table semestre="{{ $semestre }}" anoLetivo="{{ $anoLetivo }}"/>
             @endif
             {{-- Student --}}
-            @if( Session::get('tipo') == 2)
+            @if($aluno)
                 {{-- Para já não vai ter nada aqui --}}
             @endif
         </div>

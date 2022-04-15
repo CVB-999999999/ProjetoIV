@@ -34,11 +34,11 @@
 
                 {{-- Sidebar Btns --}}
                 {{-- Professor --}}
-                @if( Session::get('tipo') == 1)
+                @if($prof)
                     {{-- Para já não vai ter nada aqui --}}
                 @endif
                 {{-- Student --}}
-                @if( Session::get('tipo') == 2)
+                @if($aluno)
                     <a href="/menu"
                        class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
                         Formulários
