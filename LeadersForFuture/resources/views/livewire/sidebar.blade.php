@@ -39,13 +39,13 @@
                 @endif
                 {{-- Student --}}
                 @if($aluno)
-                    <a href="/menu"
+{{--                    <a href="/menu"--}}
+{{--                       class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">--}}
+{{--                        Formulários--}}
+{{--                    </a>--}}
+                    <a href="/form"
                        class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
                         Formulários
-                    </a>
-                    <a href="/modelos"
-                       class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
-                        Modelos
                     </a>
                 @endif
                 <a href="/logout"

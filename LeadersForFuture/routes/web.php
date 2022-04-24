@@ -26,29 +26,32 @@ use App\Http\Livewire\Logout;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::group(['middleware' => ['sessionCheck']], function () {
-    // your routes here
-    Route::get('/', Home::class);
-    Route::get('/teste', Form::class);
-    Route::get('/menu/form/{id}', Form::class)->name('formulario');
-    Route::get('/menu', Menu::class);
-    Route::get('/modelos', Models::class);
-    Route::get('/modelos/form1', Form1::class);
-    Route::get('/modelos/form2', Form2::class);
-    Route::get('/modelos/form3', Form3::class);
-    Route::get('/modelos/form4', Form4::class);
-    Route::get('/modelos/form5', Form5::class);
-    Route::get('/modelos/form6', Form6::class);
-    Route::get('/modelos/form7', Form7::class);
-    Route::get('/logout',Logout::class);
-});
 
+// TODO -> Middleware para verificar o tipo de utilizador e se tem acesso ao form
+
+Route::group(['middleware' => ['sessionCheck']], function () {
+//    Rotas antigas
+//    Route::get('/teste', Form::class);
+//    Route::get('/menu/form/{id}', Form::class)->name('formulario');
+//    Route::get('/menu', Menu::class);
+//    Route::get('/modelos', Models::class);
+//    Route::get('/modelos/form1', Form1::class);
+//    Route::get('/modelos/form2', Form2::class);
+//    Route::get('/modelos/form3', Form3::class);
+//    Route::get('/modelos/form4', Form4::class);
+//    Route::get('/modelos/form5', Form5::class);
+//    Route::get('/modelos/form6', Form6::class);
+//    Route::get('/modelos/form7', Form7::class);
+
+    Route::get('/', Home::class);
+    Route::get('/logout', Logout::class);
+    Route::get('/form', Models::class);
+    Route::get('/form/{id}', Form::class)->name('formulario');
+    Route::get('/menu', Menu::class);
+});
 
 /*Route::get('/sidebar', function () {
     return view('sidebar');
 });*/
 //Route::post('signin', [Login::class, 'customLogin'])->name('login.custom');
-//Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom'); 
-
-
-
+//Route::post('custom-login', [CustomAuthController::class, 'customLogin'])->name('login.custom');

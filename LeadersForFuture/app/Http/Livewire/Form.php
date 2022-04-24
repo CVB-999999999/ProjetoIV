@@ -35,45 +35,50 @@ class Form extends Component
             $this->respostas = DB::select("exec buscaRespostasCondForm ?", [$this->formID]);
         }
 
+        // TODO -> Buscar os dados dos utilizadores para colocar no form
+        // Creates the page with Student info
         return view('livewire.form', [
             'name' => "nome",
             'number' => "123",
             'email' => "mail",
-            'course' => "mail",
-            'year' => "mail",
-            'schoolYear' => "mail",
-            'task' => "mail"
+            'course' => "curso",
+            'year' => "ano",
+            'schoolYear' => "ano escolar",
+            'task' => "tarefa"
         ]);
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Submition Funtion
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Inserts forms data in DB
+    // --- Only works if form status = 1 or 2
+    // -----------------------------------------------------------------------------------------------------------------
+    // TODO -> Verificar se o tipo de form é o correto antes de atualizar a BD
     public function submit()
     {
+        // Updates DB with the answers
         foreach ($this->perguntas as $index => $pergunta) {
-
-
             if ((($index + 1) < count($this->perguntas))) {
                 DB::update("exec insertResposta2 ?, ?, ?", [$this->respostas[$index], trim($pergunta['id']), $this->formID]);
             } else {
 
                 DB::update("exec insertResposta2 ?, ?, ?", [' ', trim($pergunta['id']), $this->formID]);
             }
-
-
         }
+
+        // Changes the form status
         $tipo = Session::get('tipo');
 
+        // Student
         if ($tipo == 2) {
-
             DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
-
+        // Teacher
         } elseif ($tipo == 1) {
             DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
-
         }
 
+        // Returns to main page
         return redirect()->to('/menu');
-
     }
-
-
 }

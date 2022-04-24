@@ -21,13 +21,10 @@ class Home extends Component
     public function mount()
     {
         if (Session::has('user')) {
-
             return redirect()->to('/menu');
-
         }
 
         $teste = Session::get('tipo');
-
 
         if ($teste == 2) {
             $this->aluno = true;

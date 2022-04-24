@@ -12,7 +12,7 @@
                 <div class="">
                     {{-- Logo --}}
                     <img class="p-1 md:pt-10 md:px-5" src="{{ URL('images/esce.png') }}" alt="ESCE Logo">
-                    {{-- ^^^^^^^^^^^^ Melhorar o posicionamento da imagem que está muito mau assim ^^^^^^^^^^^^ --}}
+                    {{-- TODO ^^^^^^^^^^^ Melhorar o posicionamento da imagem que está muito mau assim ^^^^^^^^^^^^ --}}
                 </div>
                 {{-- Form --}}
                 <div class="md:border-l-2 md:pl-5" style="border-color: #e92739">
