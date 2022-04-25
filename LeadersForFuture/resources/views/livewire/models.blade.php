@@ -9,7 +9,7 @@
             <p> Por favor contacte o Professor responsavel pelos seus projetos para mais informação</p>
 
         @else
-            <h1 class="text-center text-3xl m-2 m-md-4"> Escolha um formulário</h1>
+            <h1 class="text-center text-3xl m-2 m-md-5"> Escolha um formulário</h1>
 
             @php($aux = "")
             @php($i=0)
@@ -18,7 +18,7 @@
 
                 {{-- Verify if project title has been displayed --}}
                 @if(!($aux === $form->Pnome))
-                    <h2 class="text-center text-xl"> {{ $form->Pnome }} </h2>
+                    <h2 class="text-center text-xl my-5"> {{ $form->Pnome }} </h2>
                     @php($i=0)
                 @endif
 

@@ -16,7 +16,7 @@
 </head>
 
 <body class="flex flex-col h-screen justify-between bg-zinc-50 dark:bg-zinc-800">
-<div class="bg-zinc-50 dark:bg-zinc-800 mb-2 md:mb-5 mb-auto">
+<div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
     <div class="md:flex w-full">
         @include('livewire.sidebar')
 
