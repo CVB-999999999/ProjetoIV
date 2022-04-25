@@ -6,7 +6,11 @@ module.exports = {
         "./resources/**/*.vue",
     ],
     theme: {
-        extend: {},
+        extend: {
+            colors: {
+                'esce': '#d22730',
+            }
+        },
         fontFamily: {
             'sans': ['ui-sans-serif', 'system-ui'],
             'serif': ['ui-serif', 'Georgia'],

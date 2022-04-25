@@ -28,7 +28,7 @@
                 {{-- card with link --}}
                 <a href="form/{{ $form->id }}"
                    class="block rounded m-2 m-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
-                   transition duration-200 hover:bg-red-700 hover:text-white">
+                   transition duration-200 hover:bg-esce hover:text-white">
 
                     <div class="md:grid md:grid-cols-2 p-1">
                         {{-- Left side - Number and year info --}}

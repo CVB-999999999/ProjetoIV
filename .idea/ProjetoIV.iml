@@ -142,5 +142,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="@alpinejs/collapse" level="application" />
     <orderEntry type="library" name="alpinejs" level="application" />
+    <orderEntry type="library" name="bootstrap-icons" level="application" />
   </component>
 </module>

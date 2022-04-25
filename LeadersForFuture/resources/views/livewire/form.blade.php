@@ -1,113 +1,105 @@
 <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
 
-<div class="w-full bg-white">
-    {{-- TODO -> linha 150 --}}
-    {{-- TODO: Redo the btns --}}
-
-    <div x-data="{ expanded: false }">
-        <button @click="expanded = ! expanded">Toggle Content</button>
-
-        <p x-show="expanded" x-collapse>
-            ...
-        </p>
-    </div>
-
+<div class="w-full">
     {{-- Form --}}
-    <div class="relative mx-auto ">
+    <div class="relative mx-auto dark:text-white">
         <div class="md:mx-5">
-            <div x-data="{ expanded: false }">
-                <button @click="expanded = ! expanded">Informação Estudante</button>
+            {{-- Header with student info --}}
+            <div class="mx-2 m-md-3 dark:text-white" x-data="{ expanded: false }">
+                <button class="w-full rounded my-2 my-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
+                   transition duration-200 hover:bg-esce hover:text-white text-left" @click="expanded = ! expanded">
+                    Informação do Estudante
+                </button>
 
-                <p x-show="expanded" x-collapse>
-                    ...
+                <p x-show="expanded" x-collapse.duration.600ms>
+
+                    {{-- Name --}}
+                    <span class="my-3 flex justify-start mx-8">
+                        Nome: {{ $name }}
+                    </span>
+
+                    <span class="my-3 grid grid-cols-3 mx-8">
+                        {{-- Student Number --}}
+                        <span class="flex justify-start ">
+                            Nº de aluno: {{ $number }}
+                        </span>
+                        {{-- Email --}}
+                        <span class="flex col-span-2 mx-8">
+                            Email: {{ $email }}
+                        </span>
+                    </span>
+
+                    <span class="my-3 grid grid-cols-2 mx-8">
+                        {{-- Course --}}
+                        <span class="flex justify-start">
+                            Curso: {{ $course }}
+                        </span>
+                        {{-- Year --}}
+                        <span class="flex justify-start">
+                            Ano: {{ $year }}
+                        </span>
+                    </span>
+
+                    {{-- Task --}}´
+                    <span class="my-3 grid grid-cols-1 mx-8">
+                        <span class="flex justify-start">
+                            Tarefa realizada na Unidade Curricular: {{ $task }}
+                        </span>
+                    </span>
+
+                    {{-- School Year --}}
+                    <span class="my-3 grid grid-cols-1 grid-rows-1 mx-8">
+                        <span class=" flex justify-between">
+                            Ano Letivo: {{ $schoolYear }}
+                        </span>
+                    </span>
                 </p>
             </div>
 
-            {{-- Header with student info --}}
-            <div class="my-3 flex flex-row flex-wrap justify-start mx-8">
-                <p class="">ESCOLA SUPERIOR DE CIÊNCIAS EMPRESARIAIS</p>
-            </div>
-
-            {{-- Name --}}
-            <div class="my-3 border-b border-black flex justify-start mx-8">
-                <p class="">Nome: {{ $name }}</p>
-            </div>
-
-            <div class="my-3 grid grid-cols-3 mx-8">
-                {{-- Student Number --}}
-                <div class="flex justify-start ">
-                    <p class="">Nº de aluno: {{ $number }}</p>
-                </div>
-                {{-- Email --}}
-                <div class="flex col-span-2 mx-8">
-                    <p class="">Email: {{ $email }}</p>
-                </div>
-            </div>
-
-            <div class="my-3 grid grid-cols-2 mx-8">
-                {{-- Course --}}
-                <div class="flex justify-start">
-                    <p class="">Curso: {{ $course }}</p>
-                </div>
-                {{-- Year --}}
-                <div class="flex justify-start">
-                    <p class="">Ano: {{ $year }}</p>
-                </div>
-            </div>
-
-            {{-- Task --}}
-            <div class="my-3 grid grid-cols-1 mx-8">
-                <div class="flex justify-start">
-                    <p class="">Tarefa realizada na Unidade Curricular: {{ $task }}</p>
-                </div>
-            </div>
-
-            {{-- School Year --}}
-            <div class="my-3 grid grid-cols-1 grid-rows-1 mx-8">
-                <div class=" flex justify-between">
-                    <p class="">Ano Letivo: {{ $schoolYear }}</p>
-                </div>
-            </div>
-
-            {{-- Impossible to anwser and Student --}}
-            @if ($estado[0]->estado == 0 && $aluno)
+            {{-- Impossible to anwser || Ready to anwser and Teacher || Anwsered and Student || Form Locked --}}
+            @if (($estado[0]->estado == 0) || ($estado[0]->estado ==1 && $prof) || ($estado[0]->estado == 2 && $aluno) || ($estado[0]->estado == 3))
                 @foreach ($perguntas as $index => $pergunta)
-                    <div class="my-3 flex flex-row flex-wrap justify-between mx-8">
-                        <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                        <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full" rows="3" disabled>
+                    <div class="mx-2 mx-md-3" x-data="{ expanded: false }">
+                        <button class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
+                       transition duration-200 hover:bg-esce hover:text-white text-left"
+                                @click="expanded = ! expanded">
+                            <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
+                        </button>
+                        <p x-show="expanded" x-collapse>
+
+                        <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full rounded-md" rows="6"
+                                  disabled>
                             </textarea>
+                        </p>
                     </div>
                 @endforeach
 
                 {{-- Ready to anwser and Student --}}
             @elseif ($estado[0]->estado == 1 && $aluno)
-
                 @foreach ($perguntas as $index => $pergunta)
-                    <div class="my-3 flex flex-row flex-wrap justify-between mx-8">
-                        {{-- Teacher observation field (disabled for the student) --}}
-                        @if ($loop->last)
-                            <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                            <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 rounded-md w-full"
-                                      rows="3"
-                                      disabled>
-                                </textarea>
-                            {{-- Campos dos estudantes --}}
-                        @else
-                            <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                            <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
-                                      class="border border-black p-2 w-full  rounded-md" rows="3"> </textarea>
-                        @endif
-                    </div>
-                @endforeach
+                    <div class="mx-2 m-md-3" x-data="{ expanded: false }">
 
-                {{-- Ready to anwser and Teacher --}}
-            @elseif ($estado[0]->estado ==1 && $prof)
-                @foreach ($perguntas as $index => $pergunta)
-                    <div class="my-3 flex flex-row flex-wrap justify-between mx-8">
-                        <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                        <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full" rows="1"
-                                  disabled>
+                        <button class="w-full rounded my-2 my-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
+                            transition duration-200 hover:bg-esce hover:text-white text-left"
+                                @click="expanded = ! expanded">
+                            <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
+                        </button>
+
+                        {{-- Text Area --}}
+                        <p x-show="expanded" x-collapse>
+                            {{-- Teacher observation field (disabled for the student) --}}
+                            @if ($loop->last)
+                                <textarea name="ta{{ $index }}"
+                                          class="border border-gray-500 p-2 rounded-md w-full dark:bg-zinc-900"
+                                          rows="6" disabled>
                                 </textarea>
+                                {{-- Campos dos estudantes --}}
+                            @else
+                                <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
+                                          class="border border-black p-2 w-full  rounded-md dark:bg-zinc-900" rows="6">
+                                </textarea>
+                            @endif
+                        </p>
                     </div>
                 @endforeach
 
@@ -115,85 +107,40 @@
             @elseif ($estado[0]->estado == 2 && $prof)
 
                 @foreach ($perguntas as $index => $pergunta)
-                    <div class="my-3 flex flex-row flex-wrap justify-between mx-8">
-                        @if ($loop->last)
+                    <div class="mx-2 m-md-3" x-data="{ expanded: false }">
+
+                        <button class="w-full rounded my-2 my-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
+                            transition duration-200 hover:bg-esce hover:text-white text-left"
+                                @click="expanded = ! expanded">
                             <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                            <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
-                                      class="border border-black p-2 w-full" rows="3"> </textarea>
-                        @else
-                            <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                            <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full" rows="1"
-                                      disabled>
+                        </button>
+
+                        <p x-show="expanded" x-collapse>
+                            @if ($loop->last)
+                                <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
+                                          class="border border-black p-2 w-full rounded-md" rows="6"> </textarea>
+                            @else
+                                <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full rounded-md"
+                                          rows="6" disabled>
                                 </textarea>
-                        @endif
-                    </div>
-                @endforeach
-
-                {{-- Anwsered and Student --}}
-            @elseif ($estado[0]->estado == 2 && $aluno)
-
-                @foreach ($perguntas as $index => $pergunta)
-                    <div class="my-3 flex flex-row flex-wrap justify-between mx-8">
-                        @if ($loop->last)
-                            <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                            <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full" rows="1"
-                                      disabled>
-                                </textarea>
-                        @else
-                            <label for="ta{{ $index }}">{{ $pergunta->pergunta }} </label>
-                            <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full" rows="1"
-                                      disabled>
-                                    {{ $respostas[$index]->Resposta }}
-                                </textarea>
-                        @endif
-                    </div>
-                @endforeach
-
-                {{-- Teacher anwsered and Teacher --}}
-            @elseif($estado[0]->estado == 3 && $prof)
-
-                @foreach ($perguntas as $index => $pergunta)
-                    <div class="my-3 flex flex-row flex-wrap justify-between mx-8">
-
-                        <p class="">{{ $pergunta->pergunta }} </p>
-
-                        <p class="border border-black w-full "
-                           rows="3">{{ $respostas[$index]->Resposta }}
+                            @endif
                         </p>
                     </div>
                 @endforeach
+            @endif
 
-                {{-- Teacher anwsered and Teacher --}}{{-- Suposed to be student??? --}}
-            @elseif ($estado[0]->estado == 3 && $prof)
-
-                @foreach ($perguntas as $index => $pergunta)
-                    <div class="my-3 flex flex-row flex-wrap justify-between mx-8">
-                        @if ($loop->last)
-                            <p class="">{{ $pergunta->pergunta }} </p>
-
-                            <p class="border border-black w-full "
-                               rows="3">{{ $respostas[$index]->Resposta }} </p>
-                        @else
-                            <p class="">{{ $pergunta->pergunta }} </p>
-
-                            <textarea wire:model="respostas.{{ $index }}"
-                                      class="border border-black w-full "
-                                      rows="3"> </textarea>
-                        @endif
-                    </div>
-                @endforeach
+            @if($estado[0]->estado == 1 && $aluno|| $estado[0]->estado == 2 && $prof)
+                <div class="flex justify-center md:justify-end">
+                    <button wire:click.prevent="submit"
+                            class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
+                        Guardar
+                    </button>
+                    <button wire:click.prevent="submit"
+                            class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
+                        Submeter
+                    </button>
+                </div>
             @endif
         </div>
     </div>
-
-    @if($estado[0]->estado == 1 && $aluno|| $estado[0]->estado == 2 && $prof)
-        <button wire:click.prevent="submit"
-                class="bg-gray-500 border rounded border-black hover:bg-gray-800 px-4 py-2">
-            Guardar
-        </button>
-        <button wire:click.prevent="submit"
-                class="bg-gray-500 border rounded border-black hover:bg-gray-800 px-4 py-2">
-            Submeter
-        </button>
-    @endif
 </div>

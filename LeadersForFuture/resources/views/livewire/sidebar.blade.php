@@ -30,7 +30,7 @@
 
                 <p class="text-center"> Bem Vindo <br> {{ $nome }} </p>
 
-                <hr class="my-5" style="border-color: #e92739">
+                <hr class="my-5 border-esce">
 
                 {{-- Sidebar Btns --}}
                 {{-- Professor --}}
