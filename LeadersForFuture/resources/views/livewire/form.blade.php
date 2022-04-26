@@ -16,7 +16,7 @@
                     {{-- Student Data --}}
                     @foreach($dadosUsers as $dados)
                         {{-- Name --}}
-                        <span class="my-3 flex justify-start mx-8">
+                        <span class="m-2.5 md:m-3">
                             {{-- Professor --}}
                             @if($dados->id_tipoUtilizador == 1)
                                 Professor:
@@ -24,48 +24,52 @@
                                 Nome:
                             @endif
                             {{ $dados->nome }} {{ $dados->apelido }}
-                        </span>
-                        <span class="my-3 grid grid-cols-3 mx-8">
+                            </span>
+                        <span class="m-2.5 md:m-3 grid grid-cols-3 border-b-2 pb-2 md:pb-1 border-zinc-700">
                             {{-- Student Number --}}
-                            <span class="flex justify-start ">
-                                Nº de aluno: {{ $dados->numero }}
+                            <span class="col-span-3 md:col-span-1 mb-2.5 md:mb-3">
+                                Número Mecanografico: {{ $dados->numero }}
                             </span>
                             {{-- Email --}}
-                            <span class="flex col-span-2 mx-8">
+                            <span class="col-span-3 md:col-span-2">
                                 Email: {{ $dados->email }}
                             </span>
                         </span>
-
-                    <hr class="border dark:border-zinc-700">
                     @endforeach
 
-                    @foreach($dadosForm as $form)
-                        {{-- Course Data --}}
-                        <span class="my-3 grid grid-cols-2 mx-8">
+                    {{-- Course Data --}}
+                    <span class="grid grid-cols-1 md:grid-cols-2 m-2.5 md:m-3 md:pt-1">
+
+                        @if(!empty($dadosCurso))
                             {{-- Course --}}
-                            <span class="flex justify-start">
-                                Curso: Curso
+                            <span>
+                                Curso: {{ $dadosCurso[0]->nm_curso }}
                             </span>
+                            <span class="mt-2.5 md:mt-0">
+                                Grau: {{ $dadosCurso[0]->ds_grau }}
+                            </span>
+                            <span class="mt-2.5 md:mt-3">
+                                Disciplina: {{ $dadosCurso[0]->ds_discip }}
+                            </span>
+                        @endif
+
+                        @foreach($dadosForm as $form)
                             {{-- Year --}}
-                            <span class="flex justify-start">
+                            <span class="mt-2.5 md:mt-3">
                                 {{ $form->ano_curricular }}ºano &nbsp; {{ $form->semestre }}º semestre
                             </span>
-                        </span>
 
-                        {{-- Task --}}
-                        <span class="my-3 grid grid-cols-1 mx-8">
-                            <span class="flex justify-start">
+                            {{-- Task --}}
+                            <span class="mt-2.5 md:mt-3">
                                 Tema: {{ $form->tema }}
                             </span>
-                        </span>
 
-                        {{-- School Year --}}
-                        <span class="my-3 grid grid-cols-1 grid-rows-1 mx-8">
-                            <span class=" flex justify-between">
+                            {{-- School Year --}}
+                            <span class="mt-2.5 md:mt-3">
                                 Ano Letivo: {{ $form->ano_letivo }}
                             </span>
-                        </span>
-                    @endforeach
+                        @endforeach
+                    </span>
                 </p>
             </div>
 

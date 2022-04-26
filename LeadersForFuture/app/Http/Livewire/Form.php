@@ -17,6 +17,7 @@ class Form extends Component
     public $estado;
     public $dadosUsers = [];
     public $dadosForm = [];
+    public $dadosCurso = [];
 
     function mount($id)
     {
@@ -42,7 +43,9 @@ class Form extends Component
 
         $this->dadosForm = DB::select("exec buscaDadosFormProj ?", [$this->formID]);
 
-//        ddd($this->dadosForm);
+        $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
+
+//        ddd($this->dadosCurso);
 
         // Creates the page with Student info
         return view('livewire.form');
