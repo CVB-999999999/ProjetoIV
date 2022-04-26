@@ -15,6 +15,8 @@ class Form extends Component
     public $respostas = [];
     public $formID;
     public $estado;
+    public $dadosUsers = [];
+    public $dadosForm = [];
 
     function mount($id)
     {
@@ -23,6 +25,7 @@ class Form extends Component
 
     public function render()
     {
+
         // Verifies the state of the form
         $this->estado = DB::select("exec buscaEstado ?", [$this->formID]);
 
@@ -35,17 +38,14 @@ class Form extends Component
             $this->respostas = DB::select("exec buscaRespostasCondForm ?", [$this->formID]);
         }
 
-        // TODO -> Buscar os dados dos utilizadores para colocar no form
+        $this->dadosUsers = DB::select("exec buscaAlunosForms ?", [$this->formID]);
+
+        $this->dadosForm = DB::select("exec buscaDadosFormProj ?", [$this->formID]);
+
+//        ddd($this->dadosForm);
+
         // Creates the page with Student info
-        return view('livewire.form', [
-            'name' => "nome",
-            'number' => "123",
-            'email' => "mail",
-            'course' => "curso",
-            'year' => "ano",
-            'schoolYear' => "ano escolar",
-            'task' => "tarefa"
-        ]);
+        return view('livewire.form');
     }
 
     // -----------------------------------------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ class Form extends Component
         // Student
         if ($tipo == 2) {
             DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
-        // Teacher
+            // Teacher
         } elseif ($tipo == 1) {
             DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
         }

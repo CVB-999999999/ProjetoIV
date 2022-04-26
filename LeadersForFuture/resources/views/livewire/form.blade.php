@@ -2,7 +2,7 @@
 
 <div class="w-full">
     {{-- Form --}}
-    <div class="relative mx-auto dark:text-white">
+    <div class="relative mx-auto dark:text-white mb-3">
         <div class="md:mx-5">
             {{-- Header with student info --}}
             <div class="mx-2 m-md-3 dark:text-white" x-data="{ expanded: false }">
@@ -13,46 +13,59 @@
 
                 <p x-show="expanded" x-collapse.duration.600ms>
 
-                    {{-- Name --}}
-                    <span class="my-3 flex justify-start mx-8">
-                        Nome: {{ $name }}
-                    </span>
+                    {{-- Student Data --}}
+                    @foreach($dadosUsers as $dados)
+                        {{-- Name --}}
+                        <span class="my-3 flex justify-start mx-8">
+                            {{-- Professor --}}
+                            @if($dados->id_tipoUtilizador == 1)
+                                Professor:
+                            @else
+                                Nome:
+                            @endif
+                            {{ $dados->nome }} {{ $dados->apelido }}
+                        </span>
+                        <span class="my-3 grid grid-cols-3 mx-8">
+                            {{-- Student Number --}}
+                            <span class="flex justify-start ">
+                                Nº de aluno: {{ $dados->numero }}
+                            </span>
+                            {{-- Email --}}
+                            <span class="flex col-span-2 mx-8">
+                                Email: {{ $dados->email }}
+                            </span>
+                        </span>
 
-                    <span class="my-3 grid grid-cols-3 mx-8">
-                        {{-- Student Number --}}
-                        <span class="flex justify-start ">
-                            Nº de aluno: {{ $number }}
-                        </span>
-                        {{-- Email --}}
-                        <span class="flex col-span-2 mx-8">
-                            Email: {{ $email }}
-                        </span>
-                    </span>
+                    <hr class="border dark:border-zinc-700">
+                    @endforeach
 
-                    <span class="my-3 grid grid-cols-2 mx-8">
-                        {{-- Course --}}
-                        <span class="flex justify-start">
-                            Curso: {{ $course }}
+                    @foreach($dadosForm as $form)
+                        {{-- Course Data --}}
+                        <span class="my-3 grid grid-cols-2 mx-8">
+                            {{-- Course --}}
+                            <span class="flex justify-start">
+                                Curso: Curso
+                            </span>
+                            {{-- Year --}}
+                            <span class="flex justify-start">
+                                {{ $form->ano_curricular }}ºano &nbsp; {{ $form->semestre }}º semestre
+                            </span>
                         </span>
-                        {{-- Year --}}
-                        <span class="flex justify-start">
-                            Ano: {{ $year }}
-                        </span>
-                    </span>
 
-                    {{-- Task --}}´
-                    <span class="my-3 grid grid-cols-1 mx-8">
-                        <span class="flex justify-start">
-                            Tarefa realizada na Unidade Curricular: {{ $task }}
+                        {{-- Task --}}
+                        <span class="my-3 grid grid-cols-1 mx-8">
+                            <span class="flex justify-start">
+                                Tema: {{ $form->tema }}
+                            </span>
                         </span>
-                    </span>
 
-                    {{-- School Year --}}
-                    <span class="my-3 grid grid-cols-1 grid-rows-1 mx-8">
-                        <span class=" flex justify-between">
-                            Ano Letivo: {{ $schoolYear }}
+                        {{-- School Year --}}
+                        <span class="my-3 grid grid-cols-1 grid-rows-1 mx-8">
+                            <span class=" flex justify-between">
+                                Ano Letivo: {{ $form->ano_letivo }}
+                            </span>
                         </span>
-                    </span>
+                    @endforeach
                 </p>
             </div>
 
@@ -91,13 +104,12 @@
                             @if ($loop->last)
                                 <textarea name="ta{{ $index }}"
                                           class="border border-gray-500 p-2 rounded-md w-full dark:bg-zinc-900"
-                                          rows="6" disabled>
-                                </textarea>
+                                          rows="6" disabled></textarea>
                                 {{-- Campos dos estudantes --}}
                             @else
                                 <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
-                                          class="border border-black p-2 w-full  rounded-md dark:bg-zinc-900" rows="6">
-                                </textarea>
+                                          class="border border-black p-2 w-full  rounded-md dark:bg-zinc-900"
+                                          rows="6"></textarea>
                             @endif
                         </p>
                     </div>
@@ -118,11 +130,10 @@
                         <p x-show="expanded" x-collapse>
                             @if ($loop->last)
                                 <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
-                                          class="border border-black p-2 w-full rounded-md" rows="6"> </textarea>
+                                          class="border border-black p-2 w-full rounded-md" rows="6"></textarea>
                             @else
                                 <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full rounded-md"
-                                          rows="6" disabled>
-                                </textarea>
+                                          rows="6" disabled></textarea>
                             @endif
                         </p>
                     </div>
