@@ -26,7 +26,6 @@ class Form extends Component
 
     public function render()
     {
-
         // Verifies the state of the form
         $this->estado = DB::select("exec buscaEstado ?", [$this->formID]);
 
@@ -45,8 +44,6 @@ class Form extends Component
 
         $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
 
-//        ddd($this->dadosCurso);
-
         // Creates the page with Student info
         return view('livewire.form');
     }
@@ -57,31 +54,36 @@ class Form extends Component
     // --- Inserts forms data in DB
     // --- Only works if form status = 1 or 2
     // -----------------------------------------------------------------------------------------------------------------
-    // TODO -> Verificar se o tipo de form é o correto antes de atualizar a BD
     public function submit()
     {
+        ddd('sadsada');
         // Updates DB with the answers
-        foreach ($this->perguntas as $index => $pergunta) {
-            if ((($index + 1) < count($this->perguntas))) {
-                DB::update("exec insertResposta2 ?, ?, ?", [$this->respostas[$index], trim($pergunta['id']), $this->formID]);
-            } else {
-
-                DB::update("exec insertResposta2 ?, ?, ?", [' ', trim($pergunta['id']), $this->formID]);
-            }
-        }
-
-        // Changes the form status
-        $tipo = Session::get('tipo');
-
-        // Student
-        if ($tipo == 2) {
-            DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
-            // Teacher
-        } elseif ($tipo == 1) {
-            DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
-        }
+//        foreach ($this->perguntas as $index => $pergunta) {
+//            if ((($index + 1) < count($this->perguntas))) {
+//                DB::update("exec insertResposta2 ?, ?, ?", [$this->respostas[$index], trim($pergunta['id']), $this->formID]);
+//            } else {
+//
+//                DB::update("exec insertResposta2 ?, ?, ?", [' ', trim($pergunta['id']), $this->formID]);
+//            }
+//        }
+//
+//        // Changes the form status
+//        $tipo = Session::get('tipo');
+//
+//        // Student
+//        if ($tipo == 2) {
+//            DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+//            // Teacher
+//        } elseif ($tipo == 1) {
+//            DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
+//        }
 
         // Returns to main page
         return redirect()->to('/menu');
+    }
+
+    public function test()
+    {
+        ddd("klojm");
     }
 }

@@ -18,18 +18,17 @@
 <body class="flex flex-col h-screen justify-between bg-zinc-50 dark:bg-zinc-800">
 <div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
     <div class="md:flex w-full">
-        @include('livewire.sidebar')
+        @include('components.sidebar')
 
-        {{ $slot }}
+        @yield('content')
     </div>
 
     @livewireScripts
     @powerGridScripts
 </div>
 
-{{-- This neeeds to be here to work proprelly.                                                          --}}
-{{-- For some reason this goes one div up when logged in (eg: in this place it will go to line 24)      --}}
-@include('layouts.footer')
+@include('components.footer')
+
 </body>
 
 </html>

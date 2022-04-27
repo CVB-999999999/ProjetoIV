@@ -2,11 +2,11 @@
 
 namespace App\Http\Livewire;
 
-use Livewire\Component;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Livewire\Component;
 
-class Home extends Component
+class Login extends Component
 {
     public $aluno = false;
     public $prof = false;
@@ -38,7 +38,7 @@ class Home extends Component
     //------------------------------------------------------------------------------------------------------------------
     public function render()
     {
-        return view('livewire.home');
+        return view('livewire.login');
     }
 
 
