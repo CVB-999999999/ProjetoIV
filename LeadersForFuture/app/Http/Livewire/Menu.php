@@ -25,8 +25,6 @@ class Menu extends Component
             return redirect()->to('/');
 
         }
-
-
     }
 
     public function render()

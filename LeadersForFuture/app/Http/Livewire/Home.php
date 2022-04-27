@@ -64,7 +64,7 @@ class Home extends Component
             Session::put('user', $this->username);
             Session::put('name', $name);
             Session::put('tipo', $this->user[0]->tipo);
-
+            Session::put('numero', $this->user[0]->numero);
             return redirect()->to('/menu');
 
         }
