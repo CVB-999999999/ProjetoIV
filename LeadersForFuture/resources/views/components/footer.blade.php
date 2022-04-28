@@ -1,4 +1,4 @@
-<footer class="footer bg-zinc-200 dark:bg-zinc-900 pt-1 border-b-2" style="border-color: #e92739">
+<footer class="footer bg-zinc-200 dark:bg-zinc-900 pt-1 border-b-2 border-esce mt-auto">
     {{-- Top --}}
     <div class="container mx-auto px-6">
         <div class="sm:flex sm:mt-8">

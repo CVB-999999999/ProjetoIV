@@ -41,16 +41,13 @@ class Login extends Component
         return view('livewire.login');
     }
 
-
     //------------------------------------------------------------------------------------------------------------------
     // Login - Checks if login and password are correct
     //------------------------------------------------------------------------------------------------------------------
     public function login()
     {
-
         // Uses a SP to querry the DB with the username and password
         $this->user = DB::select("exec buscaUser_username_pw ?, ?", [$this->username, $this->password]);
-
 
         // Verifies if the SP has return anything
         if (empty($this->user)) {
@@ -67,7 +64,6 @@ class Login extends Component
             Session::put('numero', $this->user[0]->numero);
 
             return redirect()->to('/');
-
         }
     }
 }

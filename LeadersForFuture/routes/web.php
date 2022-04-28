@@ -2,9 +2,7 @@
 
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\SessionController;
-use App\Http\Livewire\Form;
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\Menu;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +27,8 @@ Route::group(['middleware' => ['sessionCheck']], function () {
         return view('home');
     });
     // Form
-    Route::get('/form', [FormController::class, 'formSelection']);
-    Route::get('/form/{id}', Form::class);
+    Route::get('/form', [FormController::class, 'formSelection'])->name('form');
+    Route::get('/form/{id}', [FormController::class, 'form']);
+
+//    Route::get('/teste', Teste::class);
 });

@@ -15,22 +15,25 @@
     @powerGridStyles
 </head>
 
-<body class="h-screen">
-
-@include('components.navbar')
+<body class="flex flex-col h-screen justify-between bg-zinc-50 dark:bg-zinc-800">
+@if($user)
+    @include('components.navbar')
+@endif
 
 <div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
     <div class="md:flex w-full">
-        @include('components.sidebar')
+        @if($user)
+            @include('components.sidebar')
+        @endif
 
         @yield('content')
     </div>
-
-    @livewireScripts
-    @powerGridScripts
 </div>
 
 @include('components.footer')
+
+@livewireScripts
+@powerGridScripts
 
 </body>
 

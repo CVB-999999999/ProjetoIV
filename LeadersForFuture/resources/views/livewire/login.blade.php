@@ -22,7 +22,7 @@
     {{-- Password/Username wrong warning --}}
     @if (!$verifier)
         <div class="">
-            <h1 class=" font-semibold text-red-500"> A password utilizada está errada</h1>
+            <h1 class="font-semibold text-red-500"> A password ou o utilizador estão incorretos</h1>
         </div>
     @endif
 

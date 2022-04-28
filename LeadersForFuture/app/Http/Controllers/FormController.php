@@ -17,7 +17,10 @@ class FormController extends Controller
         return view('forms.form-selection', ['forms' => $forms]);
     }
 
-    public function form() {
-        return view('forms.forms');
+    public function form($id) {
+
+//        ddd($id);
+
+        return view('forms.form-page', ['id'=>$id]);
     }
 }
