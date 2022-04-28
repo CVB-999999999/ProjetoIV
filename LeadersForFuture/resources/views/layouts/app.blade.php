@@ -15,7 +15,10 @@
     @powerGridStyles
 </head>
 
-<body class="flex flex-col h-screen justify-between bg-zinc-50 dark:bg-zinc-800">
+<body class="h-screen">
+
+@include('components.navbar')
+
 <div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
     <div class="md:flex w-full">
         @include('components.sidebar')

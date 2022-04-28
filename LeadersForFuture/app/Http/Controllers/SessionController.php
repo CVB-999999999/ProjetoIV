@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
-    public function logout() {
+    public function logout()
+    {
         session()->flush();
 
         return redirect()->to('/');
     }
 
-    public function login() {
+    public function login()
+    {
         return view('sessions.login');
     }
 }

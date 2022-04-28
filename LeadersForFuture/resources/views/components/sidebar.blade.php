@@ -1,15 +1,15 @@
 @if($user)
     <div class="md:flex flex-col md:flex-row md:min-h-screen">
         <div @click.away="open = false"
-             class="flex flex-col w-full md:w-64 text-gray-700 bg-zinc-200 dark:text-gray-200 dark:bg-zinc-900 flex-shrink-0"
+             class="flex flex-col w-full md:w-48 text-gray-700 bg-zinc-200 dark:text-gray-200 dark:bg-zinc-900
+             flex-shrink-0 text-center"
              x-data="{ open: false }">
             {{-- Top of Sidebar / Navbar in sm --}}
-            <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between">
-                <a href="/"
-                   class="text-lg font-semibold uppercase rounded-lg dark-mode:text-white
+            <div class="flex-shrink-0 px-8 py-4 flex flex-row items-center justify-between md:hidden">
+                <p class="text-lg font-semibold uppercase rounded-lg dark-mode:text-white
                    focus:outline-none focus:shadow-outline text-center">
-                    Leaders For The Future
-                </a>
+                    Opções
+                </p>
                 {{-- Mobile Show/Hide Sidebar --}}
                 <button class="rounded-lg md:hidden rounded-lg focus:outline-none focus:shadow-outline"
                         @click="open = !open">
@@ -26,9 +26,12 @@
 
             {{-- Sidebar content --}}
             <nav :class="{'block': open, 'hidden': !open}"
-                 class="flex-grow md:block px-4 pb-4 md:pb-0 md:overflow-y-auto">
+                 class="flex-grow md:block p-4 md:pb-0 md:overflow-y-auto">
 
-                <p class="text-center"> Bem Vindo <br> {{ $nome }} </p>
+                <a href="/"
+                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
+                    Página Inicial
+                </a>
 
                 <hr class="my-5 border-esce">
 
@@ -40,14 +43,11 @@
                 {{-- Student --}}
                 @if($aluno)
                     <a href="/form"
-                       class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
+                       class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
                         Formulários
                     </a>
                 @endif
-                <a href="/logout"
-                   class="block py-2.5 px-4 rounded transition duration-200 hover:bg-red-800 hover:text-white">
-                    Logout
-                </a>
+
             </nav>
         </div>
     </div>
