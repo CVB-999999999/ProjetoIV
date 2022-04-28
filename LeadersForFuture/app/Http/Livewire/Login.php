@@ -65,7 +65,8 @@ class Login extends Component
             Session::put('name', $name);
             Session::put('tipo', $this->user[0]->tipo);
             Session::put('numero', $this->user[0]->numero);
-            return redirect()->to('/menu');
+
+            return redirect()->to('/');
 
         }
     }

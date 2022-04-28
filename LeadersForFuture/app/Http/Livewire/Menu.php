@@ -22,7 +22,7 @@ class Menu extends Component
 
         if (!Session::has('user')) {
 
-            return redirect()->to('/');
+            return redirect()->to('/login');
 
         }
     }
@@ -31,10 +31,7 @@ class Menu extends Component
     {
 
         $utilizador = Session::get('user');
-
-
         $teste = Session::get('tipo');
-
 
         if ($teste == 2) {
 
@@ -46,7 +43,6 @@ class Menu extends Component
             $this->prof = true;
             DB::update("exec buscaFormulariosAsProfessor2 ?, ?, ?", [$utilizador, $this->anoLetivo, 1]);
             $this->formularios = DB::select("exec buscaFormulariosAsProfessor");
-
         }
         return view('livewire.menu');
     }

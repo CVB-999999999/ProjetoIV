@@ -18,7 +18,7 @@ class LoginController extends Component
     public function loginLoad() {
         return view('sessions.login');
     }
-
+/*
     public function login()
     {
         $this->user = DB::select("exec buscaUser_numero_pw ?, ?",[$this->username, $this->password]);
@@ -33,7 +33,7 @@ class LoginController extends Component
             Session::put('name', $name);
             Session::put('tipo', $this->user[0]->tipo);
 
-            return redirect()->to('/menu');
+            return redirect()->to('/');
         }
-    }
+    }*/
 }
