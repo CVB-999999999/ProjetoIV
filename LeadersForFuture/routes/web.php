@@ -25,7 +25,7 @@ Route::group(['middleware' => ['sessionCheck']], function () {
     Route::get('/login', [SessionController::class, 'login']);
     Route::get('/logout', [SessionController::class, 'logout']);
     // Home
-    Route::get('/', Menu::class);
+    Route::get('/', Menu::class)->middleware('auth');
     // Form
     Route::get('/form', [FormController::class, 'formSelection']);
     Route::get('/form/{id}', Form::class);
