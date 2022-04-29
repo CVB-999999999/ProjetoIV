@@ -3,6 +3,7 @@
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,11 +25,14 @@ Route::group(['middleware' => ['sessionCheck']], function () {
     Route::get('/logout', [SessionController::class, 'logout']);
     // Home
     Route::get('/', function () {
+
+        if (Session::get('user') == null) {
+            return redirect('login');
+        }
+
         return view('home');
     });
     // Form
     Route::get('/form', [FormController::class, 'formSelection'])->name('form');
     Route::get('/form/{id}', [FormController::class, 'form']);
-
-//    Route::get('/teste', Teste::class);
 });

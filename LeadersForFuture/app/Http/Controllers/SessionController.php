@@ -10,7 +10,7 @@ class SessionController extends Controller
     {
         session()->flush();
 
-        return redirect()->to('/');
+        return redirect()->to('/login');
     }
 
     public function login()

@@ -1,4 +1,4 @@
-<div class="w-full text-gray-700 bg-zinc-200 dark:text-gray-200 dark:bg-zinc-900">
+<div class="z-50 w-full text-gray-700 bg-zinc-200 dark:text-gray-200 dark:bg-zinc-900 sticky top-0">
     <div x-data="{ open: false }" class="flex flex-col px-4 md:items-center md:justify-between
         md:flex-row md:px-6 lg:px-8">
         {{-- Phone Nav --}}

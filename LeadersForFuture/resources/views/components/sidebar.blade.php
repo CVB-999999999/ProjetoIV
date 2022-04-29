@@ -24,11 +24,9 @@
         </div>
 
         {{-- Sidebar content --}}
-        <nav :class="{'block': open, 'hidden': !open}"
-             class="flex-grow md:block p-4 md:pb-0 md:overflow-y-auto">
-
-            <a href="/"
-               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
+        <nav :class="{'block': open, 'hidden': !open}" class="flex-grow md:block p-4 md:pb-0 md:overflow-y-auto">
+            <a href="/" class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white inline inline-flex">
+{{--                <img class="dark:invert object-contain h-5" src="{{ URL('images/icons/home_FILL.svg') }}" alt="home-icon">--}}
                 Página Inicial
             </a>
 

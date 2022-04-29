@@ -4,7 +4,8 @@
     <div>
         <label for="login" class="block text-sm font-medium text-gray-700">Utilizador</label>
         <div class="mt-1">
-            <input id="login" wire:model="username" type="text" class="border border-opacity-50 rounded border-gray-700 w-full
+            <input id="login" wire:model="username" type="text" class="border border-opacity-50 rounded border-gray-700
+            w-full py-1 px-2
                    form-control{{ $errors->has('username') ? ' is-invalid' : '' }}" name="login"
                    value="{{ old('username') }}" required>
         </div>
@@ -14,7 +15,8 @@
     <div>
         <label for="password" class=" block text-sm font-medium text-gray-700">Password</label>
         <div class="mt-1">
-            <input id="password" wire:model="password" class="border border-opacity-50 rounded border-gray-700 w-full"
+            <input id="password" wire:model="password" class="border border-opacity-50 rounded border-gray-700 w-full
+             py-1 px-2"
                    name="password" type="password" autocomplete="current-password"/>
         </div>
     </div>

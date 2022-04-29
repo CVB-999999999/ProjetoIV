@@ -54,9 +54,19 @@ class Form extends Component
     // --- Inserts forms data in DB
     // --- Only works if form status = 1 or 2
     // -----------------------------------------------------------------------------------------------------------------
-    public function submit()
+    public function submitForm()
     {
-        ddd('sadsada');
+        sleep(10);
+
+//      Student Submission
+        if (Session::get('tipo') == 2) {
+
+//            Confirmar com um sp que este utilizador tem permissão para responder
+//            Inserir aqui o sp para atualizar as respostas
+//            E mudar o estado do formulário
+        }
+
+
         // Updates DB with the answers
 //        foreach ($this->perguntas as $index => $pergunta) {
 //            if ((($index + 1) < count($this->perguntas))) {
@@ -79,11 +89,11 @@ class Form extends Component
 //        }
 
         // Returns to main page
-        return redirect()->to('/menu');
+        return back();
     }
 
-    public function test()
+    public function save($index)
     {
-        ddd("klojm");
+        ddd($index);
     }
 }

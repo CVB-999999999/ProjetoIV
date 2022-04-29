@@ -19,8 +19,6 @@ class FormController extends Controller
 
     public function form($id) {
 
-//        ddd($id);
-
         return view('forms.form-page', ['id'=>$id]);
     }
 }
