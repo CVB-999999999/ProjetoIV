@@ -56,44 +56,62 @@ class Form extends Component
     // -----------------------------------------------------------------------------------------------------------------
     public function submitForm()
     {
-        sleep(10);
+        $allowed = false;
 
 //      Student Submission
         if (Session::get('tipo') == 2) {
 
-//            Confirmar com um sp que este utilizador tem permissão para responder
-//            Inserir aqui o sp para atualizar as respostas
-//            E mudar o estado do formulário
+            // Verify if user owns the form
+            // Gets all forms that the user owns and compares with current forms id
+            $dadosF = DB::select("exec buscaFormsDados ?", [Session::get('user')]);
+
+            foreach ($dadosF as $dados) {
+                if ($this->formID == $dados->id) {
+                    ddd("You shall not pass");
+
+                    // Updates DB with the answers
+                    foreach ($this->perguntas as $index => $pergunta) {
+                        if ((($index + 1) < count($this->perguntas))) {
+                            DB::update("exec insertResposta2 ?, ?, ?", [$this->respostas[$index], trim($pergunta['id']), $this->formID]);
+                        } else {
+                            DB::update("exec insertResposta2 ?, ?, ?", [' ', trim($pergunta['id']), $this->formID]);
+                        }
+                    }
+                    // Updates form status
+                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+
+                    break;
+                }
+            }
+        //        TODO -> submissão do prof (das observações)
+        } elseif (Session::get('tipo') == 1) {
+
         }
 
 
-        // Updates DB with the answers
-//        foreach ($this->perguntas as $index => $pergunta) {
-//            if ((($index + 1) < count($this->perguntas))) {
-//                DB::update("exec insertResposta2 ?, ?, ?", [$this->respostas[$index], trim($pergunta['id']), $this->formID]);
-//            } else {
-//
-//                DB::update("exec insertResposta2 ?, ?, ?", [' ', trim($pergunta['id']), $this->formID]);
-//            }
-//        }
-//
-//        // Changes the form status
-//        $tipo = Session::get('tipo');
-//
-//        // Student
-//        if ($tipo == 2) {
-//            DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
-//            // Teacher
-//        } elseif ($tipo == 1) {
-//            DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
-//        }
+//        sleep(5);
 
-        // Returns to main page
-        return back();
+        if (!$allowed) {
+            $error = "O utilizador não tem permissões para alterar este formulário";
+            $this->dispatchBrowserEvent('noPermission', ['error' => $error]);
+        }
+
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Save Funtion
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Updates a field
+    // --- Only works if form status == 1 && tipo == student
+    // -----------------------------------------------------------------------------------------------------------------
     public function save($index)
     {
         ddd($index);
+//        TODO -> guardar o campo na BD (atualizar, se não existir a resposta criar)
+    }
+
+    public function teste()
+    {
+        ddd("teste123");
     }
 }

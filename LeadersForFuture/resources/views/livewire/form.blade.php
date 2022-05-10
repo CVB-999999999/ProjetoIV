@@ -134,8 +134,8 @@
 
                     <p x-show="expanded" x-collapse>
                         @if ($loop->last)
-                            {{--                                    <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"--}}
-                            {{--                                              class="border border-black p-2 w-full rounded-md" rows="6"></textarea>--}}
+                            {{--                                                                <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"--}}
+                            {{--                                                                          class="border border-black p-2 w-full rounded-md" rows="6"></textarea>--}}
                         @else
                             <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full rounded-md"
                                       rows="6" disabled></textarea>
@@ -179,3 +179,8 @@
     </form>
 </div>
 
+<script>
+    window.addEventListener('noPermission', error => {
+        alert(error.detail.error);
+    })
+</script>

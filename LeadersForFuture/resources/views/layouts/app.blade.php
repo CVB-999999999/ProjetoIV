@@ -21,7 +21,7 @@
 @endif
 
 <div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
-    <div class="md:flex w-full">
+    <div class="md:flex w-full mb-5">
         @if($user)
             @include('components.sidebar')
         @endif
