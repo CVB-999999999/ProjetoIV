@@ -156,18 +156,23 @@
                 {{-- Aqui fica uma powergrid para mostrar o historico --}}
                 <span> Power Grid Placeholder</span>
                 {{-- Parte do docente --}}
-                <textarea name="obs" class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
-                          rows="6">
-                </textarea>
-                {{-- Btn para guardar --}}
+                @if($estado[0]->estado == 2 && $prof)
+                    <textarea name="obs" class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
+                              rows="6">
+                    </textarea>
+                @endif
             </p>
         </div>
 
-        @if($estado[0]->estado == 1 && $aluno|| $estado[0]->estado == 2 && $prof)
+        @if(($estado[0]->estado == 1 && $aluno) || ($estado[0]->estado == 2 && $prof))
             <div class="flex justify-center md:justify-end">
                 <button type="submit" x-data x-on:click.document="window.scrollTo(0, 0)"
                         class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
-                    Submeter para avaliação
+                    @if($prof)
+                        Submeter Observação
+                    @elseif($aluno)
+                        Submeter para Avaliação
+                    @endif
                 </button>
 
                 {{-- Loading popup --}}

@@ -67,6 +67,8 @@ class Form extends Component
 
             foreach ($dadosF as $dados) {
                 if ($this->formID == $dados->id) {
+
+                    $allowed = true;
                     ddd("You shall not pass");
 
                     // Updates DB with the answers
@@ -83,13 +85,21 @@ class Form extends Component
                     break;
                 }
             }
-        //        TODO -> submissão do prof (das observações)
+            //        TODO -> submissão do prof (das observações)
+//        Teacher Submission
         } elseif (Session::get('tipo') == 1) {
 
+            $allowed = true;
+
+            ddd("Not finished");
+
+            // Insert Observation
+            // Form ID | Teacher ID | Observation Content | Aproved
+            DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), "jndfkjsdnffs jkfsfsdkjnsnf", 1]);
         }
 
 
-//        sleep(5);
+//        sleep(1);
 
         if (!$allowed) {
             $error = "O utilizador não tem permissões para alterar este formulário";
