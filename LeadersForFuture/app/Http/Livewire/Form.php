@@ -58,6 +58,8 @@ class Form extends Component
     {
         $allowed = false;
 
+//        sleep(10);
+
 //      Student Submission
         if (Session::get('tipo') == 2) {
 
@@ -85,7 +87,6 @@ class Form extends Component
                     break;
                 }
             }
-            //        TODO -> submissão do prof (das observações)
 //        Teacher Submission
         } elseif (Session::get('tipo') == 1) {
 

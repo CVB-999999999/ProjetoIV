@@ -146,27 +146,32 @@
         @endif
 
         {{-- Teacher Observations --}}
-        <div class="mx-2 mx-md-3" x-data="{ expanded: false }">
-            <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
+        @if($estado[0]->estado == 2 && $prof)
+            <div class="mx-2 mx-md-3" x-data="{ expanded: false }">
+                <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
                        transition duration-200 hover:bg-esce hover:text-white text-left"
-                    @click="expanded = ! expanded">
-                <label for="obs">Observações do Docente </label>
-            </button>
-            <p x-show="expanded" x-collapse>
-                {{-- Aqui fica uma powergrid para mostrar o historico --}}
-                <span> Power Grid Placeholder</span>
-                {{-- Parte do docente --}}
-                @if($estado[0]->estado == 2 && $prof)
-                    <textarea name="obs" class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
-                              rows="6">
+                        @click="expanded = ! expanded">
+                    <label for="obs">Observações do Docente </label>
+                </button>
+                <p x-show="expanded" x-collapse>
+                    @if($estado[0]->estado == 2 && $prof)
+                        <textarea name="obs" class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
+                                  rows="6">
                     </textarea>
-                @endif
-            </p>
+                    @endif
+                </p>
+            </div>
+        @endif
+
+        <div class="mx-2 mx-md-3">
+            <livewire:obs-table/>
         </div>
+
+        {{--        <livewire:obs-table/>--}}
 
         @if(($estado[0]->estado == 1 && $aluno) || ($estado[0]->estado == 2 && $prof))
             <div class="flex justify-center md:justify-end">
-                <button type="submit" x-data x-on:click.document="window.scrollTo(0, 0)"
+                <button type="submit" x-data x-on:click.button="window.scrollTo(0, 0)"
                         class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
                     @if($prof)
                         Submeter Observação
