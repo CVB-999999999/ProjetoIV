@@ -14,6 +14,12 @@ final class ObsTable extends PowerGridComponent
 {
     use ActionButton;
 
+    // Changes the theme to a custom one
+    public function template(): ?string
+    {
+        return \App\Http\Livewire\CustomTailwindTemplate::class;
+    }
+
     /*
     |--------------------------------------------------------------------------
     |  Datasource

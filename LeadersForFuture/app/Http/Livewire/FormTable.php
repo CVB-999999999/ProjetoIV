@@ -16,6 +16,12 @@ final class FormTable extends PowerGridComponent
 {
     use ActionButton;
 
+    // Changes the theme to a custom one
+    public function template(): ?string
+    {
+        return \App\Http\Livewire\CustomTailwindTemplate::class;
+    }
+
     /*
     |--------------------------------------------------------------------------
     |  Datasource
@@ -26,7 +32,7 @@ final class FormTable extends PowerGridComponent
     public $semestre = 1 ;
     public $formularios = "";
     public $anoLetivo;
-    
+
     public function datasource(): ?Collection
     {
         $collection = collect();
@@ -122,7 +128,7 @@ final class FormTable extends PowerGridComponent
                 ->searchable()
                 ->makeInputText('name')
                 ->sortable(),
-            
+
             Column::add()
                 ->title('Ano Letivo')
                 ->field('ano_letivo')

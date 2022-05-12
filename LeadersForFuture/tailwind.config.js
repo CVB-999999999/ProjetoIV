@@ -5,6 +5,7 @@ module.exports = {
         "./resources/**/*.js",
         "./resources/**/*.vue",
         './app/Http/Livewire/**/*Table.php',
+        './app/Http/Livewire/CustomTailwindTemplate.php',
         './vendor/power-components/livewire-powergrid/resources/views/**/*.php',
         './vendor/power-components/livewire-powergrid/src/Themes/Tailwind.php',
     ],
