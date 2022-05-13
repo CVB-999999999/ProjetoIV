@@ -4,6 +4,8 @@ namespace App\Http\Livewire;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridEloquent;
@@ -13,6 +15,8 @@ use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 final class ObsTable extends PowerGridComponent
 {
     use ActionButton;
+
+    public $formID;
 
     // Changes the theme to a custom one
     public function template(): ?string
@@ -29,13 +33,27 @@ final class ObsTable extends PowerGridComponent
     */
     public function datasource(): ?Collection
     {
-        return collect([
-            ['id' => 1, 'name' => 'Name 1', 'price' => 1.58, 'created_at' => now(),],
-            ['id' => 2, 'name' => 'Name 2', 'price' => 1.68, 'created_at' => now(),],
-            ['id' => 3, 'name' => 'Name 3', 'price' => 1.78, 'created_at' => now(),],
-            ['id' => 4, 'name' => 'Name 4', 'price' => 1.88, 'created_at' => now(),],
-            ['id' => 5, 'name' => 'Name 5', 'price' => 1.98, 'created_at' => now(),],
-        ]);
+        $collection = collect();
+
+        $query = DB::select("exec buscaObs ?", [$this->formID]);
+
+        foreach ($query as $q) {
+
+            $apr = 'Não Aprovado';
+
+            if ($q->aprovado == 1) {
+                $apr = 'Aprovado';
+
+                $collection->push([
+                    'id' => $q->idProf,
+                    'name' => $q->nome . ' ' . $q->apelido,
+                    'status' => $apr,
+                    'created_at' => $q->dataHora,
+                ]);
+            }
+        }
+
+        return $collection;
     }
 
     /*
@@ -65,9 +83,9 @@ final class ObsTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('name')
-            ->addColumn('price')
+            ->addColumn('status')
             ->addColumn('created_at_formatted', function ($entry) {
-                return Carbon::parse($entry->created_at)->format('d/m/Y');
+                return Carbon::parse($entry->created_at)->format('d/m/Y h:m');
             });
     }
 
@@ -80,7 +98,7 @@ final class ObsTable extends PowerGridComponent
     |
 
     */
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -95,22 +113,21 @@ final class ObsTable extends PowerGridComponent
                 ->sortable(),
 
             Column::add()
-                ->title('Name')
+                ->title('Professor')
                 ->field('name')
                 ->searchable()
-                ->makeInputText('name')
                 ->sortable(),
 
             Column::add()
-                ->title('Price')
-                ->field('price')
+                ->title('Estado')
+                ->field('status')
                 ->sortable()
-                ->makeInputRange('price', '.', ''),
+                ->searchable(),
 
             Column::add()
-                ->title('Created At')
-                ->field('created_at_formatted')
-                ->makeInputDatePicker('created_at'),
+                ->title('Criado em')
+                ->sortable()
+                ->field('created_at_formatted'),
         ];
     }
 }

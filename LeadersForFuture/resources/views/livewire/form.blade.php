@@ -164,10 +164,8 @@
         @endif
 
         <div class="mx-2 mx-md-3">
-            <livewire:obs-table/>
+            <livewire:obs-table formID="{{ $formID }}"/>
         </div>
-
-        {{--        <livewire:obs-table/>--}}
 
         @if(($estado[0]->estado == 1 && $aluno) || ($estado[0]->estado == 2 && $prof))
             <div class="flex justify-center md:justify-end">
