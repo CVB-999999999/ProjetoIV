@@ -59,7 +59,7 @@ class Form extends Component
         $allowed = false;
 
         sleep(10);
-        ddd('Stop Right There');
+//        ddd('Stop Right There');
 
 //      Student Submission
         if (Session::get('tipo') == 2) {
@@ -96,7 +96,7 @@ class Form extends Component
 
             $allowed = true;
 
-            ddd("Not finished");
+//            ddd("Not finished");
 
             // Insert Observation
             // Form ID | Teacher ID | Observation Content | Aproved
@@ -122,8 +122,18 @@ class Form extends Component
     // -----------------------------------------------------------------------------------------------------------------
     public function save($index)
     {
-        ddd($this->respostas[$index]);
-//        TODO -> guardar o campo na BD (atualizar, se não existir a resposta criar)
+//        ddd(trim($this->perguntas[$index]['id']));
+//        ddd(trim($this->respostas[$index]));
+//        ddd($this->formID);
+
+        if (Session::get('tipo') == 2) {
+
+            DB::update("exec saveResposta ?, ?, ?", [
+                $this->formID,
+                trim($this->respostas[$index]),
+                trim($this->perguntas[$index]['id'])
+            ]);
+        }
     }
 
     public function teste()

@@ -4,6 +4,6 @@ DECLARE @idUltimaResposta AS int;
 
 INSERT INTO Observacao (idProf, conteudo, aprovado, dataHora) VALUES (@idProf, @conteudo, @aprovado, CURRENT_TIMESTAMP);
 
-SELECT @idUltimaResposta = MAX(idObservacao) FROM Observacao;
+SELECT @idUltimaResposta = SCOPE_IDENTITY();
 
 INSERT INTO ObservacaoFormulario(idFormulario, idObservacao) VALUES (@idForm, @idUltimaResposta)
