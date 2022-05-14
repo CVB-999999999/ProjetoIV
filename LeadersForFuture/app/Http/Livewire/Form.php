@@ -28,21 +28,22 @@ class Form extends Component
     {
         // Verifies the state of the form
         $this->estado = DB::select("exec buscaEstado ?", [$this->formID]);
+        // Get the questions
+        $this->perguntas = DB::select("exec buscaPerguntasCondForm ?", [$this->formID]);
+        // Get the answers (if any)
+        $respostas = DB::select("exec buscaRespostasForm ?", [$this->formID]);
+        // Gets user data
+        $this->dadosUsers = DB::select("exec buscaAlunosForms ?", [$this->formID]);
+        // Gets project data
+        $this->dadosForm = DB::select("exec buscaDadosFormProj ?", [$this->formID]);
+        // Gets course data
+        $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
 
-        // Impossible to answer the form or form ready to answer
-        if ($this->estado[0]->estado == 0 || $this->estado[0]->estado == '1') {
-            $this->perguntas = DB::select("exec buscaPerguntasCondForm ?", [$this->formID]);
-            // Student answered or teacher responded
-        } else {
-            $this->perguntas = DB::select("exec buscaPerguntasCondForm ?", [$this->formID]);
-            $this->respostas = DB::select("exec buscaRespostasCondForm ?", [$this->formID]);
+        foreach ($respostas as $resposta) {
+            array_push($this->respostas, $resposta->Resposta);
         }
 
-        $this->dadosUsers = DB::select("exec buscaAlunosForms ?", [$this->formID]);
-
-        $this->dadosForm = DB::select("exec buscaDadosFormProj ?", [$this->formID]);
-
-        $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
+//        ddd($this->respostas);
 
         // Creates the page with Student info
         return view('livewire.form');
@@ -123,7 +124,7 @@ class Form extends Component
     public function save($index)
     {
 //        ddd(trim($this->perguntas[$index]['id']));
-//        ddd(trim($this->respostas[$index]));
+//        ddd($this->respostas[$index]);
 //        ddd($this->formID);
 
         if (Session::get('tipo') == 2) {

@@ -2,7 +2,7 @@
     <form wire:submit.prevent="submitForm" method="POST" class="md:mx-5">
         {{-- Header with student info --}}
         <div class="mx-2 m-md-3 dark:text-white" x-data="{ expanded: false }">
-            <button type="button" class="w-full rounded my-2 my-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
+            <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
                    transition duration-200 hover:bg-esce hover:text-white text-left" @click="expanded = ! expanded">
                 Informação do Estudante
             </button>
@@ -80,8 +80,8 @@
                     </button>
                     {{-- Text Area Placeholder --}}
                     <p x-show="expanded" x-collapse>
-                        <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full rounded-md"
-                                  rows="6" disabled></textarea>
+                        <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
+                                  class="border border-gray-500 p-2 w-full rounded-md" rows="6" disabled></textarea>
                     </p>
                 </div>
             @endforeach
@@ -99,7 +99,7 @@
 
                     <p x-show="expanded" x-collapse>
                         {{-- Text Area --}}
-                        <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
+                        <textarea wire:model='respostas.{{ $index }}' name="ta{{ $index }}"
                                   class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
                                   rows="6"></textarea>
                         {{-- Submit Btn --}}
