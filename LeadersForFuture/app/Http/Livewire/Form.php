@@ -58,7 +58,8 @@ class Form extends Component
     {
         $allowed = false;
 
-//        sleep(10);
+        sleep(10);
+        ddd('Stop Right There');
 
 //      Student Submission
         if (Session::get('tipo') == 2) {
@@ -72,6 +73,9 @@ class Form extends Component
 
                     $allowed = true;
                     ddd("You shall not pass");
+                    // TODO -> Modificar os sps para verificar se já existem as respostas guardas
+                    // provavelmete usar o sp de guardar para guardar e manter o sps de alterar o estado
+                    // e apagar os sps de inserir respostas
 
                     // Updates DB with the answers
                     foreach ($this->perguntas as $index => $pergunta) {
@@ -104,7 +108,8 @@ class Form extends Component
 
         if (!$allowed) {
             $error = "O utilizador não tem permissões para alterar este formulário";
-            $this->dispatchBrowserEvent('noPermission', ['error' => $error]);
+//            $this->dispatchBrowserEvent('noPermission', ['error' => $error]);
+            ddd('Não tem permissões');
         }
 
     }
@@ -117,7 +122,7 @@ class Form extends Component
     // -----------------------------------------------------------------------------------------------------------------
     public function save($index)
     {
-        ddd($index);
+        ddd($this->respostas[$index]);
 //        TODO -> guardar o campo na BD (atualizar, se não existir a resposta criar)
     }
 

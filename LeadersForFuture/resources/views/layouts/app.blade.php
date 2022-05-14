@@ -21,7 +21,7 @@
 @endif
 
 <div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
-    <div class="md:flex w-full mb-5">
+    <div class="md:flex w-full">
         @if($user)
             @include('components.sidebar')
         @endif
@@ -34,6 +34,7 @@
 
 @livewireScripts
 @powerGridScripts
+@livewire('livewire-ui-modal')
 
 </body>
 

@@ -131,6 +131,7 @@
       <path value="$PROJECT_DIR$/LeadersForFuture/vendor/phpspec/prophecy" />
       <path value="$PROJECT_DIR$/LeadersForFuture/vendor/phar-io/manifest" />
       <path value="$PROJECT_DIR$/LeadersForFuture/vendor/phar-io/version" />
+      <path value="$PROJECT_DIR$/LeadersForFuture/vendor/wire-elements/modal" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">

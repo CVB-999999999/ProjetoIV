@@ -6,6 +6,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridEloquent;
@@ -17,6 +18,7 @@ final class ObsTable extends PowerGridComponent
     use ActionButton;
 
     public $formID;
+    private $query;
 
     // Changes the theme to a custom one
     public function template(): ?string
@@ -49,9 +51,12 @@ final class ObsTable extends PowerGridComponent
                     'name' => $q->nome . ' ' . $q->apelido,
                     'status' => $apr,
                     'created_at' => $q->dataHora,
+                    'obs' => $q->conteudo,
                 ]);
             }
         }
+
+        $this->query = $query;
 
         return $collection;
     }
@@ -85,8 +90,9 @@ final class ObsTable extends PowerGridComponent
             ->addColumn('name')
             ->addColumn('status')
             ->addColumn('created_at_formatted', function ($entry) {
-                return Carbon::parse($entry->created_at)->format('d/m/Y h:m');
-            });
+                return Carbon::parse($entry->created_at)->format('d/m/Y H:m');
+            })
+            ->addColumn('obs');
     }
 
     /*
@@ -128,6 +134,23 @@ final class ObsTable extends PowerGridComponent
                 ->title('Criado em')
                 ->sortable()
                 ->field('created_at_formatted'),
+
+            Column::add()
+                ->title('Observação')
+                ->sortable()
+                ->field('obs')
+                ->hidden(),
+        ];
+    }
+
+// Create an Action Button for ordering a dish.
+    public function actions(): array
+    {
+        return [
+            Button::add('obs')
+                ->caption('Ver Observação')
+                ->class('block bg-esce border border-zinc-900 text-white p-3 py-2 m-1 rounded text-sm')
+                ->openModal('view-obs', ['obs' => 'obs'])
         ];
     }
 }
