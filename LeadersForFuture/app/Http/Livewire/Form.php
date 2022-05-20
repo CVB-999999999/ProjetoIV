@@ -112,8 +112,14 @@ class Form extends Component
             DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), $this->obs, $state]);
 
             ddd("Descomentar o SP para alterar o estado e enviar o email" . $state);
-            // Updates form status
-//                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+/*
+            // Form Approved
+            if ($this->apr == 'true') {
+                DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
+                // Form Not Approved
+            } else {
+                DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+            }*/
         }
 
         if (!$allowed) {
