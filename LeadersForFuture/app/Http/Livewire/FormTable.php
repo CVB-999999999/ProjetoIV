@@ -16,12 +16,6 @@ final class FormTable extends PowerGridComponent
 {
     use ActionButton;
 
-    // Changes the theme to a custom one
-    public function template(): ?string
-    {
-        return \App\Http\Livewire\CustomTailwindTemplate::class;
-    }
-
     /*
     |--------------------------------------------------------------------------
     |  Datasource
@@ -32,7 +26,7 @@ final class FormTable extends PowerGridComponent
     public $semestre = 1 ;
     public $formularios = "";
     public $anoLetivo;
-
+    
     public function datasource(): ?Collection
     {
         $collection = collect();
@@ -43,28 +37,15 @@ final class FormTable extends PowerGridComponent
            foreach($query2 as $query2result){
                 $query3 = DB::table("Utilizador")->where('numero',$query2result->numero_utilizador)->pluck('nome');
                 if($query2result->numero_utilizador != $profnumber){
-                    $collection->push(['id' => $query2result->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]);
+
+                    foreach ($query2result as $queryresult){
+                        $query4 = DB::table("Projecto")->where('id',$query2result->id_projecto)->get();
+                    }
+                   
+                    $collection->push(['id' => $query2result->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo, 'projeto' => $query4[0]->nome]);
                 }
            }
         }
-        //dd($query[0]);
-        /*for($i=0;$i<2;$i++){
-            $query2 = DB::table("Utilizador_Projecto")->where('id_projecto',$query[$i]->id_projecto)->get();
-            //dd($query2);
-            $query3 = DB::table("Utilizador")->where('numero',$query2[0]->numero_utilizador)->pluck('nome');
-            //dd($query3[0]);
-            //['id' => $query2[0]->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]]);
-            $collection->push(['id' => $query2[0]->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]);
-        }*/
-        //dd($collection);
-        /*$collection = collect([
-            ['id' => 1, 'name' => 'Paulo', 'ano_letivo' => $this->anoLetivo,],
-            ['id' => 2, 'name' => 'Name 2', 'price' => 1.68, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-            ['id' => 3, 'name' => 'Name 3', 'price' => 1.78, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-            ['id' => 4, 'name' => 'Name 4', 'price' => 1.88, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-            ['id' => 5, 'name' => 'Name 5', 'price' => 1.98, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-        ]);*/
-        //dd($collection);
         return $collection;
     }
 
@@ -96,7 +77,8 @@ final class FormTable extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('name')
-            ->addColumn('ano_letivo');
+            ->addColumn('ano_letivo')
+            ->addColumn('projeto');
     }
 
     /*
@@ -128,12 +110,18 @@ final class FormTable extends PowerGridComponent
                 ->searchable()
                 ->makeInputText('name')
                 ->sortable(),
-
+            
             Column::add()
                 ->title('Ano Letivo')
                 ->field('ano_letivo')
                 ->sortable()
                 ->makeInputRange('Ano_Letivo'),
+
+            Column::add()
+                ->title('Projeto')
+                ->field('projeto')
+                ->searchable()
+                ->makeInputText('projeto'),
 
         ];
     }
