@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
@@ -45,15 +44,15 @@ final class ObsTable extends PowerGridComponent
 
             if ($q->aprovado == 1) {
                 $apr = 'Aprovado';
-
-                $collection->push([
-                    'id' => $q->idProf,
-                    'name' => $q->nome . ' ' . $q->apelido,
-                    'status' => $apr,
-                    'created_at' => $q->dataHora,
-                    'obs' => $q->conteudo,
-                ]);
             }
+
+            $collection->push([
+                'id' => $q->idProf,
+                'name' => $q->nome . ' ' . $q->apelido,
+                'status' => $apr,
+                'created_at' => $q->dataHora,
+                'obs' => $q->conteudo,
+            ]);
         }
 
         $this->query = $query;
@@ -90,7 +89,7 @@ final class ObsTable extends PowerGridComponent
             ->addColumn('name')
             ->addColumn('status')
             ->addColumn('created_at_formatted', function ($entry) {
-                return Carbon::parse($entry->created_at)->format('d/m/Y H:m');
+                return Carbon::parse($entry->created_at)->toDateTimeString('minute');
             })
             ->addColumn('obs');
     }
@@ -132,12 +131,10 @@ final class ObsTable extends PowerGridComponent
 
             Column::add()
                 ->title('Criado em')
-                ->sortable()
                 ->field('created_at_formatted'),
 
             Column::add()
                 ->title('Observação')
-                ->sortable()
                 ->field('obs')
                 ->hidden(),
         ];

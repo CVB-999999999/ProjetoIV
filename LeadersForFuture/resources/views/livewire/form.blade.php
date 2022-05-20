@@ -2,7 +2,7 @@
     <form wire:submit.prevent="submitForm" method="POST" class="md:mx-5">
         {{-- Header with student info --}}
         <div class="mx-2 m-md-3 dark:text-white" x-data="{ expanded: false }">
-            <button type="button" class="w-full rounded my-2 my-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
+            <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
                    transition duration-200 hover:bg-esce hover:text-white text-left" @click="expanded = ! expanded">
                 Informação do Estudante
             </button>
@@ -80,8 +80,8 @@
                     </button>
                     {{-- Text Area Placeholder --}}
                     <p x-show="expanded" x-collapse>
-                        <textarea name="ta{{ $index }}" class="border border-gray-500 p-2 w-full rounded-md"
-                                  rows="6" disabled></textarea>
+                        <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
+                                  class="border border-gray-500 p-2 w-full rounded-md" rows="6" disabled></textarea>
                     </p>
                 </div>
             @endforeach
@@ -99,7 +99,7 @@
 
                     <p x-show="expanded" x-collapse>
                         {{-- Text Area --}}
-                        <textarea wire:model="respostas.{{ $index }}" name="ta{{ $index }}"
+                        <textarea wire:model='respostas.{{ $index }}' name="ta{{ $index }}"
                                   class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
                                   rows="6"></textarea>
                         {{-- Submit Btn --}}
@@ -122,8 +122,15 @@
                 </button>
                 <p x-show="expanded" x-collapse>
                     @if($estado[0]->estado == 2 && $prof)
-                        <textarea name="obs" class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
-                                  rows="6"></textarea>
+                        <textarea wire:model="obs" name="obs" rows="6"
+                                  class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"></textarea>
+                        <select wire:model="apr" id="state" name="state" class="form-select appearance-none block w-full px-3 py-1.5
+                                bg-clip-padding bg-no-repeat rounded transition bg-zinc-200 dark:bg-zinc-900 dark:text-white
+                                ease-in-out m-0 focus:outline-none" required>
+                            <option selected>Escolha uma opção</option>
+                            <option value="true">Aprovado</option>
+                            <option value="false">Não Aprovado</option>
+                        </select>
                     @endif
                 </p>
             </div>
