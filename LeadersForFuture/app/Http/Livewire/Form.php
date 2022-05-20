@@ -19,6 +19,7 @@ class Form extends Component
     public $dadosForm = [];
     public $dadosCurso = [];
     public $obs;
+    public $apr;
 
     function mount($id)
     {
@@ -60,7 +61,7 @@ class Form extends Component
     {
         $allowed = false;
 
-        sleep(10);
+//        sleep(10);
 //        ddd('Stop Right There');
 
 //      Student Submission
@@ -94,14 +95,26 @@ class Form extends Component
         } elseif (Session::get('tipo') == 1) {
 
             $allowed = true;
+            $state = 0;
+
+            if ($this->apr == null) {
+                // TODO -> pop
+                ddd('Colocar aqui um pop');
+                return;
+            } elseif ($this->apr == 'true') {
+                $state = 1;
+            } else {
+                $state = 0;
+            }
 
             // Insert Observation
             // Form ID | Teacher ID | Observation Content | Approved
-            DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), $this->obs, 1]);
+            DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), $this->obs, $state]);
+
+            ddd("Descomentar o SP para alterar o estado e enviar o email" . $state);
+            // Updates form status
+//                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
         }
-
-
-//        sleep(1);
 
         if (!$allowed) {
             $error = "O utilizador não tem permissões para alterar este formulário";
@@ -131,10 +144,5 @@ class Form extends Component
                 trim($this->perguntas[$index]['id'])
             ]);
         }
-    }
-
-    public function teste()
-    {
-        ddd("teste123");
     }
 }

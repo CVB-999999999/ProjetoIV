@@ -124,6 +124,13 @@
                     @if($estado[0]->estado == 2 && $prof)
                         <textarea wire:model="obs" name="obs" rows="6"
                                   class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"></textarea>
+                        <select wire:model="apr" id="state" name="state" class="form-select appearance-none block w-full px-3 py-1.5
+                                bg-clip-padding bg-no-repeat rounded transition bg-zinc-200 dark:bg-zinc-900 dark:text-white
+                                ease-in-out m-0 focus:outline-none" required>
+                            <option selected>Escolha uma opção</option>
+                            <option value="true">Aprovado</option>
+                            <option value="false">Não Aprovado</option>
+                        </select>
                     @endif
                 </p>
             </div>
