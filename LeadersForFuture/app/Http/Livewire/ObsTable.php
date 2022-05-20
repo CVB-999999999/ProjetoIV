@@ -5,7 +5,6 @@ namespace App\Http\Livewire;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Session;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
@@ -61,6 +60,8 @@ final class ObsTable extends PowerGridComponent
         return $collection;
     }
 
+    public array $perPageValues = [0, 5, 10, 30, 50];
+
     /*
     |--------------------------------------------------------------------------
     |  Relationship Search
@@ -70,7 +71,7 @@ final class ObsTable extends PowerGridComponent
     */
     public function setUp(): void
     {
-        $this->showPerPage()
+        $this->showPerPage(5)
             ->showSearchInput()
             ->showRecordCount('full');
     }

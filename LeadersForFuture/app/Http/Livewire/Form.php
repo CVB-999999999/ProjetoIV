@@ -18,6 +18,7 @@ class Form extends Component
     public $dadosUsers = [];
     public $dadosForm = [];
     public $dadosCurso = [];
+    public $obs;
 
     function mount($id)
     {
@@ -73,21 +74,18 @@ class Form extends Component
                 if ($this->formID == $dados->id) {
 
                     $allowed = true;
-                    ddd("You shall not pass");
-                    // TODO -> Modificar os sps para verificar se já existem as respostas guardas
-                    // provavelmete usar o sp de guardar para guardar e manter o sps de alterar o estado
-                    // e apagar os sps de inserir respostas
 
                     // Updates DB with the answers
                     foreach ($this->perguntas as $index => $pergunta) {
-                        if ((($index + 1) < count($this->perguntas))) {
-                            DB::update("exec insertResposta2 ?, ?, ?", [$this->respostas[$index], trim($pergunta['id']), $this->formID]);
-                        } else {
-                            DB::update("exec insertResposta2 ?, ?, ?", [' ', trim($pergunta['id']), $this->formID]);
-                        }
+                        DB::update("exec saveResposta ?, ?, ?", [
+                            $this->formID,
+                            trim($this->respostas[$index]),
+                            trim($this->perguntas[$index]['id'])
+                        ]);
                     }
+                    ddd("Descomentar o SP para alterar o estado e enviar o email");
                     // Updates form status
-                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+//                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
 
                     break;
                 }
@@ -97,11 +95,9 @@ class Form extends Component
 
             $allowed = true;
 
-//            ddd("Not finished");
-
             // Insert Observation
-            // Form ID | Teacher ID | Observation Content | Aproved
-            DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), "jndfkjsdnffs jkfsfsdkjnsnf", 1]);
+            // Form ID | Teacher ID | Observation Content | Approved
+            DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), $this->obs, 1]);
         }
 
 

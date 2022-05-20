@@ -122,8 +122,8 @@
                 </button>
                 <p x-show="expanded" x-collapse>
                     @if($estado[0]->estado == 2 && $prof)
-                        <textarea name="obs" class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
-                                  rows="6"></textarea>
+                        <textarea wire:model="obs" name="obs" rows="6"
+                                  class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"></textarea>
                     @endif
                 </p>
             </div>
