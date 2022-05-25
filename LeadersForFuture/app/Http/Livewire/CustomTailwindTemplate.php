@@ -38,7 +38,7 @@ class CustomTailwindTemplate extends ThemeBase
             ->tr('border border-zinc-200 dark:border-zinc-900')
             ->th('px-2 pr-4 py-3 text-left text-xs font-medium text-esce tracking-wider whitespace-nowrap dark:text-esce ')
             ->tbody('text-zinc-800')
-            ->trBody('border border-zinc-200 dark:border-zinc-900 hover:bg-esce')
+            ->trBody('border border-zinc-200 dark:border-zinc-900 dark:hover:bg-zinc-600 hover:bg-zinc-300')
             ->tdBody('px-2 py-1 whitespace-nowrap dark:text-zinc-200')
             ->tdBodyTotalColumns('px-2 py-1 whitespace-nowrap dark:text-zinc-200 text-sm text-zinc-600 text-right space-y-2');
     }

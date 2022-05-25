@@ -16,13 +16,13 @@
 </head>
 
 <body class="flex flex-col h-screen justify-between bg-zinc-50 dark:bg-zinc-800">
-@if($user)
+@if(Session::get('tipo') != null)
     @include('components.navbar')
 @endif
 
 <div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
     <div class="md:flex w-full">
-        @if($user)
+        @if(Session::get('tipo') != null)
             @include('components.sidebar')
         @endif
 

@@ -34,11 +34,11 @@
 
             {{-- Sidebar Btns --}}
             {{-- Professor --}}
-            @if($prof)
+            @if(Session::get('tipo') == 1)
                 {{-- Para já não vai ter nada aqui --}}
             @endif
             {{-- Student --}}
-            @if($aluno)
+            @if(Session::get('tipo') == 2)
                 <a href="/form"
                    class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
                     Formulários
