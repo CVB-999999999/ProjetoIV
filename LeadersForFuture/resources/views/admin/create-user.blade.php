@@ -3,7 +3,7 @@
 
     <div class="w-full">
         <div class="relative mx-auto dark:text-white">
-            Herro
+            @livewire('user-create')
         </div>
     </div>
 @endsection
