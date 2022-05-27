@@ -35,4 +35,14 @@ Route::group(['middleware' => ['sessionCheck']], function () {
     // Form
     Route::get('/form', [FormController::class, 'formSelection'])->name('form');
     Route::get('/form/{id}', [FormController::class, 'form']);
+
+    // Admin
+    // Create Users
+    Route::get('/admin/users/create', function () {
+        return view('admin.create-user');
+    });
+    // View / Update / Delete users
+    Route::get('/admin/users', function () {
+        return view('admin.user');
+    });
 });
