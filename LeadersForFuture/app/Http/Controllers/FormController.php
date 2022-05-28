@@ -10,9 +10,12 @@ class FormController extends Controller
 {
 
     public function formSelection() {
-        $username = Session::get('user');
+        $id = Session::get('numero');
 
-        $forms = DB::select("exec buscaFormsDados ?", [$username]);
+//        $forms = DB::select("exec buscaFormsDados ?", [$username]);
+
+        $forms = DB::select("exec buscaTodosDadosForms ?", [$id]);
+//        ddd($forms);
 
         return view('forms.form-selection', ['forms' => $forms]);
     }

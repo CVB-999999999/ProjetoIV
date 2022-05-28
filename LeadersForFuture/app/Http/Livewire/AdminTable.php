@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridEloquent;
@@ -37,7 +38,7 @@ final class AdminTable extends PowerGridComponent
         foreach ($query as $q) {
 
             $collection->push([
-                'id' => $q->numero,
+                'id' => trim($q->numero),
                 'Nome' => $q->nome . ' ' . $q->apelido,
                 'Tipo' => $q->descricao,
                 'Email' => $q->email,
@@ -123,6 +124,18 @@ final class AdminTable extends PowerGridComponent
                 ->sortable()
                 ->searchable()
                 ->makeInputText('Email'),
+        ];
+    }
+
+    // Create an Action Button for ordering a dish.
+    public function actions(): array
+    {
+        return [
+            Button::add('btn')
+                ->caption('Ver mais')
+                ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
+                ->route('admin.users.info', ['id'=>'id'])
+                ->target('_self')
         ];
     }
 }

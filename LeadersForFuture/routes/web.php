@@ -41,7 +41,9 @@ Route::group(['middleware' => ['sessionCheck']], function () {
     // Create Users
     Route::get('/admin/users/create', [AdminController::class, 'userCreate']);
     // Manage Users
-    Route::get('/admin/users', [AdminController::class, 'userInfo']);
+    Route::get('/admin/users', [AdminController::class, 'userInfo'])
+        ->name('admin.users');
     // View Users Info
-    Route::get('/admin/users/{id}', [AdminController::class, 'userDetail']);
+    Route::get('/admin/users/{id}', [AdminController::class, 'userDetail'])
+        ->name('admin.users.info');;
 });

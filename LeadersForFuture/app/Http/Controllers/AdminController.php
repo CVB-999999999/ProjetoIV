@@ -7,18 +7,23 @@ use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    public function userCreate() {
+    public function userCreate()
+    {
         return view('admin.create-user');
     }
 
-    public function userInfo() {
+    public function userInfo()
+    {
         return view('admin.user');
     }
 
-    public function userDetail($id) {
+    public function userDetail($id)
+    {
 
         $user = DB::select("exec buscaUtiliz ?", [$id]);
 
-        return view('admin.user-detail', ['user' => $user]);
+        $forms = DB::select("exec buscaTodosDadosForms ?", [$id]);
+
+        return view('admin.user-detail', ['user' => $user, 'forms' => $forms]);
     }
 }

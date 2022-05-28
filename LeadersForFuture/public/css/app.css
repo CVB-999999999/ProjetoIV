@@ -1161,6 +1161,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(39 39 42 / var(--tw-bg-opacity));
 }
+.bg-zinc-300 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(212 212 216 / var(--tw-bg-opacity));
+}
 .bg-clip-padding {
   background-clip: padding-box;
 }
@@ -1817,6 +1821,11 @@ Ensure the default browser behavior of the `hidden` attribute.
     background-color: rgb(59 130 246 / var(--tw-bg-opacity));
   }
 
+  .dark\:bg-zinc-600 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(82 82 91 / var(--tw-bg-opacity));
+  }
+
   .dark\:text-esce {
     --tw-text-opacity: 1;
     color: rgb(210 39 48 / var(--tw-text-opacity));
@@ -2363,6 +2372,10 @@ Ensure the default browser behavior of the `hidden` attribute.
 
   .md\:pl-5 {
     padding-left: 1.25rem;
+  }
+
+  .md\:text-right {
+    text-align: right;
   }
 
   .md\:text-8xl {
