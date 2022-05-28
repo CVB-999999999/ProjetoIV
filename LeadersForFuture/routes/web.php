@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
@@ -38,11 +39,9 @@ Route::group(['middleware' => ['sessionCheck']], function () {
 
     // Admin
     // Create Users
-    Route::get('/admin/users/create', function () {
-        return view('admin.create-user');
-    });
-    // View / Update / Delete users
-    Route::get('/admin/users', function () {
-        return view('admin.user');
-    });
+    Route::get('/admin/users/create', [AdminController::class, 'userCreate']);
+    // Manage Users
+    Route::get('/admin/users', [AdminController::class, 'userInfo']);
+    // View Users Info
+    Route::get('/admin/users/{id}', [AdminController::class, 'userDetail']);
 });
