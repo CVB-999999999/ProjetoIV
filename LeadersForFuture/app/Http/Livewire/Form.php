@@ -20,10 +20,18 @@ class Form extends Component
     public $dadosCurso = [];
     public $obs;
     public $apr;
+    public $prof = false;
+    public $aluno = false;
 
     function mount($id)
     {
         $this->formID = $id;
+
+        if (Session::get('tipo') == 2) {
+            $this->aluno = true;
+        } elseif (Session::get('tipo') == 1) {
+            $this->prof = true;
+        }
     }
 
     public function render()

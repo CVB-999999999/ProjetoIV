@@ -21,12 +21,12 @@
                 @foreach($forms as $form)
 
                     {{-- Verify if project title has been displayed --}}
-                    @if(!($aux === $form->Pnome))
-                        <h2 class="text-center text-xl my-5"> {{ $form->Pnome }} </h2>
+                    @if(!($aux === $form->nome))
+                        <h2 class="text-center text-xl my-5"> {{ $form->nome }} </h2>
                         @php($i=0)
                     @endif
 
-                    @php($aux = $form->Pnome)
+                    @php($aux = $form->nome)
                     @php($i++)
 
                     {{-- card with link --}}
