@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use PowerComponents\LivewirePowerGrid\Column;
+use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
 use PowerComponents\LivewirePowerGrid\PowerGridEloquent;
 use PowerComponents\LivewirePowerGrid\PowerGridComponent;
@@ -79,7 +80,7 @@ final class FormTable extends PowerGridComponent
     {
         $this->showCheckBox()
             ->showPerPage()
-            ->showExportOption('download', ['excel', 'csv'])
+            ->showExportOption('download', ['pdf', 'csv'])
             ->showSearchInput();
     }
 
@@ -137,4 +138,15 @@ final class FormTable extends PowerGridComponent
 
         ];
     }
+    public function actions(): array
+    {
+        return [
+            Button::add('btn')
+                ->caption('Ver mais')
+                ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
+                ->route('prof.users.info', ['id'=>'id'])
+                ->target('_self')
+        ];
+    }
+    
 }

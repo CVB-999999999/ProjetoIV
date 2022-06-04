@@ -26,4 +26,5 @@ class AdminController extends Controller
 
         return view('admin.user-detail', ['user' => $user, 'forms' => $forms]);
     }
+    
 }
