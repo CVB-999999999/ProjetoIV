@@ -1,32 +1,38 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="w-full dark:bg-zinc-100 p-3 md:p-5">
-        {{-- Year Chart --}}
-        <div class="mx-auto mb-5">
-            <label id="yearChart"> Ano Letivo: </label>
-            <input class="p-2 w-24 md:w-fit rounded-md" type="text" name="yearChart" id="yearChartInput" placeholder="Ex: 2022">
-            <button onclick="updateChart()" class="bg-esce px-5 py-2 rounded-md mx-auto">Atualizar</button>
+    <div class="w-full p-3 md:p-5">
+        {{-- Year and semester selector --}}
+        <div class="mx-auto mb-5 items-center bg-zinc-100 px-5 py-3 rounded-md">
+            <div class="text-center">
+                {{-- School Year --}}
+                <label id="chartYear"> Ano Letivo: </label>
+                <input class="p-2 my-1 rounded-md" type="text" name="ChartYear" id="ChartYearInput"
+                       placeholder="Ex: 2022">
+                {{-- Semester --}}
+                <label id="detailedChartSemester"> Semestre: </label>
+                <select class="p-3 rounded-md" id="ChartSemesterSelect" name="ChartSemester">
+                    <option value="0" selected> 1º Semestre</option>
+                    <option value="1"> 2º Semestre</option>
+                </select>
+            </div>
+            <div class="text-center py-1">
+                {{-- Update Btn --}}
+                <button onclick="updateCharts()" class="bg-esce px-5 py-2 rounded-md">Atualizar</button>
+            </div>
         </div>
-
-        <div class="relative mx-auto dark:text-white">
-            <div id="chart" style="height: 300px;"></div>
-        </div>
-        {{-- Detailed Chart --}}
-        <div class="mx-auto mb-5">
-            <label id="detailedChartYear"> Ano Letivo: </label>
-            <input class="p-2 my-1 rounded-md" type="text" name="detailedChartYear" id="detailedChartYearInput"
-                   placeholder="Ex: 2022">
-            <label id="detailedChartSemester"> Semestre: </label>
-            <select class="p-3 rounded-md" id="detailedChartSemesterSelect" name="detailedChartSemester">
-                <option value="0" selected> 1º Semestre</option>
-                <option value="1"> 2º Semestre</option>
-            </select>
-            <button onclick="updateChart1()" class="bg-esce px-5 py-2 rounded-md">Atualizar</button>
-        </div>
-
-        <div class="relative mx-auto dark:text-white">
-            <div id="chart1" style="height: 300px;"></div>
+        {{-- Charts --}}
+        <div class="bg-zinc-100 px-5 py-3 rounded-md">
+            {{-- Yearly Chart --}}
+            <div class="relative mx-auto dark:text-white">
+                <h2 class="text-black text-2xl text-center"> Estado dos formulários por ano</h2>
+                <div id="chart" style="height: 300px;"></div>
+            </div>
+            {{-- Detailed Chart --}}
+            <div class="relative mx-auto dark:text-white">
+                <h2 class="text-black text-2xl text-center"> Estado dos formulários detalhado</h2>
+                <div id="chart1" style="height: 300px;"></div>
+            </div>
         </div>
     </div>
 
@@ -35,15 +41,10 @@
     <script src="https://unpkg.com/@chartisan/echarts/dist/chartisan_echarts.js"></script>
     <script>
         // Gets current school year
-        let date = new Date()
-        let year = date.getFullYear()
-        if(date.getMonth() < 8) {
-            year = year - 1
-        }
+        let year = getSchoolYear()
 
         // Puts the current year in the input
-        document.getElementById("yearChartInput").placeholder = year
-        document.getElementById("detailedChartYearInput").placeholder = year
+        document.getElementById("ChartYearInput").placeholder = year
 
         {{-- Year Chart Script --}}
         const chart = new Chartisan({
@@ -66,17 +67,38 @@
                 .datasets(['bar', 'bar']),
         });
 
-        function updateChart() {
-            let year = document.getElementById("yearChartInput").value;
+        // Return the current school year
+        function getSchoolYear() {
+            let date = new Date()
+            let year = date.getFullYear()
+            if (date.getMonth() < 8) {
+                year = year - 1
+            }
+            return year
+        }
 
+        function updateCharts() {
+
+            // Gets the year and semester from the fields
+            let year = document.getElementById("ChartYearInput").value;
+            let e = document.getElementById("ChartSemesterSelect");
+            let sem = e.options[e.selectedIndex].value;
+
+            // If year field is empty uses current year
+            if (year === "") {
+                year = getSchoolYear()
+            }
+
+            // Updates charts
+            updateChart(year)
+            updateChart1(year, sem)
+        }
+
+        function updateChart(year) {
             chart.update({url: "@chart('project_status')" + "?year=" + year})
         }
 
-        function updateChart1() {
-            let year = document.getElementById("detailedChartYearInput").value;
-            let e = document.getElementById("detailedChartSemesterSelect");
-            let sem = e.options[e.selectedIndex].value;
-
+        function updateChart1(year, sem) {
             chart1.update({url: "@chart('status_year')" + "?year=" + year + "-" + sem})
         }
     </script>
