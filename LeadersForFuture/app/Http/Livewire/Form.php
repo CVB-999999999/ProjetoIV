@@ -88,8 +88,8 @@ class Form extends Component
 
                     // Verify if a field is empty
                     $mpt = false;
-                    foreach ($this->respostas as $r) {
-                        if ($r == "" || $r == null || empty($r)) {
+                    foreach ($this->perguntas as $index=>$r) {
+                        if ($this->respostas[$index] == "" || empty($this->respostas[$index])) {
                             $mpt = true;
                         }
                     }
