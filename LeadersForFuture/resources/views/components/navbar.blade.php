@@ -25,6 +25,13 @@
 
             {{-- DropDown --}}
             <div @click.away="open = false" class="relative z-40" x-data="{ open: false }">
+
+                {{-- Btns that only show in nav when low width --}}
+                <div class="md:hidden">
+                    @include('components.nav-btns')
+                </div>
+
+                {{-- Profile Options --}}
                 <button @click="open = !open"
                         class="flex flex-row items-center mt-2 font-semibold md:inline md:mt-0 md:ml-4 block py-2.5 px-4
                             rounded transition duration-200 hover:bg-esce hover:text-white">
