@@ -3,8 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Illuminate\Support\Facades\Session;
-
+use ConsoleTVs\Charts\Registrar as Charts;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,22 +22,13 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Charts $charts)
     {
-        // 
-        /*
-
-        $aluno = false;
-        $prof = false;
-        $user = false;
-
-        
-
-        
-        */
-        
-        
-        
-        
+        $charts->register([
+            \App\Charts\SampleChart::class,
+            \App\Charts\ProjectStatus::class,
+            \App\Charts\StudentCount::class,
+            \App\Charts\StatusYear::class
+        ]);
     }
 }

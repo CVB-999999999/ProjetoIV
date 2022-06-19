@@ -26,5 +26,9 @@ class AdminController extends Controller
 
         return view('admin.user-detail', ['user' => $user, 'forms' => $forms]);
     }
-    
+
+    public function stats()
+    {
+        return view('admin.stats');
+    }
 }

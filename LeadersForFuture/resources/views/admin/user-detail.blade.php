@@ -28,7 +28,7 @@
             <h2 class="dark:text-white text-2xl text-center my-5"> Formulários</h2>
 
             <div class="bg-zinc-200 dark:bg-zinc-700 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10 md:m-10">
-                <button class="block bg-esce px-5 py-2 rounded-md text-white mx-auto"> Inscrever num Projeto</button>
+{{--                <button class="block bg-esce px-5 py-2 rounded-md text-white mx-auto"> Inscrever num Projeto</button>--}}
 
                 @php($aux = "")
 
@@ -62,7 +62,7 @@
 
                             <div>
                                 <p>Ano Letivo: {{ $form->ano_letivo }}</p>
-                                <p> {{ $form->ano_curricular }}ºano {{ $form->semestre + 1 }}º semestre</p>
+                                <p> {{ $form->ano_curricular }}º ano {{ $form->semestre + 1 }}º semestre</p>
                             </div>
 
                             <div class="md:text-right">

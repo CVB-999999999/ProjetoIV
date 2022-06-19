@@ -138,11 +138,15 @@
       <excludeFolder url="file://$MODULE_DIR$/LeadersForFuture/vendor/phar-io/manifest" />
       <excludeFolder url="file://$MODULE_DIR$/LeadersForFuture/vendor/phar-io/version" />
       <excludeFolder url="file://$MODULE_DIR$/LeadersForFuture/vendor/wire-elements/modal" />
+      <excludeFolder url="file://$MODULE_DIR$/LeadersForFuture/vendor/chartisan/php" />
+      <excludeFolder url="file://$MODULE_DIR$/LeadersForFuture/vendor/consoletvs/charts" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="@alpinejs/collapse" level="application" />
     <orderEntry type="library" name="alpinejs" level="application" />
     <orderEntry type="library" name="bootstrap-icons" level="application" />
+    <orderEntry type="library" name="@chartisan/echarts" level="application" />
+    <orderEntry type="library" name="echarts" level="application" />
   </component>
 </module>
