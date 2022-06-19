@@ -92,9 +92,11 @@ class Form extends Component
                             trim($this->perguntas[$index]['id'])
                         ]);
                     }
-                    ddd("Descomentar o SP para alterar o estado e enviar o email");
+                    $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
                     // Updates form status
 //                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+
+                    $this->emit("openModal", "success", ["message" => 'Formulário submetido com sucesso!']);
 
                     break;
                 }
@@ -103,11 +105,11 @@ class Form extends Component
         } elseif (Session::get('tipo') == 1) {
 
             $allowed = true;
-            $state = 0;
 
+            // Form status selection
             if ($this->apr == null) {
-                // TODO -> pop
-                ddd('Colocar aqui um pop');
+                // None selected
+                $this->emit("openModal", "error1", ["message" => 'O campo "Estado do Formulário é um campo obrigatorio!"']);
                 return;
             } elseif ($this->apr == 'true') {
                 $state = 1;
@@ -119,8 +121,8 @@ class Form extends Component
             // Form ID | Teacher ID | Observation Content | Approved
             DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), $this->obs, $state]);
 
-            ddd("Descomentar o SP para alterar o estado e enviar o email" . $state);
-/*
+            $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
+            /*
             // Form Approved
             if ($this->apr == 'true') {
                 DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
@@ -128,12 +130,14 @@ class Form extends Component
             } else {
                 DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
             }*/
+
+            $this->emit("openModal", "success", ["message" => 'Observação submetida com sucesso!']);
         }
 
         if (!$allowed) {
             $error = "O utilizador não tem permissões para alterar este formulário";
-//            $this->dispatchBrowserEvent('noPermission', ['error' => $error]);
-            ddd('Não tem permissões');
+
+            $this->emit("openModal", "error1", ["message" => $error]);
         }
 
     }
@@ -146,16 +150,28 @@ class Form extends Component
     // -----------------------------------------------------------------------------------------------------------------
     public function save($index)
     {
-//        ddd(trim($this->perguntas[$index]['id']));
+//        ddd($this->perguntas[$index]);
 //        ddd($this->respostas[$index]);
 //        ddd($this->formID);
 
         if (Session::get('tipo') == 2) {
 
+//            sleep(10);
+
             DB::update("exec saveResposta ?, ?, ?", [
                 $this->formID,
                 trim($this->respostas[$index]),
                 trim($this->perguntas[$index]['id'])
+            ]);
+
+            // Open Success Popup
+            $this->emit("openModal", "success", [
+                "message" => 'A resposta ao campo número ' . $index + 1 . ' foi guardada com sucesso!'
+            ]);
+        } else {
+            // Open Error Popup
+            $this->emit("openModal", "error1", [
+                "message" => "O utilizador não tem permissões para efetuar alterações"
             ]);
         }
     }
