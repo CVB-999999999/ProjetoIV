@@ -6,6 +6,7 @@ use Livewire\Component;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use function Livewire\str;
 
 class Form extends Component
 {
@@ -22,6 +23,7 @@ class Form extends Component
     public $apr;
     public $prof = false;
     public $aluno = false;
+    public $sure = false;
 
     function mount($id)
     {
@@ -83,6 +85,22 @@ class Form extends Component
                 if ($this->formID == $dados->id) {
 
                     $allowed = true;
+
+                    // Verify if a field is empty
+                    $mpt = false;
+                    foreach ($this->respostas as $r) {
+                        if ($r == "" || $r == null || empty($r)) {
+                            $mpt = true;
+                        }
+                    }
+                    if ($mpt && !$this->sure) {
+                        $this->emit("openModal", "warn", [
+                            "message" => 'Existe pelo menos um campo vazio no formulário! Na próxima vez que tentar submeter o formulário este aviso não irá aparecer.'
+                        ]);
+
+                        $this->sure = true;
+                        return;
+                    }
 
                     // Updates DB with the answers
                     foreach ($this->perguntas as $index => $pergunta) {
