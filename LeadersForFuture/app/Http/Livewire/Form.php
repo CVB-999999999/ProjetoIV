@@ -6,12 +6,9 @@ use Livewire\Component;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use function Livewire\str;
 
 class Form extends Component
 {
-    /*public $form;
-    public $disciplinas;*/
     public $perguntas;
     public $respostas = [];
     public $formID;
@@ -25,10 +22,13 @@ class Form extends Component
     public $aluno = false;
     public $sure = false;
 
+    // TODO -> DOWNLOAD DO PDF
+
     function mount($id)
     {
         $this->formID = $id;
 
+        // To make life easy in the form
         if (Session::get('tipo') == 2) {
             $this->aluno = true;
         } elseif (Session::get('tipo') == 1) {
@@ -55,8 +55,6 @@ class Form extends Component
             array_push($this->respostas, $resposta->Resposta);
         }
 
-//        ddd($this->respostas);
-
         // Creates the page with Student info
         return view('livewire.form');
     }
@@ -71,9 +69,6 @@ class Form extends Component
     {
         $allowed = false;
 
-//        sleep(10);
-//        ddd('Stop Right There');
-
 //      Student Submission
         if (Session::get('tipo') == 2) {
 
@@ -87,12 +82,17 @@ class Form extends Component
                     $allowed = true;
 
                     // Verify if a field is empty
+                    // Only runs the first time the page loads
                     $mpt = false;
-                    foreach ($this->perguntas as $index=>$r) {
-                        if ($this->respostas[$index] == "" || empty($this->respostas[$index])) {
-                            $mpt = true;
+                    if (!$this->sure) {
+                        foreach ($this->perguntas as $index => $r) {
+                            if ($this->respostas[$index] == "" || empty($this->respostas[$index])) {
+                                $mpt = true;
+                            }
                         }
                     }
+                    // Sends the warning only once
+                    // Emits the warning
                     if ($mpt && !$this->sure) {
                         $this->emit("openModal", "warn", [
                             "message" => 'Existe pelo menos um campo vazio no formulário! Na próxima vez que tentar submeter o formulário este aviso não irá aparecer.'
@@ -129,8 +129,10 @@ class Form extends Component
                 // None selected
                 $this->emit("openModal", "error1", ["message" => 'O campo "Estado do Formulário é um campo obrigatorio!"']);
                 return;
+                // Approved
             } elseif ($this->apr == 'true') {
                 $state = 1;
+                // Not approved
             } else {
                 $state = 0;
             }
@@ -152,6 +154,7 @@ class Form extends Component
             $this->emit("openModal", "success", ["message" => 'Observação submetida com sucesso!']);
         }
 
+        // No permissions
         if (!$allowed) {
             $error = "O utilizador não tem permissões para alterar este formulário";
 
@@ -168,20 +171,14 @@ class Form extends Component
     // -----------------------------------------------------------------------------------------------------------------
     public function save($index)
     {
-//        ddd($this->perguntas[$index]);
-//        ddd($this->respostas[$index]);
-//        ddd($this->formID);
-
+        // Verify if its a student tring to save
         if (Session::get('tipo') == 2) {
-
-//            sleep(10);
-
+            // Save the answer
             DB::update("exec saveResposta ?, ?, ?", [
                 $this->formID,
                 trim($this->respostas[$index]),
                 trim($this->perguntas[$index]['id'])
             ]);
-
             // Open Success Popup
             $this->emit("openModal", "success", [
                 "message" => 'A resposta ao campo número ' . $index + 1 . ' foi guardada com sucesso!'
