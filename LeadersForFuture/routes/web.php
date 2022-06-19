@@ -49,4 +49,6 @@ Route::group(['middleware' => ['sessionCheck']], function () {
     // Admin Stats
     Route::get('/admin/stats', [AdminController::class, 'stats'])
         ->name('admin.stats');
+    Route::get('/prof/users/{id}', [AdminController::class, 'userDetail'])
+        ->name('prof.users.info');;
 });
