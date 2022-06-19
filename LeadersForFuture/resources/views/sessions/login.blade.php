@@ -9,16 +9,15 @@
         </div>
 
         {{-- Middle Card Login --}}
-        <div class="md:grid grid-cols-8 mx-auto align-items-center">
+        <div class="md:grid grid-cols-8 mx-auto align-items-center mb-20 mx-3 ">
             <div class="col-start-3 col-span-4 bg-zinc-100 p-2 md:p-8 rounded-md">
                 <div class="md:grid grid-cols-2 mx-auto align-items-center">
-                    <div class="">
+                    <div class="grid grid-cols-1 content-center">
                         {{-- Logo --}}
-                        <img class="p-1 md:pt-10 md:px-5" src="{{ URL('images/esce.png') }}" alt="ESCE Logo">
-                        {{-- TODO ^^^^^^^^^ Melhorar o posicionamento da imagem que está muito mau assim ^^^^^^^^^^ --}}
+                        <img class="p-1 text-center px-5" src="{{ URL('images/esce.png') }}" alt="ESCE Logo">
                     </div>
                     {{-- Form --}}
-                    <div class="md:border-l-2 md:pl-5 border-esce">
+                    <div class="md:border-l-2 md:pl-5 border-esce mx-3 md:mx-0">
                         @livewire('login')
                     </div>
                 </div>

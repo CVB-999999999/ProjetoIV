@@ -9,8 +9,6 @@ use Illuminate\Support\Facades\Session;
 
 class Form extends Component
 {
-    /*public $form;
-    public $disciplinas;*/
     public $perguntas;
     public $respostas = [];
     public $formID;
@@ -22,11 +20,15 @@ class Form extends Component
     public $apr;
     public $prof = false;
     public $aluno = false;
+    public $sure = false;
+
+    // TODO -> DOWNLOAD DO PDF
 
     function mount($id)
     {
         $this->formID = $id;
 
+        // To make life easy in the form
         if (Session::get('tipo') == 2) {
             $this->aluno = true;
         } elseif (Session::get('tipo') == 1) {
@@ -53,8 +55,6 @@ class Form extends Component
             array_push($this->respostas, $resposta->Resposta);
         }
 
-//        ddd($this->respostas);
-
         // Creates the page with Student info
         return view('livewire.form');
     }
@@ -69,9 +69,6 @@ class Form extends Component
     {
         $allowed = false;
 
-//        sleep(10);
-//        ddd('Stop Right There');
-
 //      Student Submission
         if (Session::get('tipo') == 2) {
 
@@ -84,6 +81,27 @@ class Form extends Component
 
                     $allowed = true;
 
+                    // Verify if a field is empty
+                    // Only runs the first time the page loads
+                    $mpt = false;
+                    if (!$this->sure) {
+                        foreach ($this->perguntas as $index => $r) {
+                            if ($this->respostas[$index] == "" || empty($this->respostas[$index])) {
+                                $mpt = true;
+                            }
+                        }
+                    }
+                    // Sends the warning only once
+                    // Emits the warning
+                    if ($mpt && !$this->sure) {
+                        $this->emit("openModal", "warn", [
+                            "message" => 'Existe pelo menos um campo vazio no formulário! Na próxima vez que tentar submeter o formulário este aviso não irá aparecer.'
+                        ]);
+
+                        $this->sure = true;
+                        return;
+                    }
+
                     // Updates DB with the answers
                     foreach ($this->perguntas as $index => $pergunta) {
                         DB::update("exec saveResposta ?, ?, ?", [
@@ -92,9 +110,11 @@ class Form extends Component
                             trim($this->perguntas[$index]['id'])
                         ]);
                     }
-                    ddd("Descomentar o SP para alterar o estado e enviar o email");
+                    $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
                     // Updates form status
 //                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+
+                    $this->emit("openModal", "success", ["message" => 'Formulário submetido com sucesso!']);
 
                     break;
                 }
@@ -103,14 +123,16 @@ class Form extends Component
         } elseif (Session::get('tipo') == 1) {
 
             $allowed = true;
-            $state = 0;
 
+            // Form status selection
             if ($this->apr == null) {
-                // TODO -> pop
-                ddd('Colocar aqui um pop');
+                // None selected
+                $this->emit("openModal", "error1", ["message" => 'O campo "Estado do Formulário é um campo obrigatorio!"']);
                 return;
+                // Approved
             } elseif ($this->apr == 'true') {
                 $state = 1;
+                // Not approved
             } else {
                 $state = 0;
             }
@@ -119,8 +141,8 @@ class Form extends Component
             // Form ID | Teacher ID | Observation Content | Approved
             DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), $this->obs, $state]);
 
-            ddd("Descomentar o SP para alterar o estado e enviar o email" . $state);
-/*
+            $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
+            /*
             // Form Approved
             if ($this->apr == 'true') {
                 DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
@@ -128,12 +150,15 @@ class Form extends Component
             } else {
                 DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
             }*/
+
+            $this->emit("openModal", "success", ["message" => 'Observação submetida com sucesso!']);
         }
 
+        // No permissions
         if (!$allowed) {
             $error = "O utilizador não tem permissões para alterar este formulário";
-//            $this->dispatchBrowserEvent('noPermission', ['error' => $error]);
-            ddd('Não tem permissões');
+
+            $this->emit("openModal", "error1", ["message" => $error]);
         }
 
     }
@@ -146,16 +171,22 @@ class Form extends Component
     // -----------------------------------------------------------------------------------------------------------------
     public function save($index)
     {
-//        ddd(trim($this->perguntas[$index]['id']));
-//        ddd($this->respostas[$index]);
-//        ddd($this->formID);
-
+        // Verify if its a student tring to save
         if (Session::get('tipo') == 2) {
-
+            // Save the answer
             DB::update("exec saveResposta ?, ?, ?", [
                 $this->formID,
                 trim($this->respostas[$index]),
                 trim($this->perguntas[$index]['id'])
+            ]);
+            // Open Success Popup
+            $this->emit("openModal", "success", [
+                "message" => 'A resposta ao campo número ' . $index + 1 . ' foi guardada com sucesso!'
+            ]);
+        } else {
+            // Open Error Popup
+            $this->emit("openModal", "error1", [
+                "message" => "O utilizador não tem permissões para efetuar alterações"
             ]);
         }
     }
