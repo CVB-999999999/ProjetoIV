@@ -4,13 +4,13 @@
     {{-- Semester and year selector --}}
     <div class="w-full min-h-screen">
         {{-- Professor --}}
-        @if(Session::get('tipo') == 1)
+        @if(Auth::user()->id_tipoUtilizador == 1)
         <div class="w-full p-3">
             @livewire('form-table')
         </div>
         @endif
         {{-- Student --}}
-        @if(Session::get('tipo') == 2)
+        @if(Auth::user()->id_tipoUtilizador == 2)
             {{-- Para já não vai ter nada aqui --}}
         @endif
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
@@ -20,7 +21,7 @@ class Menu extends Component
     public function mount()
     {
 
-        if (!Session::has('user')) {
+        if (!Auth::check()) {
 
             return redirect()->to('/login');
 
@@ -30,8 +31,8 @@ class Menu extends Component
     public function render()
     {
 
-        $utilizador = Session::get('user');
-        $teste = Session::get('tipo');
+        $utilizador = Auth::user()->username;
+        $teste = Auth::user()->id_tipoUtilizador;
 
         if ($teste == 2) {
 

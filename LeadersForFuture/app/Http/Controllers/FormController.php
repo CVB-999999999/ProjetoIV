@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
@@ -10,7 +11,7 @@ class FormController extends Controller
 {
 
     public function formSelection() {
-        $id = Session::get('numero');
+        $id = Auth::user()->numero;
 
 //        $forms = DB::select("exec buscaFormsDados ?", [$username]);
 

@@ -46,14 +46,14 @@ class Login extends Component
     // Login - Checks if login and password are correct
     //------------------------------------------------------------------------------------------------------------------
     public function login()
-    {
+    {/*
         // Uses a SP to querry the DB with the username and password
         $this->user = DB::select("exec buscaUser_username_pw ?, ?", [$this->username, $this->password]);
 
         // Verifies if the SP has return anything
         if (empty($this->user)) {
             // Changes the value of verifier to false
-            // Basically means if password or email is correct
+            // Basically means if password or email is incorrect
             $this->verifier = false;
 
         } else {
@@ -65,6 +65,23 @@ class Login extends Component
             Session::put('numero', $this->user[0]->numero);
 
             return redirect()->to('/');
+        }*/
+
+
+        $user = \App\Models\User::where('username', $this->username)->where('password', $this->password)->first();
+
+        if ($user) {
+            Auth::login($user);
+
+            if(Auth::check()) {
+                return redirect()->to('/');
+            }
         }
+
+        // Changes the value of verifier to false
+        // Basically means if password or email is incorrect
+        $this->verifier = false;
+
+        return back();
     }
 }

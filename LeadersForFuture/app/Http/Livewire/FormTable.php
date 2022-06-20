@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use PowerComponents\LivewirePowerGrid\Column;
 use PowerComponents\LivewirePowerGrid\Button;
 use PowerComponents\LivewirePowerGrid\PowerGrid;
@@ -30,23 +31,27 @@ final class FormTable extends PowerGridComponent
     | Provides data to your Table using a Model or Collection
     |
     */
-    public $semestre = 1 ;
+    public $semestre = 1;
     public $formularios = "";
     public $anoLetivo;
 
     public function datasource(): ?Collection
     {
         $collection = collect();
-        $profnumber = Session::get('numero');
-        $query = DB::table("Utilizador_Projecto")->where('numero_utilizador',$profnumber)->get();
-        foreach ($query as $queryresult){
-            $query2 = DB::table("Utilizador_Projecto")->where('id_projecto',$queryresult->id_projecto)->get();
-           foreach($query2 as $query2result){
-                $query3 = DB::table("Utilizador")->where('numero',$query2result->numero_utilizador)->pluck('nome');
-                if($query2result->numero_utilizador != $profnumber){
+        $profnumber = Auth::user()->numero;
+
+        $query = DB::table("Utilizador_Projecto")->where('numero_utilizador', $profnumber)->get();
+
+        foreach ($query as $queryresult) {
+            $query2 = DB::table("Utilizador_Projecto")->where('id_projecto', $queryresult->id_projecto)->get();
+
+            foreach ($query2 as $query2result) {
+                $query3 = DB::table("Utilizador")->where('numero', $query2result->numero_utilizador)->pluck('nome');
+
+                if ($query2result->numero_utilizador != $profnumber) {
                     $collection->push(['id' => $query2result->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]);
                 }
-           }
+            }
         }
         //dd($query[0]);
         /*for($i=0;$i<2;$i++){
@@ -109,7 +114,7 @@ final class FormTable extends PowerGridComponent
     |
 
     */
-     /**
+    /**
      * PowerGrid Columns.
      *
      * @return array<int, Column>
@@ -138,15 +143,16 @@ final class FormTable extends PowerGridComponent
 
         ];
     }
+
     public function actions(): array
     {
         return [
             Button::add('btn')
                 ->caption('Ver mais')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
-                ->route('prof.users.info', ['id'=>'id'])
+                ->route('prof.users.info', ['id' => 'id'])
                 ->target('_self')
         ];
     }
-    
+
 }

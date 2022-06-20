@@ -25,7 +25,8 @@ class UserCreate extends Component
         $user = DB::selectOne("exec buscaUtiliz ?", [$this->mNumber]);
 
         if ((!empty($user) || !$user == null) || ($this->typeA == null)) {
-            ddd("ERRO: Utilizador já existe");
+            $this->emit("openModal", "error1", ["message" => 'Utilizador já existe']);
+            return back();
         } else {
             $username = explode("@", $this->emailA);
 

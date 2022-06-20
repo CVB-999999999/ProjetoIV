@@ -16,15 +16,16 @@
 </head>
 
 <body class="flex flex-col h-screen justify-between bg-zinc-50 dark:bg-zinc-800">
-@if(Session::get('tipo') != null)
+@auth()
     @include('components.navbar')
-@endif
+@endauth
 
 <div class="bg-zinc-50 dark:bg-zinc-800 mb-auto">
     <div class="md:flex w-full">
-        @if(Session::get('tipo') != null)
+
+        @auth()
             @include('components.sidebar')
-        @endif
+        @endauth
 
         @yield('content')
     </div>
