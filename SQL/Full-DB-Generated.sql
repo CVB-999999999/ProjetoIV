@@ -272,6 +272,7 @@ create table Utilizador
     id_tipoUtilizador nchar(20) not null,
     email             nvarchar(50),
     username          nvarchar(50),
+    remember_token    nvarchar(100),
     constraint PK_Utilizador
         primary key (numero),
     constraint [Tipo_Utilizador->Utilizador]
