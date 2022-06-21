@@ -272,6 +272,7 @@ create table Utilizador
     id_tipoUtilizador nchar(20) not null,
     email             nvarchar(50),
     username          nvarchar(50),
+    remember_token    nvarchar(100),
     constraint PK_Utilizador
         primary key (numero),
     constraint [Tipo_Utilizador->Utilizador]
@@ -354,7 +355,7 @@ create table tempExecBuscaFormularios
 )
 go
 
-CREATE PROCEDURE [dbo].[alterarEstadoForm] @estadoNovo nchar(10), @idForm nchar(50)
+CREATE PROCEDURE [dbo].[alterarEstadoForm] @estadoNovo nvarchar(10), @idForm nchar(50)
 AS
 UPDATE Formulario SET estado = @estadoNovo where id = @idForm
 go

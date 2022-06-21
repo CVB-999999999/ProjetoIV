@@ -21,15 +21,10 @@ class Login extends Component
     //------------------------------------------------------------------------------------------------------------------
     public function mount()
     {
-        if (Session::has('user')) {
-            return redirect()->to('/menu');
-        }
-
-        $teste = Session::get('tipo');
-
-        if ($teste == 2) {
+        // To make life easy in the form
+        if (Auth::user()->id_tipoUtilizador == 2) {
             $this->aluno = true;
-        } elseif ($teste == 1) {
+        } elseif (Auth::user()->id_tipoUtilizador == 1) {
             $this->prof = true;
         }
     }
@@ -47,24 +42,23 @@ class Login extends Component
     //------------------------------------------------------------------------------------------------------------------
     public function login()
     {
-        // Uses a SP to querry the DB with the username and password
-        $this->user = DB::select("exec buscaUser_username_pw ?, ?", [$this->username, $this->password]);
+        // Creates the user object
+        $user = \App\Models\User::where('username', $this->username)->where('password', $this->password)->first();
 
-        // Verifies if the SP has return anything
-        if (empty($this->user)) {
-            // Changes the value of verifier to false
-            // Basically means if password or email is correct
-            $this->verifier = false;
+        // Tries to authenticate
+        if ($user) {
+            Auth::login($user);
 
-        } else {
-            $name = $this->user[0]->nome . $this->user[0]->apelido;
-
-            Session::put('user', $this->username);
-            Session::put('name', $name);
-            Session::put('tipo', $this->user[0]->tipo);
-            Session::put('numero', $this->user[0]->numero);
-
-            return redirect()->to('/');
+            // Autentication complete
+            if(Auth::check()) {
+                return redirect()->to('/');
+            }
         }
+
+        // Changes the value of verifier to false
+        // Basically means if password or email is incorrect
+        $this->verifier = false;
+
+        return back();
     }
 }

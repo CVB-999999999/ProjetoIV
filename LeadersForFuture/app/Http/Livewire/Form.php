@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 use Illuminate\Support\Facades\DB;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class Form extends Component
 {
+    // Data to be access in the livewire form
     public $perguntas;
     public $respostas = [];
     public $formID;
@@ -29,9 +31,9 @@ class Form extends Component
         $this->formID = $id;
 
         // To make life easy in the form
-        if (Session::get('tipo') == 2) {
+        if (Auth::user()->id_tipoUtilizador == 2) {
             $this->aluno = true;
-        } elseif (Session::get('tipo') == 1) {
+        } elseif (Auth::user()->id_tipoUtilizador == 1) {
             $this->prof = true;
         }
     }
@@ -51,6 +53,22 @@ class Form extends Component
         // Gets course data
         $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
 
+        // Section to verify if user has peermission to access the form
+        $found = false;
+
+        foreach ($this->dadosUsers as $d) {
+            if ($d->numero == Auth::user()->numero) {
+                $found = true;
+                break;
+            }
+        }
+
+        // User does not have permission to access the form
+        if (!$found) {
+            return view ('livewire.no-permission');
+        }
+
+        // Reformats the Respostas array
         foreach ($respostas as $resposta) {
             array_push($this->respostas, $resposta->Resposta);
         }
@@ -70,11 +88,11 @@ class Form extends Component
         $allowed = false;
 
 //      Student Submission
-        if (Session::get('tipo') == 2) {
+        if (Auth::user()->id_tipoUtilizador == 2) {
 
             // Verify if user owns the form
             // Gets all forms that the user owns and compares with current forms id
-            $dadosF = DB::select("exec buscaFormsDados ?", [Session::get('user')]);
+            $dadosF = DB::select("exec buscaFormsDados ?", [Auth::user()->username]);
 
             foreach ($dadosF as $dados) {
                 if ($this->formID == $dados->id) {
@@ -120,7 +138,7 @@ class Form extends Component
                 }
             }
 //        Teacher Submission
-        } elseif (Session::get('tipo') == 1) {
+        } elseif (Auth::user()->id_tipoUtilizador == 1) {
 
             $allowed = true;
 
@@ -139,7 +157,7 @@ class Form extends Component
 
             // Insert Observation
             // Form ID | Teacher ID | Observation Content | Approved
-            DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Session::get('numero'), $this->obs, $state]);
+            DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Auth::user()->numero, $this->obs, $state]);
 
             $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
             /*
@@ -172,7 +190,7 @@ class Form extends Component
     public function save($index)
     {
         // Verify if its a student tring to save
-        if (Session::get('tipo') == 2) {
+        if (Auth::user()->id_tipoUtilizador == 2) {
             // Save the answer
             DB::update("exec saveResposta ?, ?, ?", [
                 $this->formID,

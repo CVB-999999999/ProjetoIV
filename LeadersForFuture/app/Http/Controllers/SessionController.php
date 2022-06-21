@@ -3,16 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
-    public function logout()
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Logout
+    // --- --- Performs the logout
+    // -----------------------------------------------------------------------------------------------------------------
+    public function logout(Request $request)
     {
-        session()->flush();
+        Auth::logout();
 
-        return redirect()->to('/login');
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/');
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Login
+    // --- --- Return the Login View
+    // -----------------------------------------------------------------------------------------------------------------
     public function login()
     {
         return view('sessions.login');

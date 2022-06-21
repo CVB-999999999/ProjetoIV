@@ -1,16 +1,16 @@
 {{-- Professor --}}
-@if(Session::get('tipo') == 1)
-    {{-- Para já não vai ter nada aqui --}}
+@if(Auth::user()->id_tipoUtilizador == 1)
+{{--     Para já não vai ter nada aqui--}}
 @endif
 {{-- Student --}}
-@if(Session::get('tipo') == 2)
+@if(Auth::user()->id_tipoUtilizador == 2)
     <a href="/form"
        class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
         Formulários
     </a>
 @endif
 {{-- Admin --}}
-@if(Session::get('tipo') == 3)
+@if(Auth::user()->id_tipoUtilizador == 3)
     <a href="/admin/users/create"
        class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
         Criar Utilizadores

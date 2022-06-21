@@ -4,7 +4,6 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FormController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Session;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,41 +16,50 @@ use Illuminate\Support\Facades\Session;
 |
 */
 
-// TODO -> Middleware para verificar o tipo de utilizador e se tem acesso ao form
+// Session
+// Login
+Route::get('/login', [SessionController::class, 'login'])
+    ->name('login')
+    ->middleware('guest');
+// Logout
+Route::get('/logout', [SessionController::class, 'logout'])
+    ->middleware('auth');
 
-Route::group(['middleware' => ['sessionCheck']], function () {
+// Home Page
+Route::get('/', function () {
+    return view('home');
+})  ->name('home')
+    ->middleware('auth');
 
-    // Session
-    Route::get('/login', [SessionController::class, 'login'])->name('login');
-    Route::get('/logout', [SessionController::class, 'logout']);
-    // Home
-    Route::get('/', function () {
+// Form Stuff
+// Form Selection
+Route::get('/form', [FormController::class, 'formSelection'])
+    ->name('form')
+    ->middleware('hasPermission:2');
+// Form Page
+Route::get('/form/{id}', [FormController::class, 'form'])
+    ->middleware(['auth']);
 
-        if (Session::get('user') == null) {
-            return redirect('login');
-        }
+// Admin
+// Create Users
+Route::get('/admin/users/create', [AdminController::class, 'userCreate'])
+    ->middleware('hasPermission:3');
+// Manage Users
+Route::get('/admin/users', [AdminController::class, 'userInfo'])
+    ->name('admin.users')
+    ->middleware('hasPermission:3');
+// View Users Info
+Route::get('/admin/users/{id}', [AdminController::class, 'userDetail'])
+    ->name('admin.users.info')
+    ->middleware('hasPermission:3');
+// Admin Stats
+Route::get('/admin/stats', [AdminController::class, 'stats'])
+    ->name('admin.stats')
+    ->middleware('hasPermission:3');
 
-        return view('home');
-    });
-    // Form
-    Route::get('/form', [FormController::class, 'formSelection'])->name('form');
-    Route::get('/form/{id}', [FormController::class, 'form']);
+// Professor
+// Student Info
+Route::get('/prof/users/{id}', [AdminController::class, 'userDetail'])
+    ->name('prof.users.info')
+    ->middleware('hasPermission:1');
 
-    // Admin
-    // Create Users
-    Route::get('/admin/users/create', [AdminController::class, 'userCreate']);
-    // Manage Users
-    Route::get('/admin/users', [AdminController::class, 'userInfo'])
-        ->name('admin.users');
-    // View Users Info
-    Route::get('/admin/users/{id}', [AdminController::class, 'userDetail'])
-        ->name('admin.users.info');
-    // Admin Stats
-    Route::get('/admin/stats', [AdminController::class, 'stats'])
-        ->name('admin.stats');
-
-    // Professor
-    // Student Info
-    Route::get('/prof/users/{id}', [AdminController::class, 'userDetail'])
-        ->name('prof.users.info');;
-});

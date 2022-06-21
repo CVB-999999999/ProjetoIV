@@ -35,7 +35,7 @@
                 <button @click="open = !open"
                         class="flex flex-row items-center mt-2 font-semibold md:inline md:mt-0 md:ml-4 block py-2.5 px-4
                             rounded transition duration-200 hover:bg-esce hover:text-white">
-                    <span> {{ $nome }} </span>
+                    <span> {{ Auth::user()->nome }} {{ Auth::user()->apelido }} </span>
 
                     {{-- DropDown Icon --}}
                     <svg fill="currentColor" viewBox="0 0 20 20" :class="{'rotate-180': open, 'rotate-0': !open}"
