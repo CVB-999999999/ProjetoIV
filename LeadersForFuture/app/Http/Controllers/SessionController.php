@@ -7,12 +7,12 @@ use Illuminate\Support\Facades\Auth;
 
 class SessionController extends Controller
 {
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Logout
+    // --- --- Performs the logout
+    // -----------------------------------------------------------------------------------------------------------------
     public function logout(Request $request)
     {
-//        session()->flush();
-//
-//        return redirect()->to('/login');
-
         Auth::logout();
 
         $request->session()->invalidate();
@@ -22,6 +22,10 @@ class SessionController extends Controller
         return redirect('/');
     }
 
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- Login
+    // --- --- Return the Login View
+    // -----------------------------------------------------------------------------------------------------------------
     public function login()
     {
         return view('sessions.login');

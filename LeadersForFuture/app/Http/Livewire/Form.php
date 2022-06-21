@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Session;
 
 class Form extends Component
 {
+    // Data to be access in the livewire form
     public $perguntas;
     public $respostas = [];
     public $formID;
@@ -52,20 +53,22 @@ class Form extends Component
         // Gets course data
         $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
 
+        // Section to verify if user has peermission to access the form
         $found = false;
 
         foreach ($this->dadosUsers as $d) {
-
             if ($d->numero == Auth::user()->numero) {
                 $found = true;
                 break;
             }
         }
 
+        // User does not have permission to access the form
         if (!$found) {
             return view ('livewire.no-permission');
         }
 
+        // Reformats the Respostas array
         foreach ($respostas as $resposta) {
             array_push($this->respostas, $resposta->Resposta);
         }

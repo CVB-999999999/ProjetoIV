@@ -30,6 +30,7 @@ class Menu extends Component
 
     public function render()
     {
+        ddd('Hi there, I did not know that this was in use, you will need no mod some stuff for this to work, sorry for the inconvenience');
 
         $utilizador = Auth::user()->username;
         $teste = Auth::user()->id_tipoUtilizador;

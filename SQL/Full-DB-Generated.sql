@@ -355,7 +355,7 @@ create table tempExecBuscaFormularios
 )
 go
 
-CREATE PROCEDURE [dbo].[alterarEstadoForm] @estadoNovo nchar(10), @idForm nchar(50)
+CREATE PROCEDURE [dbo].[alterarEstadoForm] @estadoNovo nvarchar(10), @idForm nchar(50)
 AS
 UPDATE Formulario SET estado = @estadoNovo where id = @idForm
 go

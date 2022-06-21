@@ -19,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 // Session
 // Login
 Route::get('/login', [SessionController::class, 'login'])
-    ->name('login');
+    ->name('login')
+    ->middleware('guest');
 // Logout
 Route::get('/logout', [SessionController::class, 'logout'])
     ->middleware('auth');
@@ -27,7 +28,7 @@ Route::get('/logout', [SessionController::class, 'logout'])
 // Home Page
 Route::get('/', function () {
     return view('home');
-})->name('home')
+})  ->name('home')
     ->middleware('auth');
 
 // Form Stuff
