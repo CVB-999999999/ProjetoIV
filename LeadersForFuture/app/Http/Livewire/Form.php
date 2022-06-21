@@ -52,6 +52,20 @@ class Form extends Component
         // Gets course data
         $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
 
+        $found = false;
+
+        foreach ($this->dadosUsers as $d) {
+
+            if ($d->numero == Auth::user()->numero) {
+                $found = true;
+                break;
+            }
+        }
+
+        if (!$found) {
+            return view ('livewire.no-permission');
+        }
+
         foreach ($respostas as $resposta) {
             array_push($this->respostas, $resposta->Resposta);
         }
