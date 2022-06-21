@@ -12,3 +12,6 @@ A plataforma deve permitir criar documentos parciais e um documento final, em pd
 - PowerGrid
 - Alphine.js
 - Tailwind CSS
+- Laravel Charts / Chartisan
+- Wire Elements Modal
+- SQL Server
