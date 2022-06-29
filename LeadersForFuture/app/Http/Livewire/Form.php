@@ -47,13 +47,13 @@ class Form extends Component
         // Get the answers (if any)
         $respostas = DB::select("exec buscaRespostasForm ?", [$this->formID]);
         // Gets user data
-        $this->dadosUsers = DB::select("exec buscaAlunosForms ?", [$this->formID]);
+        $this->dadosUsers = DB::select("exec buscaAlunosForms1 ?", [$this->formID]);
         // Gets project data
-        $this->dadosForm = DB::select("exec buscaDadosFormProj ?", [$this->formID]);
+        $this->dadosForm = DB::select("exec buscaDadosFormProj1 ?", [$this->formID]);
         // Gets course data
-        $this->dadosCurso = DB::select("exec buscaCursoForm ?", [$this->formID]);
+        $this->dadosCurso = DB::select("exec buscaCursoForm1 ?", [$this->formID]);
 
-        // Section to verify if user has peermission to access the form
+        // Section to verify if user has permission to access the form
         $found = false;
 
         foreach ($this->dadosUsers as $d) {
@@ -62,6 +62,8 @@ class Form extends Component
                 break;
             }
         }
+
+//        ddd($this->formID);
 
         // User does not have permission to access the form
         if (!$found) {

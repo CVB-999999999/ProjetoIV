@@ -557,11 +557,11 @@ Ensure the default browser behavior of the `hidden` attribute.
 .m-0 {
   margin: 0px;
 }
-.m-1 {
-  margin: 0.25rem;
-}
 .m-10 {
   margin: 2.5rem;
+}
+.m-1 {
+  margin: 0.25rem;
 }
 .my-1 {
   margin-top: 0.25rem;
@@ -591,6 +591,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   margin-left: 0.5rem;
   margin-right: 0.5rem;
 }
+.mx-10 {
+  margin-left: 2.5rem;
+  margin-right: 2.5rem;
+}
 .my-3 {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
@@ -610,10 +614,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .-my-2 {
   margin-top: -0.5rem;
   margin-bottom: -0.5rem;
-}
-.mx-10 {
-  margin-left: 2.5rem;
-  margin-right: 2.5rem;
 }
 .mt-1 {
   margin-top: 0.25rem;
@@ -1387,6 +1387,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
+}
 .text-5xl {
   font-size: 3rem;
   line-height: 1;
@@ -1394,10 +1398,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .text-base {
   font-size: 1rem;
   line-height: 1.5rem;
-}
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 .font-medium {
   font-weight: 500;
