@@ -33,6 +33,7 @@
                 @php($aux = "")
 
                 @foreach($forms as $form)
+                <a href="{{$form->nome}}">Ir para o formulário</a>
                     {{-- Verify if project header has been displayed --}}
                     @if(!($aux === $form->nome))
                         {{-- Only puts the line and closes the div after thee fists loop as ended --}}
@@ -42,7 +43,7 @@
                         @endif
                         {{-- Header --}}
                         <div class="bg-zinc-300 dark:bg-zinc-600 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10">
-                            <h2 class="text-center text-2xl"> {{ $form->nome }} </h2>
+                        <a href="/form/{{$form->id}}"><h2 class="text-center text-2xl"> {{ $form->nome }} </h2></a>
                             <div class="md:grid md:grid-cols-2">
                                 <div>
                                      Disciplina: {{ $form->id_Disciplina }} - Nome da disciplina (alterar o SP para adicionar o nome da disciplina)
