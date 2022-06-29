@@ -22,11 +22,11 @@ class Login extends Component
     public function mount()
     {
         // To make life easy in the form
-        if (Auth::user()->id_tipoUtilizador == 2) {
-            $this->aluno = true;
-        } elseif (Auth::user()->id_tipoUtilizador == 1) {
-            $this->prof = true;
-        }
+//        if (Auth::user()->id_tipoUtilizador == 2) {
+//            $this->aluno = true;
+//        } elseif (Auth::user()->id_tipoUtilizador == 1) {
+//            $this->prof = true;
+//        }
     }
 
     //------------------------------------------------------------------------------------------------------------------
