@@ -15,6 +15,7 @@ class Login extends Component
     public $password;
     public $verifier = true;
     public $user;
+    public $remember = false;
 
     //------------------------------------------------------------------------------------------------------------------
     // Mount -
@@ -47,7 +48,8 @@ class Login extends Component
 
         // Tries to authenticate
         if ($user) {
-            Auth::login($user);
+            ddd($this->remember);
+            Auth::login($user, $this->remember);
 
             // Autentication complete
             if(Auth::check()) {
