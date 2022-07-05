@@ -33,10 +33,28 @@ class FormController extends Controller
     }
     public function generatePDF()
     {
-        $filename = 'hello_world.pdf';
-    	$html = '<h1 style="color:red;">Hello World</h1>';
+        $id = 1;
+        // Get the questions
+        $perguntas = DB::select("exec buscaPerguntasCondForm ?", [$id]);
+        // Get the answers (if any)
+        $respostas = DB::select("exec buscaRespostasForm ?", [$id]);
+        // Gets user data
+        $dadosUsers = DB::select("exec buscaAlunosForms1 ?", [$id]);
+        // Gets project data
+        $dadosForm = DB::select("exec buscaDadosFormProj1 ?", [$id]);
+        // Gets course data
+        $dadosCurso = DB::select("exec buscaCursoForm1 ?", [$id]);
+        //ddd($respostas[0]->Resposta);
+        //ddd($perguntas[0]);
         
+        $filename = 'lff.pdf';
+        $html = null;
+        foreach ($perguntas as $index => $pergunta){
+            $html = $html . '<h1>'.$pergunta->pergunta.'</h1>';
+            $html = $html . $respostas[$index]->Resposta;
+        }
         PDF::SetTitle('Hello World');
+
         PDF::AddPage();
         PDF::writeHTML($html, true, false, true, false, '');
 
