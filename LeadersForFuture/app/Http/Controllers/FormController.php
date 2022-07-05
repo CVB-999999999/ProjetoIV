@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use PDF;
 
 class FormController extends Controller
 {
@@ -29,5 +30,18 @@ class FormController extends Controller
     public function form($id) {
 
         return view('forms.form-page', ['id'=>$id]);
+    }
+    public function generatePDF()
+    {
+        $filename = 'hello_world.pdf';
+    	$html = '<h1 style="color:red;">Hello World</h1>';
+        
+        PDF::SetTitle('Hello World');
+        PDF::AddPage();
+        PDF::writeHTML($html, true, false, true, false, '');
+
+        PDF::Output(public_path($filename), 'F');
+
+        return response()->download(public_path($filename));
     }
 }
