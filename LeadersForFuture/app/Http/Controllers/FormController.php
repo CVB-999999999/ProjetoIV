@@ -35,9 +35,8 @@ class FormController extends Controller
         return view('forms.form-page', ['id' => $id]);
     }
 
-    public function generatePDF()
+    public function generatePDF($id)
     {
-        $id = 1;
         // Get the questions
         $perguntas = DB::select("exec buscaPerguntasCondForm ?", [$id]);
         // Get the answers (if any)

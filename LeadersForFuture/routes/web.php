@@ -77,5 +77,5 @@ Route::get('/prof/aluno/{id}', function () {
         })  ->name('prof.aluno')
             ->middleware('auth');
 
-Route::get('/teste', [FormController::class, 'generatePDF'])
+Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
     ->middleware('auth');
