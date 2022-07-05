@@ -83,10 +83,8 @@ final class FormTable extends PowerGridComponent
     */
     public function setUp(): void
     {
-        $this->showCheckBox()
-            ->showPerPage()
-            ->showExportOption('download', ['pdf', 'csv'])
-            ->showSearchInput();
+        $this->showPerPage()
+        ->showSearchInput();
     }
 
     /*
@@ -132,14 +130,12 @@ final class FormTable extends PowerGridComponent
                 ->title('Name')
                 ->field('name')
                 ->searchable()
-                ->makeInputText('name')
                 ->sortable(),
 
             Column::add()
                 ->title('Ano Letivo')
                 ->field('ano_letivo')
-                ->sortable()
-                ->makeInputRange('Ano_Letivo'),
+                ->sortable(),
 
         ];
     }

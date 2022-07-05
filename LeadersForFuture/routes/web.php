@@ -59,10 +59,13 @@ Route::get('/admin/stats', [AdminController::class, 'stats'])
 
 // Professor
 // Student Info
+Route::get('/prof/stats', [AdminController::class, 'statsprof'])
+    ->name('prof.stats')
+    ->middleware('hasPermission:1');
+
 Route::get('/prof/users/{id}', [AdminController::class, 'userDetail'])
     ->name('prof.users.info')
     ->middleware('hasPermission:1');
 
 Route::get('/teste', [FormController::class, 'generatePDF'])
-    ->name('prof.users.info')
     ->middleware('auth');

@@ -20,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
+     * 
      * @return void
      */
     public function boot(Charts $charts)
@@ -27,8 +28,11 @@ class AppServiceProvider extends ServiceProvider
         $charts->register([
             \App\Charts\SampleChart::class,
             \App\Charts\ProjectStatus::class,
+            \App\Charts\ProjectProf::class,
             \App\Charts\StudentCount::class,
-            \App\Charts\StatusYear::class
+            \App\Charts\StudentCountProf::class,
+            \App\Charts\StatusYear::class,
+            \App\Charts\StatusYearProf::class
         ]);
     }
 }
