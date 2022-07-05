@@ -31,7 +31,6 @@ class AdminController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function userDetail($id)
     {
-
         // Gets the user
         $user = DB::select("exec buscaUtiliz ?", [$id]);
 

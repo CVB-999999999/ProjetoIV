@@ -83,8 +83,7 @@ final class FormTable extends PowerGridComponent
     */
     public function setUp(): void
     {
-        $this->showCheckBox()
-            ->showPerPage()
+        $this->showPerPage()
             ->showExportOption('download', ['pdf', 'csv'])
             ->showSearchInput();
     }

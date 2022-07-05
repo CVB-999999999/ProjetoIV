@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-use PDF;
+//use PDF;
 
 class FormController extends Controller
 {
@@ -14,7 +15,8 @@ class FormController extends Controller
     // --- FormSelection
     // --- --- Gets the necessary data and return the view to enable the student to select a form
     // -----------------------------------------------------------------------------------------------------------------
-    public function formSelection() {
+    public function formSelection()
+    {
         $id = Auth::user()->numero;
 
         // Gets the data to fill the form selection page
@@ -27,10 +29,12 @@ class FormController extends Controller
     // --- Form
     // --- --- Return the view for the form
     // -----------------------------------------------------------------------------------------------------------------
-    public function form($id) {
+    public function form($id)
+    {
 
-        return view('forms.form-page', ['id'=>$id]);
+        return view('forms.form-page', ['id' => $id]);
     }
+
     public function generatePDF()
     {
         $id = 1;
@@ -44,22 +48,28 @@ class FormController extends Controller
         $dadosForm = DB::select("exec buscaDadosFormProj1 ?", [$id]);
         // Gets course data
         $dadosCurso = DB::select("exec buscaCursoForm1 ?", [$id]);
-        //ddd($respostas[0]->Resposta);
-        //ddd($perguntas[0]);
-        
-        $filename = 'lff.pdf';
-        $html = null;
-        foreach ($perguntas as $index => $pergunta){
-            $html = $html . '<h1>'.$pergunta->pergunta.'</h1>';
-            $html = $html . $respostas[$index]->Resposta;
-        }
-        PDF::SetTitle('Hello World');
 
-        PDF::AddPage();
-        PDF::writeHTML($html, true, false, true, false, '');
+//        ddd($dadosCurso);
 
-        PDF::Output(public_path($filename), 'F');
+        $pdf = PDF::loadView('layouts.pdf', [
+            'perguntas' => $perguntas,
+            'respostas' => $respostas,
+            'dadosUsers' => $dadosUsers,
+            'dadosForms' => $dadosForm,
+            'dadosCurso' => $dadosCurso
+        ]);
 
-        return response()->download(public_path($filename));
+        return $pdf->download('LFF-' . md5($id) . '.pdf');
+
+//        return $pdf->download('invoice.pdf');
+
+//        PDF::SetTitle('LFF-' . $id);
+
+//        PDF::AddPage();
+//        PDF::writeHTML($html, true, false, true, false, '');
+
+//        PDF::Output(public_path($filename), 'F');
+
+//        return response()->download(public_path($filename));
     }
 }
