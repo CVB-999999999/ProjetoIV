@@ -48,7 +48,7 @@ class Login extends Component
 
         // Tries to authenticate
         if ($user) {
-            ddd($this->remember);
+//            ddd($this->remember);
             Auth::login($user, $this->remember);
 
             // Autentication complete

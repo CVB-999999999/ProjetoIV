@@ -24,8 +24,6 @@ class Form extends Component
     public $aluno = false;
     public $sure = false;
 
-    // TODO -> DOWNLOAD DO PDF
-
     function mount($id)
     {
         $this->formID = $id;
@@ -63,11 +61,9 @@ class Form extends Component
             }
         }
 
-//        ddd($this->formID);
-
         // User does not have permission to access the form
         if (!$found) {
-            return view ('livewire.no-permission');
+            return view('livewire.no-permission');
         }
 
         // Reformats the Respostas array
@@ -130,9 +126,9 @@ class Form extends Component
                             trim($this->perguntas[$index]['id'])
                         ]);
                     }
-                    $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
+//                    $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
                     // Updates form status
-//                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
 
                     $this->emit("openModal", "success", ["message" => 'Formulário submetido com sucesso!']);
 
@@ -161,15 +157,15 @@ class Form extends Component
             // Form ID | Teacher ID | Observation Content | Approved
             DB::update("exec insertObservacao ?, ?, ?, ?", [$this->formID, Auth::user()->numero, $this->obs, $state]);
 
-            $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
-            /*
+//            $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
+
             // Form Approved
             if ($this->apr == 'true') {
                 DB::update("exec alterarEstadoForm ?, ?", ['3', $this->formID]);
                 // Form Not Approved
             } else {
-                DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
-            }*/
+                DB::update("exec alterarEstadoForm ?, ?", ['1', $this->formID]);
+            }
 
             $this->emit("openModal", "success", ["message" => 'Observação submetida com sucesso!']);
         }
