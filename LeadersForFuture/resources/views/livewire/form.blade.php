@@ -1,5 +1,5 @@
 <div class="relative mx-auto dark:text-white mb-3">
-    <form wire:submit.prevent="submitForm" method="POST" class="md:mx-5">
+    <form wire:submit.prevent="submitForm" method="POST" class="md:mx-5 mb-10">
         {{-- Header with student info --}}
         <div class="mx-2 m-md-3 dark:text-white" x-data="{ expanded: false }">
             <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
@@ -155,8 +155,10 @@
                 </div>
             </div>
         @endif
-        <a href="/downloadpdf/{{$formID}}" class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2 mt-5"> Download PDF</a>
     </form>
+
+    <a href="/downloadpdf/{{$formID}}"
+       class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2 md:mx-7"> Download PDF</a>
 
     {{-- Table With the Observation History --}}
     <div class="mx-2 md:mx-7">

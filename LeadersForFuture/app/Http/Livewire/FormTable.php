@@ -49,7 +49,7 @@ final class FormTable extends PowerGridComponent
                 $query3 = DB::table("Utilizador")->where('numero', $query2result->numero_utilizador)->pluck('nome');
 
                 if ($query2result->numero_utilizador != $profnumber) {
-                    $collection->push(['id' => $query2result->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]);
+                    $collection->push(['id' => trim($query2result->numero_utilizador), 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]);
                 }
             }
         }

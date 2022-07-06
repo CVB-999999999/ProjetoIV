@@ -128,7 +128,7 @@ class Form extends Component
                     }
 //                    $this->emit("openModal", "error1", ["message" => 'Descomentar o SP para alterar o estado e enviar o email']);
                     // Updates form status
-                    DB::update("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
+                    DB::select("exec alterarEstadoForm ?, ?", ['2', $this->formID]);
 
                     $this->emit("openModal", "success", ["message" => 'Formulário submetido com sucesso!']);
 
