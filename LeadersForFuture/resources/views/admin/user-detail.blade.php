@@ -23,7 +23,7 @@
                     </div>
                 </div>
 
-                <a href="/admin/users/{{ trim($u->numero) }}/update"
+                <a href="/admin/users/{{ trim($u->numero)  }}/update"
                    class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
                     Editar Utilizador
                 </a>
