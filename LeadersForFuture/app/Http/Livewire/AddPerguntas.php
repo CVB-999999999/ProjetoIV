@@ -23,8 +23,10 @@ class AddPerguntas extends Component
         DB::insert("INSERT INTO Pergunta (id,Pergunta) Values (?, ?)",
             [$new, $this->pergunta]);
         
-            DB::insert("INSERT INTO PerguntasFormulario (id_formulario, id_pergunta) Values (?, ?)",
+        DB::insert("INSERT INTO PerguntasFormulario (id_formulario, id_pergunta) Values (?, ?)",
             [$this->idform,$new]);
-        return redirect("form/{{$this->idform}}");
+        $idred = trim($this->idform);
+        //dd($idred);
+        return redirect("form/$idred");
     }
 }
