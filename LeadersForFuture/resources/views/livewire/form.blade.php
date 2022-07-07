@@ -19,12 +19,6 @@
                     Desconhecido
             @endswitch
         </div>
-        @foreach($dadosUsers as $dados)
-            @if($dados->id_tipoUtilizador == 1)
-                <a href="/form/addPerguntas/{{$formID}}"
-                class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2 md:mx-7"> Adicionar Perguntas</a>
-            @endif
-        @endforeach
 
         {{-- Header with student info --}}
         <div class="mx-2 m-md-3 dark:text-white" x-data="{ expanded: false }">

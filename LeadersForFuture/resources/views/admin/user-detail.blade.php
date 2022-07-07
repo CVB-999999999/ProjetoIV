@@ -76,6 +76,13 @@
                     <div>
                         <p>Ano Letivo: {{ $form->ano_letivo }}</p>
                         <p> {{ $form->ano_curricular }}º ano {{ $form->semestre + 1 }}º semestre</p>
+                        @if(Auth::user()->id_tipoUtilizador == 1)
+                            <div class="my-5">
+                                <a href="/form/addPerguntas/{{$form->id}}"
+                                   class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                                    Adicionar Perguntas</a>
+                            </div>
+                        @endif
                     </div>
                     <div class="md:text-right">
                         <div>
@@ -105,7 +112,7 @@
                         </div>
                         {{-- Only show view form btn to teacher --}}
                         @if(Auth::user()->id_tipoUtilizador == 1)
-                            <div class="mt-2">
+                            <div class="my-2">
                                 <a class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2"
                                    href="/form/{{trim($form->id)}}"> Ver Form </a>
                             </div>
