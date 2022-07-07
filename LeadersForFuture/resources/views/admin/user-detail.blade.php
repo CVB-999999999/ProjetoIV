@@ -41,8 +41,7 @@
                 <h2 class="text-center text-2xl"> {{ $form->nome }} </h2>
                 <div class="md:grid md:grid-cols-2">
                     <div>
-                        Disciplina: {{ $form->id_Disciplina }} - Nome da disciplina (alterar o SP para adicionar o nome
-                        da disciplina)
+                        Disciplina: {{ $form->id_Disciplina }} - Nome da disciplina
                     </div>
                     <div class="md:text-right">
                         Tema do Projeto: {{ $form->tema }}
