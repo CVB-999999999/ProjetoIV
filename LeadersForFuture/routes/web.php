@@ -44,6 +44,9 @@ Route::get('/form/{id}', [FormController::class, 'form'])
 // Create Users
 Route::get('/admin/users/create', [AdminController::class, 'userCreate'])
     ->middleware('hasPermission:3');
+// Edit Users
+Route::get('/admin/users/{id}/update', [AdminController::class, 'userEdit'])
+    ->middleware('hasPermission:3');
 // Manage Users
 Route::get('/admin/users', [AdminController::class, 'userInfo'])
     ->name('admin.users')
