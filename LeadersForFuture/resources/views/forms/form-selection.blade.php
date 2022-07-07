@@ -46,19 +46,19 @@
 
                                 @switch($form->estado)
                                     @case(0)
-                                    Bloqueado
-                                    @break
+                                        Bloqueado
+                                        @break
                                     @case(1)
-                                    Aberto
-                                    @break
+                                        Aberto
+                                        @break
                                     @case(2)
-                                    Em avaliação
-                                    @break
+                                        Em avaliação
+                                        @break
                                     @case(3)
-                                    Bloqueado
-                                    @break
+                                        Concluido
+                                        @break
                                     @default
-                                    Desconhecido
+                                        Desconhecido
                                 @endswitch
                             </div>
                         </div>

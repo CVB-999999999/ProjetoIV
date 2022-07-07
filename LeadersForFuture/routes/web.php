@@ -28,7 +28,7 @@ Route::get('/logout', [SessionController::class, 'logout'])
 // Home Page
 Route::get('/', function () {
     return view('home');
-})  ->name('home')
+})->name('home')
     ->middleware('auth');
 
 // Form Stuff
@@ -45,6 +45,9 @@ Route::get('/form/{id}', [FormController::class, 'form'])
 // Admin
 // Create Users
 Route::get('/admin/users/create', [AdminController::class, 'userCreate'])
+    ->middleware('hasPermission:3');
+// Edit Users
+Route::get('/admin/users/{id}/update', [AdminController::class, 'userEdit'])
     ->middleware('hasPermission:3');
 // Manage Users
 Route::get('/admin/users', [AdminController::class, 'userInfo'])
@@ -74,15 +77,22 @@ Route::get('/prof/users/{id}', [AdminController::class, 'userDetail'])
     ->name('prof.users.info')
     ->middleware('hasPermission:1');
 
+// Create a new project with a student (id) and the current prof
+Route::get('/prof/users/{id}/project/create', [AdminController::class, 'projectCreate'])
+    ->middleware('hasPermission:1');
+// Add a student to a existing project
+Route::get('/prof/users/{id}/project/add', [AdminController::class, 'projectAdd'])
+    ->middleware('hasPermission:1');
+
 Route::get('/prof/proj', function () {
-        return view('homeproj');
-    })  ->name('profproj')
-        ->middleware('auth');
+    return view('homeproj');
+})->name('profproj')
+    ->middleware('auth');
 
 Route::get('/prof/aluno/{id}', function () {
-            return view('homealuno');
-        })  ->name('prof.aluno')
-            ->middleware('auth');
+    return view('homealuno');
+})->name('prof.aluno')
+    ->middleware('auth');
 
 Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
     ->middleware('auth');

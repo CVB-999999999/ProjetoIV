@@ -2,10 +2,13 @@
     <div x-data="{ open: false }" class="flex flex-col px-4 md:items-center md:justify-between
         md:flex-row md:px-6 lg:px-8">
         {{-- Phone Nav --}}
-        <div class="flex flex-row justify-between p-4">
+        <div class="flex flex-row justify-between">
             {{-- Title --}}
             <a href="/" class="text-lg font-semibold uppercase focus:outline-none focus:shadow-outline">
-                Leaders For the Future
+                <span class="inline-flex">
+                    <img src="{{ URL('/images/esce.png') }}" alt="ESCE Logo" class="h-12 p-0 hidden md:flex my-auto">
+                    <span class="ml-2 p-4"> Leaders For the Future</span>
+                </span>
             </a>
             {{-- Phone nav icon --}}
             <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">

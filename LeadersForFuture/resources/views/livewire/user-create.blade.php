@@ -30,8 +30,8 @@
         <select wire:model="typeA" name="type" class="border border-opacity-50 rounded border-gray-700
             w-full py-2 bg-white mb-3 dark:bg-zinc-700" required>
             <option selected> Escolha um opção</option>
-            <option value="1">Aluno</option>
-            <option value="2">Professor</option>
+            <option value="2">Aluno</option>
+            <option value="1">Professor</option>
             <option value="3">Admin</option>
         </select>
 

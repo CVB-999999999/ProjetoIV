@@ -12,7 +12,7 @@
         @foreach($user as $u)
             {{-- User Info --}}
             <div class="bg-zinc-200 dark:bg-zinc-700 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10 md:m-10">
-                <div class="md:grid md:grid-cols-2">
+                <div class="md:grid md:grid-cols-2 mb-3">
                     <div>
                         <p class="my-1">Nome: {{ $u->nome}} {{ $u->apelido}}</p>
                         <p class="my-1">Email: {{ $u->email }}</p>
@@ -22,6 +22,23 @@
                         <p class="my-1">Tipo de Utilizador: <span class="capitalize"> {{$u->descricao}} </span></p>
                     </div>
                 </div>
+
+                @if(Auth::user()->id_tipoUtilizador == 3)
+                    <a href="/admin/users/{{ trim($u->numero) }}/update"
+                       class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                        Editar Utilizador
+                    </a>
+                @endif
+                @if(Auth::user()->id_tipoUtilizador == 1)
+                    <a href="/prof/users/{{ trim($u->numero) }}/project/create"
+                       class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                        Criar Projeto
+                    </a>
+                    <a href="/prof/users/{{ trim($u->numero) }}/project/add"
+                       class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 mx-5">
+                        Adicionar a Projeto Existente
+                    </a>
+                @endif
             </div>
 
             {{-- Form Info --}}
@@ -41,7 +58,7 @@
                 <h2 class="text-center text-2xl"> {{ $form->nome }} </h2>
                 <div class="md:grid md:grid-cols-2">
                     <div>
-                        Disciplina: {{ $form->id_Disciplina }} - Nome da disciplina
+                        Disciplina: {{ $form->id_Disciplina }}
                     </div>
                     <div class="md:text-right">
                         Tema do Projeto: {{ $form->tema }}

@@ -7,7 +7,7 @@
                     Bloqueado
                     @break
                 @case(1)
-                    Em Progresso
+                    Aberto
                     @break
                 @case(2)
                     Em Avaliação
