@@ -36,7 +36,7 @@ final class FormAluno extends PowerGridComponent
     public $anoLetivo;
 
     public function datasource(): ?Collection
-    {   
+    {
         $collection = collect();
         $id = \Request::segment(3);
 

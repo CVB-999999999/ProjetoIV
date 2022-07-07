@@ -79,3 +79,6 @@ Route::get('/prof/aluno/{id}', function () {
 
 Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
     ->middleware('auth');
+
+Route::get('/form/{id}/enable', [FormController::class, 'formActivate'])
+    ->middleware('auth');

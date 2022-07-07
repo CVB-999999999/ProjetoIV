@@ -67,6 +67,12 @@
                             @switch($form->estado)
                                 @case(0)
                                     Bloqueado
+                                    <form action="/form/{{trim($form->id)}}/enable">
+                                        <button
+                                            class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2"
+                                            type="submit"> Ativar Formulário
+                                        </button>
+                                    </form>
                                     @break
                                 @case(1)
                                     Aberto
@@ -85,7 +91,7 @@
                         @if(Auth::user()->id_tipoUtilizador == 1)
                             <div class="mt-2">
                                 <a class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2"
-                                   href="/form/{{$form->id}}"> Ver Form </a>
+                                   href="/form/{{trim($form->id)}}"> Ver Form </a>
                             </div>
                         @endif
                     </div>

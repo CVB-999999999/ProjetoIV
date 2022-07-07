@@ -71,4 +71,11 @@ class FormController extends Controller
 
 //        return response()->download(public_path($filename));
     }
+
+    public function formActivate($id) {
+
+        DB::update("exec alterarEstadoForm ?, ?", ['1', $id]);
+
+        return back();
+    }
 }
