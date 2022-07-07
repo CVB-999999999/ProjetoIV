@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Leader for the Future</title>
+    <title>Leaders for the Future</title>
 
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <script src="{{ mix('js/app.js') }}" defer></script>
