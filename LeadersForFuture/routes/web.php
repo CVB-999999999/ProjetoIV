@@ -70,7 +70,11 @@ Route::get('/prof/users/{id}', [AdminController::class, 'userDetail'])
     ->name('prof.users.info')
     ->middleware('hasPermission:1');
 
+// Create a new project with a student (id) and the current prof
 Route::get('/prof/users/{id}/project/create', [AdminController::class, 'projectCreate'])
+    ->middleware('hasPermission:1');
+// Add a student to a existing project
+Route::get('/prof/users/{id}/project/add', [AdminController::class, 'projectAdd'])
     ->middleware('hasPermission:1');
 
 Route::get('/prof/proj', function () {
