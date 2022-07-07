@@ -56,6 +56,11 @@ Route::get('/admin/users/{id}', [AdminController::class, 'userDetail'])
 Route::get('/admin/stats', [AdminController::class, 'stats'])
     ->name('admin.stats')
     ->middleware('hasPermission:3');
+    
+    // Admin Forms
+Route::get('/admin/forms', [AdminController::class, 'formCriar'])
+->middleware('hasPermission:3');
+
 
 // Professor
 // Student Info
