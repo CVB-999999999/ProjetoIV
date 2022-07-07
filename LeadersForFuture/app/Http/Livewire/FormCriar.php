@@ -30,7 +30,6 @@ class FormCriar extends Component
     }
     public function submitForm()
     {
-       
         DB::insert("INSERT INTO Formulario (id,estado,tipo_formulario,id_projecto,ano_letivo,ano_curricular,semestre) Values (?, ?, ?, ?, ?, ?, ?)",
             [$this->idform,$this->estado,$this->tpForm,$this->projeto,$this->ano_letivo,$this->anocurricular,$this->semestre]);
         return redirect("admin/users/");

@@ -40,6 +40,8 @@ Route::get('/form', [FormController::class, 'formSelection'])
 Route::get('/form/{id}', [FormController::class, 'form'])
     ->middleware(['auth']);
 
+
+
 // Admin
 // Create Users
 Route::get('/admin/users/create', [AdminController::class, 'userCreate'])
@@ -86,4 +88,8 @@ Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
     ->middleware('auth');
 
 Route::get('/form/{id}/enable', [FormController::class, 'formActivate'])
+    ->middleware('auth');
+    
+//ADD PERGUNTAS FORM
+Route::get('/form/addPerguntas/{id}', [FormController::class, 'addPerguntas'])
     ->middleware('auth');
