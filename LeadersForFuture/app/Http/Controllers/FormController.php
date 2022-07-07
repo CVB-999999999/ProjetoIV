@@ -34,6 +34,10 @@ class FormController extends Controller
 
         return view('forms.form-page', ['id' => $id]);
     }
+    public function addPerguntas($id)
+    {   
+        return view('forms.addPerguntas', ['idform' => $id]);
+    }
 
     public function generatePDF($id)
     {

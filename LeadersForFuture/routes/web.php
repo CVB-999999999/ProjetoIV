@@ -40,6 +40,8 @@ Route::get('/form', [FormController::class, 'formSelection'])
 Route::get('/form/{id}', [FormController::class, 'form'])
     ->middleware(['auth']);
 
+
+
 // Admin
 // Create Users
 Route::get('/admin/users/create', [AdminController::class, 'userCreate'])
@@ -59,6 +61,11 @@ Route::get('/admin/users/{id}', [AdminController::class, 'userDetail'])
 Route::get('/admin/stats', [AdminController::class, 'stats'])
     ->name('admin.stats')
     ->middleware('hasPermission:3');
+    
+    // Admin Forms
+Route::get('/admin/forms', [AdminController::class, 'formCriar'])
+->middleware('hasPermission:3');
+
 
 // Professor
 // Student Info
@@ -91,4 +98,8 @@ Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
     ->middleware('auth');
 
 Route::get('/form/{id}/enable', [FormController::class, 'formActivate'])
+    ->middleware('auth');
+    
+//ADD PERGUNTAS FORM
+Route::get('/form/addPerguntas/{id}', [FormController::class, 'addPerguntas'])
     ->middleware('auth');

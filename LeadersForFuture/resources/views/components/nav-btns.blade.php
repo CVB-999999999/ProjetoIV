@@ -30,4 +30,8 @@
        class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
         Estatisticas
     </a>
+    <a href="/admin/forms"
+       class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
+        Forms
+    </a>
 @endif

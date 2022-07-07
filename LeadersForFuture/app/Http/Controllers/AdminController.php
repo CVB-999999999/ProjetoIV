@@ -75,10 +75,19 @@ class AdminController extends Controller
     {
         return view('admin.stats');
     }
-
-    public function statsprof()
+    public function formCriar()
     {
+        // Gets the Tipo_Formulario
+        $tpForms = DB::select("exec buscaTipoForm");
+        // Gets the projects
+        $projetos = DB::select("exec buscaProjetos");
 
+        return view('admin.form-criar', ['tpForms' => $tpForms, 'projetos' => $projetos]);
+    }
+    
+    public function statsprof()
+    {  
         return view('prof.stats');
     }
+
 }
