@@ -8,6 +8,10 @@
        class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
         Projetos
     </a>
+    <a href="/prof/forms"
+       class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
+        Forms
+    </a>
 @endif
 {{-- Student --}}
 @if(Auth::user()->id_tipoUtilizador == 2)
