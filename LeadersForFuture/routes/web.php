@@ -61,7 +61,7 @@ Route::get('/admin/users/{id}', [AdminController::class, 'userDetail'])
 Route::get('/admin/stats', [AdminController::class, 'stats'])
     ->name('admin.stats')
     ->middleware('hasPermission:3');
-    
+
     // Admin Forms
 Route::get('/admin/forms', [AdminController::class, 'formCriar'])
 ->middleware('hasPermission:3');
@@ -99,7 +99,7 @@ Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
 
 Route::get('/form/{id}/enable', [FormController::class, 'formActivate'])
     ->middleware('auth');
-    
+
 //ADD PERGUNTAS FORM
 Route::get('/form/addPerguntas/{id}', [FormController::class, 'addPerguntas'])
     ->middleware('auth');

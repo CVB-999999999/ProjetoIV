@@ -49,7 +49,7 @@ final class FormTable extends PowerGridComponent
                 $query3 = DB::table("Utilizador")->where('numero', $query2result->numero_utilizador)->first();
 
                 if ($query2result->numero_utilizador != $profnumber) {
-                    $collection->push(['id' => trim($query2result->numero_utilizador), 'name' => trim($query3->nome) . " " . trim($query3->apelido), 'ano_letivo' => $this->anoLetivo,]);
+                    $collection->push(['id' => trim($query2result->numero_utilizador), 'name' => trim($query3->nome) . " " . trim($query3->apelido)]);
                 }
             }
         }
@@ -99,8 +99,8 @@ final class FormTable extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('name')
-            ->addColumn('ano_letivo');
+            ->addColumn('name');
+//            ->addColumn('ano_letivo');
     }
 
     /*
@@ -132,10 +132,10 @@ final class FormTable extends PowerGridComponent
                 ->searchable()
                 ->sortable(),
 
-            Column::add()
-                ->title('Ano Letivo')
-                ->field('ano_letivo')
-                ->sortable(),
+//            Column::add()
+//                ->title('Ano Letivo')
+//                ->field('ano_letivo')
+//                ->sortable(),
         ];
     }
 
