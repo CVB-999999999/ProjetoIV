@@ -97,6 +97,10 @@ class AdminController extends Controller
     {
         return view('admin.criar-proj');
     }
+    public function addToproj()
+    {
+        return view('admin.add-toproj');
+    }
     
     public function statsprof()
     {  

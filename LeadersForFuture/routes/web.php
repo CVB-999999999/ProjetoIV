@@ -72,6 +72,9 @@ Route::get('/admin/forms', [AdminController::class, 'formCriar'])
    // Admin Projetos
    Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
    ->middleware('hasPermission:3');
+   // Admin Projetos
+   Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
+   ->middleware('hasPermission:3');
 
 
 
