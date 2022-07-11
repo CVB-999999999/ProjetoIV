@@ -26,6 +26,11 @@ class CreateProject extends Component
 
     public function submit()
     {
+        if($this->name == "" || $this->theme == "" || $this->cid) {
+            $this->emit("openModal", "error1", ["message" => 'Um ou mais campos obrigatórios encontram-se vazios!']);
+            return;
+        }
+
         $query = DB::table('Disciplina')
             ->where('cd_discip', $this->cid)
             ->first();

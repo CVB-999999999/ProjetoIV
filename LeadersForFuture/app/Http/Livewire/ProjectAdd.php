@@ -28,6 +28,11 @@ class ProjectAdd extends Component
 
     public function submit()
     {
+        if ($this->projId == null) {
+            $this->emit("openModal", "error1", ["message" => 'Projeto selecionado inválido!']);
+            return;
+        }
+
         DB::insert('INSERT INTO Utilizador_Projecto(id_projecto, numero_utilizador) VALUES (?,?)', [$this->projId, $this->alunoId]);
 
         $this->emit("openModal", "success", ["message" => 'Projeto Adicionado com sucesso!']);
