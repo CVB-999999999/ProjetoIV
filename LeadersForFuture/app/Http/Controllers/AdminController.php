@@ -93,6 +93,10 @@ class AdminController extends Controller
 
         return view('prof.form-criar', ['tpForms' => $tpForms, 'projetos' => $projetos]);
     }
+    public function criarProj()
+    {
+        return view('admin.criar-proj');
+    }
     
     public function statsprof()
     {  
