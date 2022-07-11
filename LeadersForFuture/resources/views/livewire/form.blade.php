@@ -1,30 +1,44 @@
 <div class="relative mx-auto dark:text-white mb-3">
     <form wire:submit.prevent="submitForm" method="POST" class="md:mx-5 mb-10">
         {{-- Form Status --}}
-        <div class="mx-2 my-2 text-right"> Estado do Formulário:
-            @switch($estado[0]->estado)
-                @case(0)
-                    Bloqueado
-                    @break
-                @case(1)
-                    Aberto
-                    @break
-                @case(2)
-                    Em Avaliação
-                    @break
-                @case(3)
-                    Concluido
-                    @break
-                @default
-                    Desconhecido
-            @endswitch
+        <div class="md:grid md:grid-cols-2">
+            <div class="mx-2 my-2">
+                <a href="/downloadpdf/{{$formID}}"
+                    class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                    <span class="material-symbols-outlined align-middle h-7">file_download</span>
+                    Download PDF</a>
+            </div>
+
+            <div class="mx-2 my-2 md:text-right"> Estado do Formulário:
+                @switch($estado[0]->estado)
+                    @case(0)
+                        <span class="material-symbols-outlined align-middle h-7">lock</span>
+                        Bloqueado
+                        @break
+                    @case(1)
+                        <span class="material-symbols-outlined align-middle h-7">lock_open</span>
+                        Aberto
+                        @break
+                    @case(2)
+                        <span class="material-symbols-outlined align-middle h-7">history_edu</span>
+                        Em avaliação
+                        @break
+                    @case(3)
+                        <span class="material-symbols-outlined align-middle h-7">check_small</span>
+                        Terminado
+                        @break
+                    @default
+                        <span class="material-symbols-outlined align-middle h-7">question_mark</span>
+                        Desconhecido
+                @endswitch
+            </div>
         </div>
 
         {{-- Header with student info --}}
         <div class="mx-2 m-md-3 dark:text-white" x-data="{ expanded: false }">
             <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
                    transition duration-200 hover:bg-esce hover:text-white text-left" @click="expanded = ! expanded">
-                Informação do Estudante
+                <span class="material-symbols-outlined align-middle h-7">info</span> &emsp;Informação do Formulário
             </button>
 
             <p x-show="expanded" x-collapse.duration.600ms>
@@ -125,7 +139,7 @@
                         {{-- Submit Btn --}}
                         <button wire:click.prevent="save({{ $index }})"
                                 class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
-                            Guardar
+                            <span class="material-symbols-outlined align-middle h-7">save</span> Guardar
                         </button>
                     </p>
                 </div>
@@ -138,7 +152,10 @@
                 <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
                        transition duration-200 hover:bg-esce hover:text-white text-left"
                         @click="expanded = ! expanded">
-                    <label for="obs">Observações do Docente </label>
+                    <label for="obs">
+                        <span class="material-symbols-outlined align-middle h-7">school</span>
+                         &emsp; Observações do Docente
+                    </label>
                 </button>
                 <p x-show="expanded" x-collapse>
                     @if($estado[0]->estado == 2 && $prof)
@@ -149,8 +166,12 @@
                                 bg-clip-padding bg-no-repeat rounded transition bg-zinc-200 dark:bg-zinc-900 dark:text-white
                                 ease-in-out m-0 focus:outline-none" required>
                             <option selected>Escolha uma opção</option>
-                            <option value="true">Aprovado</option>
-                            <option value="false">Não Aprovado</option>
+                            <option value="true">
+                                Aprovado
+                            </option>
+                            <option value="false">
+                                Não Aprovado
+                            </option>
                         </select>
                     @endif
                 </p>
@@ -163,8 +184,10 @@
                 <button type="submit" x-data x-on:click.button="window.scrollTo(0, 0)"
                         class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
                     @if($prof)
+                        <span class="material-symbols-outlined align-middle h-7">publish</span>
                         Submeter Observação
                     @elseif($aluno)
+                        <span class="material-symbols-outlined align-middle h-7">publish</span>
                         Submeter para Avaliação
                     @endif
                 </button>
@@ -176,10 +199,6 @@
             </div>
         @endif
     </form>
-
-    <a href="/downloadpdf/{{$formID}}"
-       class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2 md:mx-7"> Download
-        PDF</a>
 
     {{-- Table With the Observation History --}}
     <div class="mx-2 md:mx-7">
