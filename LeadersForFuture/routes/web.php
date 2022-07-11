@@ -40,7 +40,10 @@ Route::get('/form', [FormController::class, 'formSelection'])
 Route::get('/form/{id}', [FormController::class, 'form'])
     ->middleware(['auth']);
 
-
+Route::get('/admin/erro', function () {
+        return view('admin/erro');
+    })->name('erro')
+        ->middleware('auth');
 
 // Admin
 // Create Users
@@ -65,6 +68,8 @@ Route::get('/admin/stats', [AdminController::class, 'stats'])
     // Admin Forms
 Route::get('/admin/forms', [AdminController::class, 'formCriar'])
 ->middleware('hasPermission:3');
+
+
 
 Route::get('/prof/forms', [AdminController::class, 'formCriarProf'])
 ->middleware('hasPermission:1');
