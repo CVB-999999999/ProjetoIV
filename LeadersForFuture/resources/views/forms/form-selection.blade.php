@@ -31,7 +31,7 @@
 
                     {{-- card with link --}}
                     <a href="form/{{ $form->id }}"
-                       class="block rounded m-2 m-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
+                       class="block md:w-96 rounded m-2 m-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900
                    transition duration-200 hover:bg-esce hover:text-white">
 
                         <div class="md:grid md:grid-cols-2 p-1">
@@ -41,7 +41,7 @@
                                 <p> {{ $form->ano_curricular }}º ano - {{ $form->semestre + 1 }}º semestre</p>
                             </div>
                             {{-- Right side - Status --}}
-                            <div class="text-right mx-md-4">
+                            <div class="md:text-right mx-md-4">
                                 Estado:
 
                                 @switch($form->estado)

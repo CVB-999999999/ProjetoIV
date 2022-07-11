@@ -18,7 +18,9 @@
             </div>
             <div class="text-center py-1">
                 {{-- Update Btn --}}
-                <button onclick="updateCharts()" class="bg-esce px-5 py-2 rounded-md">Atualizar</button>
+                <button onclick="updateCharts()" class="bg-esce px-5 py-2 rounded-md">
+                    <span class="material-symbols-outlined align-middle h-7">refresh</span> Atualizar
+                </button>
             </div>
         </div>
         {{-- Charts --}}

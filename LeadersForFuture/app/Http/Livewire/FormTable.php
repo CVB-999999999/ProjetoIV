@@ -127,7 +127,7 @@ final class FormTable extends PowerGridComponent
                 ->sortable(),
 
             Column::add()
-                ->title('Name')
+                ->title('Nome')
                 ->field('name')
                 ->searchable()
                 ->sortable(),

@@ -100,7 +100,7 @@ final class FormProj extends PowerGridComponent
                 ->sortable(),
 
             Column::add()
-                ->title('Nome')
+                ->title('Nome do Projeto')
                 ->field('nome')
                 ->searchable()
                 ->sortable(),
