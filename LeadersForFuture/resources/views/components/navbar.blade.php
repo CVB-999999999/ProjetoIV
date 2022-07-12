@@ -54,9 +54,14 @@
                      x-transition:leave="transition ease-in duration-75"
                      x-transition:leave-start="transform opacity-100 scale-100"
                      x-transition:leave-end="transform opacity-0 scale-95"
-                     class="absolute right-0 w-full md:w-40 mt-2 origin-top-right">
+                     class="absolute right-0 w-full md:w-56 mt-2 origin-top-right">
                     {{-- Dropdown Content --}}
                     <div class="p-4 rounded-md shadow-lg bg-zinc-200 dark:bg-zinc-700 text-center">
+                        <a class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white"
+                           href="/users/passwdreset">
+                            <span class="material-symbols-outlined align-middle h-7">lock</span> Alterar Password
+                        </a>
+
                         <a class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white"
                            href="/logout">
                             <span class="material-symbols-outlined align-middle h-7">logout</span> Logout

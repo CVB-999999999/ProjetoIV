@@ -41,9 +41,13 @@ Route::get('/form/{id}', [FormController::class, 'form'])
     ->middleware(['auth']);
 
 Route::get('/admin/erro', function () {
-        return view('admin/erro');
-    })->name('erro')
-        ->middleware('auth');
+    return view('admin/erro');
+})->name('erro')
+    ->middleware('auth');
+
+Route::get('/users/passwdreset', function () {
+    return view('sessions.password');
+})->middleware('auth');
 
 // Admin
 // Create Users
@@ -65,21 +69,20 @@ Route::get('/admin/stats', [AdminController::class, 'stats'])
     ->name('admin.stats')
     ->middleware('hasPermission:3');
 
-    // Admin Forms
+// Admin Forms
 Route::get('/admin/forms', [AdminController::class, 'formCriar'])
-->middleware('hasPermission:3');
+    ->middleware('hasPermission:3');
 
-   // Admin Projetos
-   Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
-   ->middleware('hasPermission:3');
-   // Admin Projetos
-   Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
-   ->middleware('hasPermission:3');
-
+// Admin Projetos
+Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
+    ->middleware('hasPermission:3');
+// Admin Projetos
+Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
+    ->middleware('hasPermission:3');
 
 
 Route::get('/prof/forms', [AdminController::class, 'formCriarProf'])
-->middleware('hasPermission:1');
+    ->middleware('hasPermission:1');
 // Professor
 // Student Info
 Route::get('/prof/stats', [AdminController::class, 'statsprof'])
