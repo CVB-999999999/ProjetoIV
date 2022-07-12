@@ -2,7 +2,7 @@
 
     {{-- User input --}}
     <div>
-        <label for="login" class="block text-sm font-medium text-gray-700">Utilizador</label>
+        <label for="login" class="block text-sm font-medium text-gray-700">Email</label>
         <div class="mt-1">
             <input id="login" wire:model="username" type="text" class="border border-opacity-50 rounded border-gray-700
             w-full py-1 px-2

@@ -44,7 +44,7 @@ class Login extends Component
     public function login()
     {
         // Creates the user object
-        $user = \App\Models\User::where('username', $this->username)->where('password', $this->password)->first();
+        $user = \App\Models\User::where('email', $this->username)->where('password', $this->password)->first();
 
         // Tries to authenticate
         if ($user) {

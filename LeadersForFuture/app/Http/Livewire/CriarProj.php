@@ -39,6 +39,7 @@ class CriarProj extends Component
 
         DB::insert("INSERT INTO Projecto (id,estado,nome,tema,ano_letivo,semestre,id_Disciplina) Values (?, ?, ?, ?, ?, ?, ?)",
             [$this->idproj, $this->estado, $this->nome, $this->tema, $this->ano_letivo, $this->semestre, $this->disciplina]);
-        return view('livewire.criar-proj');
+
+        $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
     }
 }
