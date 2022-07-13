@@ -46,4 +46,8 @@ class UserEdit extends Component
 
         $this->emit("openModal", "success", ["message" => 'A password do utilizador foi alterada com sucesso!']);
     }
+
+    public function del() {
+        $this->emit("openModal", "del-usr", ["id" => $this->mNumber]);
+    }
 }

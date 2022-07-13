@@ -2258,10 +2258,6 @@ Ensure the default browser behavior of the `hidden` attribute.
     min-height: 100vh;
   }
 
-  .md\:w-40 {
-    width: 10rem;
-  }
-
   .md\:w-56 {
     width: 14rem;
   }
@@ -2270,16 +2266,16 @@ Ensure the default browser behavior of the `hidden` attribute.
     width: 24rem;
   }
 
+  .md\:w-1\/2 {
+    width: 50%;
+  }
+
   .md\:w-2\/3 {
     width: 66.666667%;
   }
 
   .md\:w-auto {
     width: auto;
-  }
-
-  .md\:w-1\/2 {
-    width: 50%;
   }
 
   .md\:w-4\/12 {
