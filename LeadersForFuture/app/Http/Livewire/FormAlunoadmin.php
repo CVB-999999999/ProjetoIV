@@ -41,11 +41,11 @@ final class FormAlunoAdmin extends PowerGridComponent
         $id = \Request::segment(3);
 
         $query = DB::select("exec buscaAlunosProj ?", [$id]);
-        
-        foreach($query as $queryres){ 
+
+        foreach ($query as $queryres) {
             $collection->push(['id' => trim($queryres->numero), 'nome' => trim($queryres->nome) . " " . trim($queryres->apelido)]);
         }
-        
+
         return $collection;
     }
 
@@ -59,7 +59,7 @@ final class FormAlunoAdmin extends PowerGridComponent
     public function setUp(): void
     {
         $this->showPerPage()
-        ->showSearchInput();
+            ->showSearchInput();
     }
 
     /*
