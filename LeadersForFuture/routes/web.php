@@ -80,6 +80,11 @@ Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
 Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:3');
 
+Route::get('/admin/proj', function () {
+    return view('homeproj');
+})->name('adminproj')
+    ->middleware('auth');
+
 
 Route::get('/prof/forms', [AdminController::class, 'formCriarProf'])
     ->middleware('hasPermission:1');
@@ -108,6 +113,11 @@ Route::get('/prof/proj', function () {
 Route::get('/prof/aluno/{id}', function () {
     return view('homealuno');
 })->name('prof.aluno')
+    ->middleware('auth');
+
+Route::get('/admin/aluno/{id}', function () {
+    return view('homealuno');
+})->name('admin.aluno')
     ->middleware('auth');
 
 Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
