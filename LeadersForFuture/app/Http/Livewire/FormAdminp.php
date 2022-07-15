@@ -57,7 +57,9 @@ final class FormAdminp extends PowerGridComponent
     public function setUp(): void
     {
         $this->showPerPage()
-        ->showSearchInput();
+        ->showCheckBox()
+        ->showSearchInput()
+        ->showExportOption('download', ['excel', 'csv']);
     }
 
     /*

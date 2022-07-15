@@ -24,7 +24,7 @@
 @if(Auth::user()->id_tipoUtilizador == 3)
     <a href="/admin/users"
        class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
-        <span class="material-symbols-outlined align-middle h-7">manage_accounts</span> Gerir Utilizadores
+        <span class="material-symbols-outlined align-middle h-7">manage_accounts</span> Utilizadores
     </a>
     <a href="/admin/stats"
        class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
