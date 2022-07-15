@@ -38,12 +38,38 @@ final class FormProj extends PowerGridComponent
     public function datasource(): ?Collection
     {
         $collection = collect();
+
         $profnumber = Auth::user()->numero;
 
         $query = DB::select("exec buscaProjProf ?", [$profnumber]);
-        foreach($query as $queryres)[
-            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo])
-        ];
+
+        foreach ($query as $queryres) {
+
+            $q = DB::table('Formulario')
+                ->select('estado')
+                ->where('id_projecto', trim($queryres->id))
+                ->get();
+
+            $finished = 0;
+            $aval = 0;
+            foreach ($q as $qr) {
+                if ($qr->estado == 3) {
+                    $finished++;
+                }
+                if ($qr->estado == 2) {
+                    $aval++;
+                }
+            }
+
+            $collection->push([
+                'id' => trim($queryres->id),
+                'nome' => $queryres->nome,
+                'ano_letivo' => $queryres->ano_letivo,
+                'progresso' => $finished . "/" . sizeof($q),
+                'aval' => $aval
+            ]);
+        }
+
         return $collection;
     }
 
@@ -57,7 +83,7 @@ final class FormProj extends PowerGridComponent
     public function setUp(): void
     {
         $this->showPerPage()
-        ->showSearchInput();
+            ->showSearchInput();
     }
 
     /*
@@ -73,7 +99,9 @@ final class FormProj extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('nome')
-            ->addColumn('ano_letivo');
+            ->addColumn('ano_letivo')
+            ->addColumn('progresso')
+            ->addColumn('aval');
     }
 
     /*
@@ -108,6 +136,16 @@ final class FormProj extends PowerGridComponent
             Column::add()
                 ->title('Ano Letivo')
                 ->field('ano_letivo')
+                ->sortable(),
+
+            Column::add()
+                ->title('Em avaliação')
+                ->field('aval')
+                ->sortable(),
+
+            Column::add()
+                ->title('Terminados')
+                ->field('progresso')
                 ->sortable(),
         ];
     }
