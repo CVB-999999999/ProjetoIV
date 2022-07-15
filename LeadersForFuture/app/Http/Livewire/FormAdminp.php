@@ -116,7 +116,7 @@ final class FormAdminp extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('Ver alunos')
+                ->caption('Ver utilizadores')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                 ->route('admin.aluno', ['id' => 'id'])
                 ->target('_self')
