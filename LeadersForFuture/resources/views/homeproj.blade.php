@@ -5,27 +5,41 @@
     <div class="w-full min-h-screen">
         {{-- Professor --}}
         @if(Auth::user()->id_tipoUtilizador == 1)
-        <div class="w-full p-3">
-            @livewire('form-proj')
-        </div>
+            <div class="w-full p-3">
+                @livewire('form-proj')
+            </div>
         @endif
         {{-- Admin --}}
         @if(Auth::user()->id_tipoUtilizador == 3)
-        <div class="p-3">
-            <strong>Listagem de projetos no sistema</strong> <a href="/admin/addproj"
-            class="my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
-            <span class="material-symbols-outlined align-middle h-7">add</span> Criar Projetos
-            </a>
-            <a href="/admin/addtoproj"
-            class="my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white w-auto">
-                <span class="material-symbols-outlined align-middle h-7">edit_note</span> Adicionar a Projeto Existente
-            </a>
-            @livewire('form-adminp')
-        </div>
-        @endif
-        {{-- Student --}}
-        @if(Auth::user()->id_tipoUtilizador == 2)
-            {{-- Para já não vai ter nada aqui --}}
-        @endif
-    </div>
+            <div class="p-3">
+                <div class="md:grid md:grid-cols-2">
+                    <div>
+                        <strong class="dark:text-white text-lg">Listagem de projetos no sistema</strong>
+                    </div>
+                    <div class="md:text-right my-2 grid grid-cols-2 md:flex md:ml-auto">
+                        <div>
+                            <a href="/admin/addproj" class="block bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce
+                                hover:text-white px-4 py-2 dark:text-white mx-2">
+                                <span class="material-symbols-outlined align-middle h-7">add</span>
+                                Criar Projetos
+                            </a>
+                        </div>
+                        <div>
+                            <a href="/admin/addtoproj" class="block bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce
+                                hover:text-white px-4 py-2 dark:text-white mx-2">
+                                <span class="material-symbols-outlined align-middle h-7">edit_note</span>
+                                Adicionar a Projeto Existente
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                @livewire('form-adminp')
+
+                @endif
+                {{-- Student --}}
+                @if(Auth::user()->id_tipoUtilizador == 2)
+                    {{-- Para já não vai ter nada aqui --}}
+                @endif
+            </div>
 @endsection
