@@ -5,16 +5,26 @@
     <div class="w-full min-h-screen">
         {{-- Professor --}}
         @if(Auth::user()->id_tipoUtilizador == 1)
-            <div class="w-full p-3">
-            <strong class="dark:text-white text-lg">Listagem de Projetos Criados associados ao Professor: {{Auth::user()->nome}} {{Auth::user()->apelido}}</strong>
-            <div class="w-full p-3"> 
-                <a href="/prof/addproj/"
-                    class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
-                    <span class="material-symbols-outlined align-middle h-7">add</span> Criar Projeto
-                </a>
+
+            <div class="md:grid md:grid-cols-2 m-2 md:m-5">
+                <div>
+                    <strong class="dark:text-white text-lg">
+                        Listagem de Projetos Criados associados ao
+                        Professor: {{Auth::user()->nome}} {{Auth::user()->apelido}}
+                    </strong>
+                </div>
+                <div class="md:text-right my-2 grid grid-cols-2 md:flex md:ml-auto">
+                    <div>
+                        <a href="/prof/addproj/" class="block bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce
+                                hover:text-white px-4 py-2 dark:text-white mx-2">
+                            <span class="material-symbols-outlined align-middle h-7">add</span>
+                            Criar Projetos
+                        </a>
+                    </div>
+
+                </div>
             </div>
-                @livewire('form-proj')
-            </div>
+            @livewire('form-proj')
         @endif
         {{-- Admin --}}
         @if(Auth::user()->id_tipoUtilizador == 3)

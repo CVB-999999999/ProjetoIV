@@ -30,16 +30,13 @@
                     </a>
                 @endif
                 @if(Auth::user()->id_tipoUtilizador == 1)
-                    <div class="lg:grid lg:grid-cols-2 mb-3">
-                        
-                        <div class="lg:text-right my-1">
-                            <a href="/prof/users/{{ trim($u->numero) }}/project/add"
-                               class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
-                                <span class="material-symbols-outlined align-middle h-7">add</span> Adicionar a Projeto
-                                Existente
-                            </a>
-                        </div>
-                    </div>
+
+                    <a href="/prof/users/{{ trim($u->numero) }}/project/add"
+                       class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                        <span class="material-symbols-outlined align-middle h-7">add</span>
+                        Adicionar a Projeto Existente
+                    </a>
+
                 @endif
             </div>
 
@@ -77,7 +74,8 @@
                     class="xl:grid xl:grid-cols-2 bg-zinc-300 dark:bg-zinc-600 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10 ">
                     <div>
                         <p class="rounded px-4 py-2 w-full text-center">Ano Letivo: {{ $form->ano_letivo }}</p>
-                        <p class="rounded px-4 py-2 w-full text-center"> {{ $form->ano_curricular }}º ano {{ $form->semestre + 1 }}º semestre</p>
+                        <p class="rounded px-4 py-2 w-full text-center"> {{ $form->ano_curricular }}º
+                            ano {{ $form->semestre + 1 }}º semestre</p>
                         <div class="rounded px-4 py-2 w-full text-center">
                             <p> Estado: </p>
                             @switch($form->estado)
