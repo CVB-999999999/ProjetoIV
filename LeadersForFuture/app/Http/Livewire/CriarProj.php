@@ -37,9 +37,12 @@ class CriarProj extends Component
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
         }
-        try { 
+        try {
             DB::insert("INSERT INTO Projecto (id,estado,nome,tema,ano_letivo,semestre,id_Disciplina) Values (?, ?, ?, ?, ?, ?, ?)",
             [$this->idproj, $this->estado, $this->nome, $this->tema, $ano[0], $this->semestre, $this->disciplina]);
+            if(Auth::user()->id_tipoUtilizador == 1){
+                DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)",[$this->idproj, Auth::user()->numero]);
+            }
           } catch(\Illuminate\Database\QueryException $ex){ 
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;

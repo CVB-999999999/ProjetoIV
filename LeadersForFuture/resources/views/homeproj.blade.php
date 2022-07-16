@@ -6,6 +6,13 @@
         {{-- Professor --}}
         @if(Auth::user()->id_tipoUtilizador == 1)
             <div class="w-full p-3">
+            <strong class="dark:text-white text-lg">Listagem de Projetos Criados associados ao Professor: {{Auth::user()->nome}} {{Auth::user()->apelido}}</strong>
+            <div class="w-full p-3"> 
+                <a href="/prof/addproj/"
+                    class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                    <span class="material-symbols-outlined align-middle h-7">add</span> Criar Projeto
+                </a>
+            </div>
                 @livewire('form-proj')
             </div>
         @endif

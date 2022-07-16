@@ -76,6 +76,9 @@ Route::get('/admin/forms', [AdminController::class, 'formCriar'])
 // Admin Projetos
 Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
     ->middleware('hasPermission:3');
+
+Route::get('/prof/addproj', [AdminController::class, 'criarProj'])
+    ->middleware('hasPermission:1');
 // Admin Projetos
 Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:3');
@@ -111,7 +114,14 @@ Route::get('/prof/proj', function () {
     ->middleware('auth');
 
 Route::get('/prof/aluno/{id}', function () {
-    return view('homealuno');
+    $id = \Request::segment(3);
+    try { 
+        $proj = DB::select("SELECT * FROM Projecto WHERE id = ?",[$id]);
+      } catch(\Illuminate\Database\QueryException $ex){ 
+        $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+        return;
+      }
+    return view('homealuno',['proj' => $proj[0]]);
 })->name('prof.aluno')
     ->middleware('auth');
 
