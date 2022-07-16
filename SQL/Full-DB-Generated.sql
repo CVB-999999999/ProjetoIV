@@ -109,136 +109,6 @@ create table Formulario
 )
 go
 
-CREATE TRIGGER [dbo].[emailUpdateEstadoFormulario]
-
-ON [dbo].[Formulario]
-AFTER UPDATE 
-AS
-BEGIN
-	DECLARE @idFormulario nchar(50),
-		    @emailUtilizador nchar(50),
-			@estadoAtualizado nchar(10),
-			@nomeProjecto nchar(50),
-			@corpoEmail nvarchar(4000),
-			@tituloEmail nchar(50),
-			@estadoTexto nchar(30),
-			@numeroUtilizador nchar(10),
-			@nomeUtilizador nchar(50),
-			@apelidoUtilizador nchar(50),
-			@parte2CorpoEmail nvarchar(4000),
-			@corpoEmailCompleto nvarchar(4000)
-		
-			
-	SELECT @idFormulario = id, @estadoAtualizado = estado FROM INSERTED 
-
-	IF(@estadoAtualizado = 1 OR @estadoAtualizado = 3)
-	BEGIN
-	DECLARE cursor_email CURSOR FOR 
-	SELECT u.email, f.estado, p.nome, u.numero, u.nome, u.apelido FROM Formulario AS f 
-	INNER JOIN Projecto p ON f.id_projecto = p.id 
-	INNER JOIN Utilizador_Projecto AS up ON p.id = up.id_projecto 
-	INNER JOIN Utilizador as u ON up.numero_utilizador = u.numero 
-	INNER JOIN TipoUtilizador AS tp ON U.id_tipoUtilizador = tp.id_TipoUtilizador 
-	WHERE f.id = @idFormulario AND u.id_tipoUtilizador = 2 
-	 
-	OPEN cursor_email
-	FETCH NEXT FROM  cursor_email INTO @emailUtilizador, @estadoAtualizado,  @nomeProjecto, @numeroUtilizador, @nomeUtilizador, @apelidoUtilizador
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN 
-				
-			--Caso do formulario estar disponivel para preenchimento--
-			IF(@estadoAtualizado = 1)
-			
-			BEGIN 
-			SELECT @emailUtilizador
-			set @estadoTexto = 'Formulario disponível para preenchimento'
-			SET @tituloEmail = 'Formulario disponível para preenchimento!'
-
-			SELECT @parte2CorpoEmail = codigoHTML FROM TemplatesHTML WHERE id = 1
-			SELECT @corpoEmail = codigoHTML FROM TemplatesHTML WHERE id = 2 
-			SET @corpoEmailCompleto = @corpoEmail + '<b>' + @nomeProjecto + '</b>' + @parte2CorpoEmail
-			SELECT CAST (@corpoEmailCompleto AS TEXT)
-			 EXEC msdb.dbo.sp_send_dbmail
-               @profile_name = 'projecto3Sistema',
-               @recipients = @emailUtilizador,
-               @body = @corpoEmailCompleto,
-               @body_format = 'HTML',
-               @subject = @tituloEmail,
-             @exclude_query_output = 1
-END
-
-			 --Caso do formulario estiver comentado pelo professor responsavel--
-			 IF(@estadoAtualizado = 3)
-			BEGIN 
-			set @estadoTexto = 'Formulário comentado pelo professor.'
-			SET @tituloEmail = 'Comentários adicionados ao formulário'
-			SELECT @parte2CorpoEmail = codigoHTML FROM TemplatesHTML WHERE id = 1
-			SELECT @corpoEmail = codigoHTML FROM TemplatesHTML WHERE id = 3 
-			SET @corpoEmailCompleto = @corpoEmail + '<b>' + @nomeProjecto + '</b>' + @parte2CorpoEmail
-			 EXEC msdb.dbo.sp_send_dbmail
-               @profile_name = 'projecto3Sistema',
-               @recipients = @emailUtilizador,
-               @body = @corpoEmailCompleto,
-               @body_format = 'HTML',
-               @subject = @tituloEmail,
-             @exclude_query_output = 1
-			 END
-
-			 INSERT INTO Email(email_destinario, id_formulario, nome_projecto, estado, numero_utilizador, nome_utilizador, apelido_utilizador, dataEnvio) VALUES (@emailUtilizador, @idFormulario, @nomeProjecto, @estadoTexto, @numeroUtilizador, @nomeUtilizador, @apelidoUtilizador, GETDATE())
-
-		FETCH NEXT FROM  cursor_email INTO @emailUtilizador, @estadoAtualizado,  @nomeProjecto, @numeroUtilizador, @nomeUtilizador, @apelidoUtilizador
-	END
-
-	CLOSE cursor_email
-	DEALLOCATE cursor_email
-	END
-	
-	IF(@estadoAtualizado = 2)
-	BEGIN
-	DECLARE cursor_email_professor CURSOR FOR 
-	SELECT u.email, f.estado, p.nome, u.numero, u.nome, u.apelido FROM Formulario AS f INNER JOIN Projecto p ON f.id_projecto = p.id INNER JOIN Utilizador_Projecto AS up ON p.id = up.id_projecto INNER JOIN Utilizador as u ON up.numero_utilizador = u.numero INNER JOIN TipoUtilizador AS tp ON U.id_tipoUtilizador = tp.id_TipoUtilizador WHERE f.id = @idFormulario AND u.id_tipoUtilizador = 1 
-	 
-	OPEN cursor_email_professor
-	FETCH NEXT FROM  cursor_email_professor INTO @emailUtilizador, @estadoAtualizado,  @nomeProjecto, @numeroUtilizador, @nomeUtilizador, @apelidoUtilizador
-
-	WHILE @@FETCH_STATUS = 0
-	BEGIN 
-				
-			--Caso do formulario estar disponivel para preenchimento--
-			IF(@estadoAtualizado = 2)
-			BEGIN 
-			set @estadoTexto = 'Um aluno preencheu um formulário'
-			SET @tituloEmail = 'Um aluno preencheu um formulário!'
-
-			SELECT @parte2CorpoEmail = codigoHTML FROM TemplatesHTML WHERE id = 1
-			SELECT @corpoEmail = codigoHTML FROM TemplatesHTML WHERE id = 4 
-			SET @corpoEmailCompleto = @corpoEmail + '<b>' + @nomeProjecto + '</b>' + @parte2CorpoEmail
-			SELECT CAST (@corpoEmailCompleto AS TEXT)
-			 EXEC msdb.dbo.sp_send_dbmail
-               @profile_name = 'projecto3Sistema',
-               @recipients = @emailUtilizador,
-               @body = @corpoEmailCompleto,
-               @body_format = 'HTML',
-               @subject = @tituloEmail,
-             @exclude_query_output = 1
-END
-
-			 INSERT INTO Email(email_destinario, id_formulario, nome_projecto, estado, numero_utilizador, nome_utilizador, apelido_utilizador, dataEnvio) VALUES (@emailUtilizador, @idFormulario, @nomeProjecto, @estadoTexto, @numeroUtilizador, @nomeUtilizador, @apelidoUtilizador, GETDATE())
-
-		FETCH NEXT FROM  cursor_email_professor INTO @emailUtilizador, @estadoAtualizado,  @nomeProjecto, @numeroUtilizador, @nomeUtilizador, @apelidoUtilizador
-	END
-
-	CLOSE cursor_email_professor
-	DEALLOCATE cursor_email_professor
-	END
-	
-			
-
-
-END
-go
-
 create table PerguntasFormulario
 (
     id_formulario nchar(50) not null,
@@ -366,16 +236,39 @@ SELECT u.* FROM Utilizador as u, Utilizador_Projecto as up, Projecto as p
 WHERE p.id = up.id_projecto AND p.id = @idForm AND up.numero_utilizador = u.numero
 go
 
+CREATE PROCEDURE [dbo].[buscaAlunosForms1] @idForm nchar(50)
+AS
+SELECT u.* FROM Utilizador as u, Utilizador_Projecto as up, Projecto as p, Formulario as f
+WHERE p.id = up.id_projecto AND f.id = @idForm AND up.numero_utilizador = u.numero and p.id = f.id_projecto
+go
+
+CREATE PROCEDURE [dbo].[buscaAlunosProj] @idProj nchar(50)
+AS
+SELECT u.* FROM Utilizador u, Utilizador_Projecto up WHERE up.id_projecto = @idProj AND up.numero_utilizador = u.numero
+go
+
 CREATE PROCEDURE [dbo].[buscaCursoForm] @idForm nchar(50)
 AS
 SELECT d.ds_discip, c.nm_curso, c.ds_grau FROM Projecto as p, Formulario as f, Disciplina d, cursos_disciplinas cd, Curso c 
 WHERE p.id = f.id_projecto AND p.id = @idForm AND p.id_Disciplina = d.cd_discip AND d.cd_discip = cd.cd_discip AND cd.cd_curso = c.cd_curso
 go
 
+CREATE PROCEDURE [dbo].[buscaCursoForm1] @idForm nchar(50)
+AS
+SELECT d.ds_discip, c.nm_curso, c.ds_grau FROM Projecto as p, Formulario as f, Disciplina d, cursos_disciplinas cd, Curso c 
+WHERE p.id = f.id_projecto AND f.id = @idForm AND p.id_Disciplina = d.cd_discip AND d.cd_discip = cd.cd_discip AND cd.cd_curso = c.cd_curso
+go
+
 CREATE PROCEDURE [dbo].[buscaDadosFormProj] @idForm nchar(50)
 AS
 SELECT f.*, p.* FROM Projecto as p, Formulario f
 WHERE p.id = f.id_projecto AND p.id = @idForm
+go
+
+CREATE PROCEDURE [dbo].[buscaDadosFormProj1] @idForm nchar(50)
+AS
+SELECT f.*, p.* FROM Projecto as p, Formulario f
+WHERE p.id = f.id_projecto AND f.id = @idForm
 go
 
 -- ================================================
@@ -390,6 +283,11 @@ CREATE PROCEDURE [dbo].[buscaEstado] @idForm nchar(50)
 AS
 SELECT estado  FROm Formulario 
 WHERE id = @idForm
+go
+
+CREATE PROCEDURE [dbo].[buscaFormsAnoIdprof] @anoLetivo nchar(50), @idProf int
+AS
+ SELECT f.* FROM Projecto p, Utilizador_Projecto up, Formulario f WHERE up.numero_utilizador = @idProf and up.id_projecto = p.id and f.id_projecto = p.id and f.ano_letivo = @anoLetivo
 go
 
 CREATE PROCEDURE [dbo].[buscaFormsAnoLetivo] @anoLetivo nchar(50)
@@ -564,6 +462,16 @@ INNER JOIN Resposta r ON pf.id_resposta=r.id
 WHERE pf.id_formulario=@idForm
 go
 
+Create PROCEDURE [dbo].[buscaProjProf] @idProf int
+AS
+SELECT p.* FROM Utilizador_Projecto up, Projecto p WHERE up.numero_utilizador = @idProf and up.id_projecto = p.id;
+go
+
+Create PROCEDURE [dbo].[buscaProjetos]
+AS
+SELECT *  From Projecto
+go
+
 Create PROCEDURE buscaRespostasCondForm @idForm varchar(50)
 AS
 SELECT r.Resposta, r.id FROM Resposta r 
@@ -576,6 +484,11 @@ AS
 SELECT r.Resposta, r.id FROM Resposta r 
 RIGHT JOIN PerguntasFormulario pf ON pf.id_resposta=r.id 
 WHERE pf.id_formulario=@idForm
+go
+
+CREATE PROCEDURE [dbo].[buscaTipoForm]
+AS
+SELECT *  From TipoFormulario
 go
 
 CREATE PROCEDURE [dbo].[buscaTodosAlunos]
@@ -674,6 +587,23 @@ INSERT INTO Observacao (idProf, conteudo, aprovado, dataHora) VALUES (@idProf, @
 SELECT @idUltimaResposta = SCOPE_IDENTITY();
 
 INSERT INTO ObservacaoFormulario(idFormulario, idObservacao) VALUES (@idForm, @idUltimaResposta)
+go
+
+CREATE PROCEDURE [dbo].[insertProjeto] @nome nchar(50), @tema varchar(200),
+                                       @disciplina nvarchar(255), @ano int, @prof nchar(50), @aluno nchar(50)
+AS
+DECLARE @maxId AS nchar(50);
+
+SELECT @maxId = max(cast(id as integer)) FROM Projecto;
+
+INSERT INTO Projecto (id, nome, tema, id_Disciplina, estado, ano_letivo)
+VALUES (@maxId + 1, @nome, @tema, @disciplina, 0, @ano);
+
+INSERT INTO Utilizador_Projecto(id_projecto, numero_utilizador)
+VALUES (@maxId, @prof);
+
+INSERT INTO Utilizador_Projecto(id_projecto, numero_utilizador)
+VALUES (@maxId, @aluno);
 go
 
 
