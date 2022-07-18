@@ -25,11 +25,16 @@ class FormProf extends Component
     public function render()
     {
         // Gets the Tipo_Formulario
+        try{
         $this->profnumber = Auth::user()->numero;
         $this->tpForms = DB::select("exec buscaTipoForm");
 
         // Gets the projects
         $this->projetos = DB::select("SELECT p.*  From Projecto p, Utilizador_Projecto up WHERE up.numero_utilizador = ? AND up.id_projecto = p.id", [$this->profnumber]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
 
         return view('livewire.form-criar');
     }
@@ -45,9 +50,13 @@ class FormProf extends Component
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
         }
-
+        try{
         DB::insert("INSERT INTO Formulario (id,estado,tipo_formulario,id_projecto,ano_letivo,ano_curricular,semestre) Values (?, ?, ?, ?, ?, ?, ?)",
             [$this->idform, $this->estado, $this->tpForm, $this->projeto, $this->ano_letivo, $this->anocurricular, $this->semestre]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
 
         return redirect("admin/users/");
     }

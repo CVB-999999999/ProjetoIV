@@ -19,8 +19,12 @@ class ProjectAdd extends Component
 
     public function render()
     {
-        $this->query = DB::select("exec buscaProjProf ?", [Auth::user()->numero]);
-
+        try{
+            $this->query = DB::select("exec buscaProjProf ?", [Auth::user()->numero]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
 //        ddd($this->query);
 
         return view('livewire.project-add');
@@ -32,9 +36,15 @@ class ProjectAdd extends Component
             $this->emit("openModal", "error1", ["message" => 'Projeto selecionado inválido!']);
             return;
         }
-
-        DB::insert('INSERT INTO Utilizador_Projecto(id_projecto, numero_utilizador) VALUES (?,?)', [$this->projId, $this->alunoId]);
-
+        try {
+            $isThere = DB::select('SELECT * FROM Utilizador_Projecto WHERE  id_projecto = ? AND numero_utilizador = ?',[$this->projId, $this->alunoId]);
+            if($isThere == null){
+                DB::insert('INSERT INTO Utilizador_Projecto(id_projecto, numero_utilizador) VALUES (?,?)', [$this->projId, $this->alunoId]);
+            }
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
         $this->emit("openModal", "success", ["message" => 'Projeto Adicionado com sucesso!']);
     }
 }

@@ -39,8 +39,11 @@ final class FormAdminp extends PowerGridComponent
     {
         $collection = collect();
         $profnumber = Auth::user()->numero;
-
-        $query = DB::select("exec buscaProjetos");
+        try{
+            $query = DB::select("exec buscaProjetos");
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+        }
         foreach($query as $queryres)[
             $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo])
         ];

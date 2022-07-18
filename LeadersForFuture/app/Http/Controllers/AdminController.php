@@ -58,11 +58,13 @@ class AdminController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function userDetail($id)
     {
-        // Gets the user
-        $user = DB::select("exec buscaUtiliz ?", [$id]);
-
-        // Gets forms associated with user
-        $forms = DB::select("exec buscaTodosDadosForms ?", [$id]);
+        try {
+            $user = DB::select("exec buscaUtiliz ?", [$id]);
+            $forms = DB::select("exec buscaTodosDadosForms ?", [$id]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
 
         return view('admin.user-detail', ['user' => $user, 'forms' => $forms]);
     }

@@ -22,7 +22,12 @@ class UserEdit extends Component
 
     public function render()
     {
+    try{
         $user = DB::selectOne("exec buscaUtiliz ?", [$this->mNumber]);
+    }catch(\Illuminate\Database\QueryException $ex){ 
+        $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+        return;
+    }
 
         if ($user == null) {
             return view('livewire.error1', ['message' => 'Utilizador não encontrado']);
@@ -42,7 +47,12 @@ class UserEdit extends Component
 
     public function submitForm()
     {
+    try{
         DB::update('UPDATE Utilizador SET password = ? WHERE numero = ?', [$this->pass, $this->mNumber]);
+    }catch(\Illuminate\Database\QueryException $ex){ 
+        $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+        return;
+    }
 
         $this->emit("openModal", "success", ["message" => 'A password do utilizador foi alterada com sucesso!']);
     }

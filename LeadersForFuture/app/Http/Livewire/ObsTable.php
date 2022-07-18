@@ -35,8 +35,11 @@ final class ObsTable extends PowerGridComponent
     public function datasource(): ?Collection
     {
         $collection = collect();
-
-        $query = DB::select("exec buscaObs ?", [$this->formID]);
+        try{
+            $query = DB::select("exec buscaObs ?", [$this->formID]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+        }
 
         foreach ($query as $q) {
 

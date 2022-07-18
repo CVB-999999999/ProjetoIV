@@ -38,6 +38,7 @@ class Form extends Component
 
     public function render()
     {
+        try{
         // Verifies the state of the form
         $this->estado = DB::select("exec buscaEstado ?", [$this->formID]);
         // Get the questions
@@ -50,6 +51,10 @@ class Form extends Component
         $this->dadosForm = DB::select("exec buscaDadosFormProj1 ?", [$this->formID]);
         // Gets course data
         $this->dadosCurso = DB::select("exec buscaCursoForm1 ?", [$this->formID]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
 
         // Section to verify if user has permission to access the form
         $found = false;
@@ -90,7 +95,12 @@ class Form extends Component
 
             // Verify if user owns the form
             // Gets all forms that the user owns and compares with current forms id
-            $dadosF = DB::select("exec buscaFormsDados ?", [Auth::user()->username]);
+            try{
+                $dadosF = DB::select("exec buscaFormsDados ?", [Auth::user()->username]);
+            }catch(\Illuminate\Database\QueryException $ex){ 
+                $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+                return;
+            }
 
             foreach ($dadosF as $dados) {
                 if ($this->formID == $dados->id) {

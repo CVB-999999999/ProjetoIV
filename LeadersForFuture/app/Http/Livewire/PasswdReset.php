@@ -29,7 +29,12 @@ class PasswdReset extends Component
 
         // Verify if old password is correct
         if ($this->passO != null) {
-            $query = DB::selectOne('SELECT numero FROM Utilizador WHERE numero = ? AND password = ?', [Auth::user()->numero, $this->passO]);
+            try{
+                $query = DB::selectOne('SELECT numero FROM Utilizador WHERE numero = ? AND password = ?', [Auth::user()->numero, $this->passO]);
+            }catch(\Illuminate\Database\QueryException $ex){ 
+                $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+                return;
+            }
         } else {
             $this->emit("openModal", "error1", ["message" => 'A password antiga é um campo obrigatorio!']);
             return;
@@ -38,8 +43,12 @@ class PasswdReset extends Component
         // Update password
         if (!empty($query)) {
             if ($this->pass == $this->passC) {
-                DB::update('UPDATE Utilizador SET password = cast(? as varchar) WHERE numero = cast(? as varchar)', [$this->pass, Auth::user()->numero]);
-
+                try{
+                    DB::update('UPDATE Utilizador SET password = cast(? as varchar) WHERE numero = cast(? as varchar)', [$this->pass, Auth::user()->numero]);
+                }catch(\Illuminate\Database\QueryException $ex){ 
+                    $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+                    return;
+                }
                 $this->emit("openModal", "success", ["message" => 'A password do utilizador foi alterada com sucesso!']);
             } else {
                 $this->emit("openModal", "error1", ["message" => 'As passwords novas não coincidem!']);

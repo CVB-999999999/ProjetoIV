@@ -22,16 +22,25 @@ class UserCreate extends Component
 
     public function submitForm()
     {
-        $user = DB::selectOne("exec buscaUtiliz ?", [$this->mNumber]);
+        try{
+            $user = DB::selectOne("exec buscaUtiliz ?", [$this->mNumber]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
 
         if ((!empty($user) || !$user == null) || ($this->typeA == null)) {
             $this->emit("openModal", "error1", ["message" => 'Utilizador já existe']);
             return back();
         } else {
             $username = explode("@", $this->emailA);
-
-            DB::insert("INSERT INTO Utilizador (numero, password, nome, apelido, nif, id_tipoUtilizador, email, username) Values (?, ?, ?, ?, ?, ?, ?, ?)",
-                [$this->mNumber, md5($this->emailA), $this->firstN, $this->lastN, $this->nif, $this->typeA, $this->emailA, $username[0]]);
+            try{
+                DB::insert("INSERT INTO Utilizador (numero, password, nome, apelido, nif, id_tipoUtilizador, email, username) Values (?, ?, ?, ?, ?, ?, ?, ?)",
+                    [$this->mNumber, md5($this->emailA), $this->firstN, $this->lastN, $this->nif, $this->typeA, $this->emailA, $username[0]]);
+            }catch(\Illuminate\Database\QueryException $ex){ 
+                $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+                return;
+            }
 
             switch ($this->typeA) {
                 case 1:

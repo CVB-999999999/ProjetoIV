@@ -31,16 +31,16 @@ class AddToproj extends Component
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
         }
-        try { 
-            DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)",
+        try {
+            $isThere = DB::select('SELECT * FROM Utilizador_Projecto WHERE  id_projecto = ? AND numero_utilizador = ?',[$this->projeto, $this->user]);
+            if($isThere == null){
+                DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)",
             [$this->projeto, $this->user]);
-              // Closures include ->first(), ->get(), ->pluck(), etc.
-          } catch(\Illuminate\Database\QueryException $ex){ 
-            $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
+            }
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
-            // Note any method of class PDOException can be called on $ex.
-          }
-        
-        return view('livewire.add-toproj');
+        }
+        $this->emit("openModal", "success", ["message" => 'Projeto Adicionado com sucesso!']);
     }
 }

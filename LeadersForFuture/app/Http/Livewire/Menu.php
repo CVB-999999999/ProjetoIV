@@ -65,8 +65,12 @@ class Menu extends Component
 
         $filename = 'test.pdf';
 
-
-        $perguntas = DB::select("exec buscaPerguntasRespostasCondForm ?", [$id]);
+        try{
+            $perguntas = DB::select("exec buscaPerguntasRespostasCondForm ?", [$id]);
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
 
         $html = \View::make('livewire.pdfgenerator', compact('perguntas'));
 

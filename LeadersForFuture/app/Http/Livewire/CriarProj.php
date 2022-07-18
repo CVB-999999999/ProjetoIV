@@ -27,9 +27,12 @@ class CriarProj extends Component
     public function submitForm()
     {
         $this->estado = 0;
-
-        $newid = DB::select("SELECT id = max(cast(id as integer)) FROM Projecto");
-
+        try{
+            $newid = DB::select("SELECT id = max(cast(id as integer)) FROM Projecto");
+        }catch(\Illuminate\Database\QueryException $ex){ 
+            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+            return;
+        }
         $this->idproj = $newid[0]->id + 1;
         $ano = explode("/", $this->ano_letivo);
         if ($this->nome == null || $this->tema == null || $this->semestre == null || $this->ano_letivo == null || $this->disciplina == null) {
@@ -48,8 +51,6 @@ class CriarProj extends Component
             return;
             // Note any method of class PDOException can be called on $ex.
           }
-        
-
         $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
     }
 }
