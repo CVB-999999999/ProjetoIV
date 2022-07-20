@@ -83,6 +83,9 @@ Route::get('/prof/addproj', [AdminController::class, 'criarProj'])
 Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:3');
 
+Route::get('/prof/addtoproj', [AdminController::class, 'addToproj'])
+    ->middleware('hasPermission:1');
+
 Route::get('/admin/proj', function () {
     return view('homeproj');
 })->name('adminproj')

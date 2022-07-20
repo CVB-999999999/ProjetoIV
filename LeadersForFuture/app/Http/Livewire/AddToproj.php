@@ -18,8 +18,13 @@ class AddToproj extends Component
     public $projeto;
 
     public function render(){
-        $this->projetos = DB::select("SELECT * FROM Projecto");
-        $this->users = DB::select("SELECT * FROM Utilizador");
+        if(Auth::user()->id_tipoUtilizador == 1){
+            $this->projetos = DB::select("SELECT p.* FROM Projecto p, Utilizador_Projecto up WHERE up.numero_utilizador = ? AND up.id_projecto = p.id", [Auth::user()->numero]);
+            $this->users = DB::select("SELECT * FROM Utilizador WHERE id_tipoUtilizador = 2");
+        }else {
+            $this->projetos = DB::select("SELECT * FROM Projecto");
+            $this->users = DB::select("SELECT * FROM Utilizador");
+        }
         return view('livewire.add-toproj');
     }
     public function submitForm()
