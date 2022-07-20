@@ -3,6 +3,7 @@
 namespace App\Http\Livewire;
 
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Livewire\Component;
 use LivewireUI\Modal\ModalComponent;
@@ -30,11 +31,35 @@ class ApagarProjeto extends ModalComponent
     public function func()
     {
         try {
+            $query = DB::table('Formulario')->where('id_projecto', '=', $this->idU)->get();
+
+            // Verifyt if any form in the project is active
+            foreach ($query as $q) {
+                if ($q->estado != 0) {
+                    $this->emit("openModal", "error1", ["message" => 'Não é possivel apagar projetos que não se encontrem no estado Bloqueado!']);
+                    return;
+                }
+            }
+
+            // Delete rows in question "link" table
+            foreach ($query as $q) {
+                DB::table('PerguntasFormulario')->where('id_formulario', '=', $q->id)->delete();
+            }
+
+            // deletes the rows
             DB::table('Formulario')->where('id_projecto', '=', $this->idU)->delete();
             DB::table('Utilizador_Projecto')->where('id_projecto', '=', $this->idU)->delete();
             DB::table('Projecto')->where('id', '=', $this->idU)->delete();
 
-            return redirect('/admin/proj');
+            // redirect form the correct page depending on the user type
+            // Prof
+            if (Auth::user()->id_TipoUtilizador == 1) {
+                return redirect('/prof/proj');
+
+                // Admin
+            } elseif (Auth::user()->id_tipoUtilizador == 3) {
+                return redirect('/admin/proj');
+            }
 
         } catch (\Illuminate\Database\QueryException $ex) {
 
