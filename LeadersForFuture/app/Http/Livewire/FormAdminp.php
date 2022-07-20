@@ -124,6 +124,11 @@ final class FormAdminp extends PowerGridComponent
                 ->caption('Ver utilizadores')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                 ->route('admin.aluno', ['id' => 'id'])
+                ->target('_self'),
+            Button::add('btn')
+                ->caption('Eliminar Projeto')
+                ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
+                ->route('admin.eliminarProjeto', ['id' => 'id'])
                 ->target('_self')
         ];
     }

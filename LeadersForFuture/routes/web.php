@@ -130,6 +130,17 @@ Route::get('/admin/aluno/{id}', function () {
 })->name('admin.aluno')
     ->middleware('auth');
 
+Route::get('/admin/eliminarProjeto/{id}', function () {
+    $id = \Request::segment(3);
+    try{
+        DB::table('Formulario')->where('id_projecto', $id)->delete();
+        DB::table('Utilizador_Projecto')->where('id_projecto', $id)->delete();
+        DB::table('Projecto')->where('id', $id)->delete();
+    }catch(\Illuminate\Database\QueryException $ex){ }
+    return view('homeproj');
+    })->name('admin.eliminarProjeto')
+        ->middleware('auth');
+
 Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
     ->middleware('auth');
 
