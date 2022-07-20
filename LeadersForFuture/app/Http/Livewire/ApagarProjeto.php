@@ -51,15 +51,7 @@ class ApagarProjeto extends ModalComponent
             DB::table('Utilizador_Projecto')->where('id_projecto', '=', $this->idU)->delete();
             DB::table('Projecto')->where('id', '=', $this->idU)->delete();
 
-            // redirect form the correct page depending on the user type
-            // Prof
-            if (Auth::user()->id_TipoUtilizador == 1) {
-                return redirect('/prof/proj');
-
-                // Admin
-            } elseif (Auth::user()->id_tipoUtilizador == 3) {
-                return redirect('/admin/proj');
-            }
+            return redirect(url()->previous());
 
         } catch (\Illuminate\Database\QueryException $ex) {
 
