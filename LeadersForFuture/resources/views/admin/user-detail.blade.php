@@ -54,7 +54,7 @@
             @endif
             {{-- Header --}}
             <div class="bg-zinc-300 dark:bg-zinc-600 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10">
-                <h2 class="text-center text-2xl"> {{ $form->nome }} </h2>
+                <h2 class="text-center text-2xl" id="{{ trim($form->id_projecto) }}"> {{ $form->nome }} </h2>
                 <div class="lg:grid lg:grid-cols-2">
                     <div>
                         Disciplina: {{ $form->id_Disciplina }}
@@ -128,9 +128,19 @@
                                     Adicionar Perguntas
                                 </a>
                             </div>
+                            @if($form->estado == 0)
+                                <div>
+                                    <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
+                                mt-3 w-full text-center" type="submit"
+                                            onclick="Livewire.emit('openModal', 'del-questions', {{ json_encode(["id" => $form->id]) }})">
+                                        <span class="material-symbols-outlined align-middle h-7">delete</span>
+                                        Apagar Perguntas
+                                    </button>
+                                </div>
+                            @endif
                         @endif
                         <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
-                                my-3 w-full text-center" type="submit"
+                                mt-3 w-full text-center" type="submit"
                                 onclick="Livewire.emit('openModal', 'apagar-forms', {{ json_encode(["id" => $form->id]) }})">
                             <span class="material-symbols-outlined align-middle h-7">delete</span>
                             Apagar Formulário
