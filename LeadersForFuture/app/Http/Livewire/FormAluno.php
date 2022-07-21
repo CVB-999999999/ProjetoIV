@@ -41,7 +41,7 @@ final class FormAluno extends PowerGridComponent
         $id = \Request::segment(3);
         try{
             $query = DB::select("exec buscaAlunosProj ?", [$id]);
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
         foreach($query as $queryres){
