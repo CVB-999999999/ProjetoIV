@@ -42,9 +42,9 @@ final class FormProj extends PowerGridComponent
         $profnumber = Auth::user()->numero;
         try{
             $query = DB::select("exec buscaProjProf ?", [$profnumber]);
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
-            
+
         }
 
         foreach ($query as $queryres) {
@@ -158,10 +158,14 @@ final class FormProj extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('Ver alunos')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">visibility</span> Ver alunos')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                 ->route('prof.aluno', ['id' => 'id'])
-                ->target('_self')
+                ->target('_self'),
+            Button::add('btn')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">delete</span> Eliminar Projeto')
+                ->class('bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
+                ->openModal('apagar-projeto', ['id' => 'id'])
         ];
     }
 

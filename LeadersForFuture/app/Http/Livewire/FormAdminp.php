@@ -39,12 +39,12 @@ final class FormAdminp extends PowerGridComponent
     {
         $collection = collect();
         $profnumber = Auth::user()->numero;
-        try{
+        try {
             $query = DB::select("exec buscaProjetos");
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
-        foreach($query as $queryres)[
+        foreach ($query as $queryres) [
             $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo])
         ];
         return $collection;
@@ -60,9 +60,9 @@ final class FormAdminp extends PowerGridComponent
     public function setUp(): void
     {
         $this->showPerPage()
-        ->showCheckBox()
-        ->showSearchInput()
-        ->showExportOption('download', ['excel', 'csv']);
+            ->showCheckBox()
+            ->showSearchInput()
+            ->showExportOption('download', ['excel', 'csv']);
     }
 
     /*
@@ -121,16 +121,14 @@ final class FormAdminp extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('Ver utilizadores')
-                ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">visibility</span> Ver utilizadores')
+                ->class('block bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
                 ->route('admin.aluno', ['id' => 'id'])
                 ->target('_self'),
             Button::add('btn')
-                ->caption('Eliminar Projeto')
-                ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
-                ->route('admin.eliminarProjeto', ['id' => 'id'])
-                ->target('_self')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">delete</span> Eliminar Projeto')
+                ->class('bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
+                ->openModal('apagar-projeto', ['id' => 'id'])
         ];
     }
-
 }
