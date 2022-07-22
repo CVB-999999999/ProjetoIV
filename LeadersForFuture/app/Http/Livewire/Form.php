@@ -51,13 +51,17 @@ class Form extends Component
         $this->dadosForm = DB::select("exec buscaDadosFormProj1 ?", [$this->formID]);
         // Gets course data
         $this->dadosCurso = DB::select("exec buscaCursoForm1 ?", [$this->formID]);
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
 
         // Section to verify if user has permission to access the form
         $found = false;
+
+        if (Auth::user()->id_tipoUtilizador == 3) {
+            $found = true;
+        }
 
         foreach ($this->dadosUsers as $d) {
             if ($d->numero == Auth::user()->numero) {
@@ -97,7 +101,7 @@ class Form extends Component
             // Gets all forms that the user owns and compares with current forms id
             try{
                 $dadosF = DB::select("exec buscaFormsDados ?", [Auth::user()->username]);
-            }catch(\Illuminate\Database\QueryException $ex){ 
+            }catch(\Illuminate\Database\QueryException $ex){
                 $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
                 return;
             }

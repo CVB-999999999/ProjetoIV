@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\FormController;
+use App\Http\Controllers\ProfController;
 use App\Http\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
@@ -85,17 +86,12 @@ Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
 // Admin Projetos
 Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:3');
-//
-Route::get('/prof/addtoproj', [AdminController::class, 'addToproj'])
-    ->middleware('hasPermission:1');
 // Table with all projects
 Route::get('/admin/proj', function () {
     return view('homeproj');
 })->name('adminproj')->middleware('hasPermission:3');
 // Admin View user Info
-Route::get('/admin/aluno/{id}', function () {
-    return view('homealuno');
-})->name('admin.aluno')->middleware('hasPermission:3');
+Route::get('/admin/aluno/{id}', [ProfController::class, 'homeAluno'])->name('admin.aluno')->middleware('hasPermission:3');
 
 // Professor
 // Student Info
@@ -121,19 +117,13 @@ Route::get('/prof/proj', function () {
 })->name('profproj')
     ->middleware('hasPermission:1');
 // View all Student associated with a projects
-Route::get('/prof/aluno/{id}', function () {
-    $id = \Request::segment(3);
-    try {
-        $proj = DB::select("SELECT * FROM Projecto WHERE id = ?", [$id]);
-    } catch (\Illuminate\Database\QueryException $ex) {
-        $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
-        return;
-    }
-    return view('homealuno', ['proj' => $proj[0]]);
-})->name('prof.aluno')
+Route::get('/prof/aluno/{id}', [ProfController::class, 'homeAluno'])->name('prof.aluno')
     ->middleware('hasPermission:1');
 // Create Forms Prof
 Route::get('/prof/forms', [AdminController::class, 'formCriarProf'])
+    ->middleware('hasPermission:1');
+// ?
+Route::get('/prof/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:1');
 // ?
 Route::get('/admin/erro', function () {
