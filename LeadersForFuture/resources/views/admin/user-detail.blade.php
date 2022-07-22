@@ -29,15 +29,7 @@
                         <span class="material-symbols-outlined align-middle h-7">edit</span> Editar Utilizador
                     </a>
                 @endif
-                @if(Auth::user()->id_tipoUtilizador == 1)
-
-                    <a href="/prof/users/{{ trim($u->numero) }}/project/add"
-                       class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
-                        <span class="material-symbols-outlined align-middle h-7">add</span>
-                        Adicionar a Projeto Existente
-                    </a>
-
-                @endif
+                
             </div>
 
             {{-- Form Info --}}

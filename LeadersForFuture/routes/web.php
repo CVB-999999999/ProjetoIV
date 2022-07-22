@@ -85,6 +85,9 @@ Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
 // Admin Projetos
 Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:3');
+//
+Route::get('/prof/addtoproj', [AdminController::class, 'addToproj'])
+    ->middleware('hasPermission:1');
 // Table with all projects
 Route::get('/admin/proj', function () {
     return view('homeproj');
