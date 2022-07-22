@@ -104,7 +104,7 @@
         </div>
 
         {{-- Impossible to anwser || Ready to anwser and Teacher || Anwsered || Form Locked --}}
-        @if (($estado[0]->estado == 0) || ($estado[0]->estado ==1 && $prof) || ($estado[0]->estado == 2) || ($estado[0]->estado == 3) || Session::get('tipo') == 3)
+        @if (($estado[0]->estado == 0) || ($estado[0]->estado ==1 && $prof) || ($estado[0]->estado == 2) || ($estado[0]->estado == 3) || Auth::user()->id_tipoUtilizador == 3)
             @foreach ($perguntas as $index => $pergunta)
                 <div class="mx-2 mx-md-3" x-data="{ expanded: false }">
                     <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
