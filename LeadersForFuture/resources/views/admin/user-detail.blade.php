@@ -29,7 +29,7 @@
                         <span class="material-symbols-outlined align-middle h-7">edit</span> Editar Utilizador
                     </a>
                 @endif
-                
+
             </div>
 
             {{-- Form Info --}}
@@ -95,17 +95,17 @@
                     </div>
                     <div class="xl:text-right">
                         {{-- Only show view form btn to teacher --}}
-                        @if($form->estado == 0)
-                            <form action="/form/{{trim($form->id)}}/enable">
-                                <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce
-                                                hover:text-white px-4 py-2 w-full text-center" type="submit">
-                                    <span class="material-symbols-outlined align-middle h-7">lock_open</span>
-                                    Ativar Formulário
-                                </button>
-                            </form>
-                        @endif
-
                         @if(Auth::user()->id_tipoUtilizador == 1)
+                            @if($form->estado == 0)
+                                <form action="/form/{{trim($form->id)}}/enable">
+                                    <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce
+                                                hover:text-white px-4 py-2 w-full text-center" type="submit">
+                                        <span class="material-symbols-outlined align-middle h-7">lock_open</span>
+                                        Ativar Formulário
+                                    </button>
+                                </form>
+                            @endif
+
                             <div class="my-3">
                                 <a class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 block text-center"
                                    href="/form/{{trim($form->id)}}">
@@ -131,12 +131,14 @@
                                 </div>
                             @endif
                         @endif
-                        <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
+                        @if($form->estado == 0)
+                            <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
                                 mt-3 w-full text-center" type="submit"
-                                onclick="Livewire.emit('openModal', 'apagar-forms', {{ json_encode(["id" => $form->id]) }})">
-                            <span class="material-symbols-outlined align-middle h-7">delete</span>
-                            Apagar Formulário
-                        </button>
+                                    onclick="Livewire.emit('openModal', 'apagar-forms', {{ json_encode(["id" => $form->id]) }})">
+                                <span class="material-symbols-outlined align-middle h-7">delete</span>
+                                Apagar Formulário
+                            </button>
+                        @endif
                     </div>
                 </div>
                 @endforeach
