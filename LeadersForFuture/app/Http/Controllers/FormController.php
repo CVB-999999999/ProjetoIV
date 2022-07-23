@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+
 //use PDF;
 
 class FormController extends Controller
@@ -34,8 +35,9 @@ class FormController extends Controller
 
         return view('forms.form-page', ['id' => $id]);
     }
+
     public function addPerguntas($id)
-    {   
+    {
         return view('forms.addPerguntas', ['idform' => $id]);
     }
 
@@ -52,7 +54,9 @@ class FormController extends Controller
         // Gets course data
         $dadosCurso = DB::select("exec buscaCursoForm1 ?", [$id]);
 
-//        ddd($dadosCurso);
+        if (/*empty($perguntas) || empty($respostas) || empty($dadosUsers) || */ empty($dadosForm) || empty($dadosCurso)) {
+            return back();
+        }
 
         $pdf = PDF::loadView('layouts.pdf', [
             'perguntas' => $perguntas,
@@ -76,7 +80,8 @@ class FormController extends Controller
 //        return response()->download(public_path($filename));
     }
 
-    public function formActivate($id) {
+    public function formActivate($id)
+    {
 
         DB::update("exec alterarEstadoForm ?, ?", ['1', $id]);
 

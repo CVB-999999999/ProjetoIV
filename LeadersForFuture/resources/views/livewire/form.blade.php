@@ -4,7 +4,7 @@
         <div class="md:grid md:grid-cols-2">
             <div class="mx-2 my-2">
                 <a href="/downloadpdf/{{$formID}}"
-                    class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                   class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
                     <span class="material-symbols-outlined align-middle h-7">file_download</span>
                     Download PDF</a>
             </div>
@@ -154,7 +154,7 @@
                         @click="expanded = ! expanded">
                     <label for="obs">
                         <span class="material-symbols-outlined align-middle h-7">school</span>
-                         &emsp; Observações do Docente
+                        &emsp; Observações do Docente
                     </label>
                 </button>
                 <p x-show="expanded" x-collapse>
