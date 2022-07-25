@@ -12,7 +12,8 @@
         </div>
 
         <p class="m-5 text-lg">
-            Tem a certeza que pretende eliminar de forma permanente o projeto?
+            Tem a certeza que pretende eliminar de forma permanente o projeto? <br>
+            NOTA: Todos os Formulários associados a este projeto também serão apagados!
         </p>
 
         <button class="m-5 px-5 py-2 bg-gray-500 rounded-md" wire:click="func">Sim</button>
