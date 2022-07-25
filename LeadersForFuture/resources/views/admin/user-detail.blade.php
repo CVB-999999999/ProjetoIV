@@ -32,115 +32,32 @@
 
             </div>
 
-            {{-- Form Info --}}
-            <h2 class="dark:text-white text-2xl text-center my-5"> Formulários</h2>
+            {{-- Project Info --}}
+            <h2 class="dark:text-white text-2xl text-center my-5"> Projetos Inscritos</h2>
             <div class="bg-zinc-200 dark:bg-zinc-700 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10 md:m-10">
                 @php($aux = "")
                 @foreach($forms as $form)
-                    {{-- Verify if project header has been displayed --}}
-                    @if(!($aux === $form->nome))
-                        {{-- Only puts the line and closes the div after thee fists loop as ended --}}
-                        @if($aux != "")
-            </div>
-            <hr class="border-esce my-2">
-            @endif
-            {{-- Header --}}
-            <div class="bg-zinc-300 dark:bg-zinc-600 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10">
-                <h2 class="text-center text-2xl" id="{{ trim($form->id_projecto) }}"> {{ $form->nome }} </h2>
-                <div class="lg:grid lg:grid-cols-2">
-                    <div>
-                        Disciplina: {{ $form->id_Disciplina }}
-                    </div>
-                    <div class="lg:text-right">
-                        Tema do Projeto: {{ $form->tema }}
-                    </div>
-                </div>
-            </div>
-
-            <div class="lg:grid lg:grid-cols-2">
-                @endif
-                {{-- Form Info --}}
-                @php($aux = $form->nome)
-
-                <div
-                    class="xl:grid xl:grid-cols-2 bg-zinc-300 dark:bg-zinc-600 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10 ">
-                    <div>
-                        <p class="rounded px-4 py-2 w-full text-center">Ano Letivo: {{ $form->ano_letivo }}</p>
-                        <p class="rounded px-4 py-2 w-full text-center"> {{ $form->ano_curricular }}º
-                            ano {{ $form->semestre + 1 }}º semestre</p>
-                        <div class="rounded px-4 py-2 w-full text-center">
-                            <p> Estado: </p>
-                            @switch($form->estado)
-                                @case(0)
-                                    <span class="material-symbols-outlined align-middle h-7">lock</span>
-                                    Bloqueado
-                                    @break
-                                @case(1)
-                                    <span class="material-symbols-outlined align-middle h-7">lock_open</span>
-                                    Aberto
-                                    @break
-                                @case(2)
-                                    <span class="material-symbols-outlined align-middle h-7">history_edu</span>
-                                    Em avaliação
-                                    @break
-                                @case(3)
-                                    <span class="material-symbols-outlined align-middle h-7">check_small</span>
-                                    Terminado
-                                    @break
-                                @default
-                                    <span class="material-symbols-outlined align-middle h-7">question_mark</span>
-                                    Desconhecido
-                            @endswitch
-                        </div>
-                    </div>
-                    <div class="xl:text-right">
-                        {{-- Only show view form btn to teacher --}}
-                        @if(Auth::user()->id_tipoUtilizador == 1)
-                            @if($form->estado == 0)
-                                <form action="/form/{{trim($form->id)}}/enable">
-                                    <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce
-                                                hover:text-white px-4 py-2 w-full text-center" type="submit">
-                                        <span class="material-symbols-outlined align-middle h-7">lock_open</span>
-                                        Ativar Formulário
-                                    </button>
-                                </form>
-                            @endif
-
-                            <div class="my-3">
-                                <a class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 block text-center"
-                                   href="/form/{{trim($form->id)}}">
-                                    <span class="material-symbols-outlined align-middle h-7">visibility</span>
-                                    Ver Formulário
-                                </a>
+                    <div class="bg-zinc-300 dark:bg-zinc-600 dark:text-zinc-200 rounded-md p-5 m-3 md:p-10">
+                        <h2 class="text-center text-2xl" id="{{ trim($form->id_projecto) }}"> {{ $form->nome }} </h2>
+                        <div class="lg:grid lg:grid-cols-2">
+                            <div>
+                                Disciplina: {{ $form->id_Disciplina }} - {{ $form->ds_discip }}
+                            </div>
+                            <div class="lg:text-right my-2">
+                                Tema do Projeto: {{ $form->tema }}
                             </div>
                             <div>
-                                <a href="/form/addPerguntas/{{$form->id}}"
-                                   class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 block text-center">
-                                    <span class="material-symbols-outlined align-middle h-7">add</span>
-                                    Adicionar Perguntas
+                                Ano Letivo de Inicio: {{ $form->ano_letivo }} / {{ $form->ano_letivo + 1 }}
+                            </div>
+                            <div class="lg:text-right my-2 mt-4">
+                                <a href="/admin/aluno/{{ trim($form->id_projecto) }}"
+                                        class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
+                                    <span class="material-symbols-outlined align-middle h-7">article</span>
+                                    Ver Detalhes do Projeto
                                 </a>
                             </div>
-                            @if($form->estado == 0)
-                                <div>
-                                    <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
-                                mt-3 w-full text-center" type="submit"
-                                            onclick="Livewire.emit('openModal', 'del-questions', {{ json_encode(["id" => $form->id]) }})">
-                                        <span class="material-symbols-outlined align-middle h-7">delete</span>
-                                        Apagar Perguntas
-                                    </button>
-                                </div>
-                            @endif
-                        @endif
-                        @if($form->estado == 0)
-                            <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
-                                mt-3 w-full text-center" type="submit"
-                                    onclick="Livewire.emit('openModal', 'apagar-forms', {{ json_encode(["id" => $form->id]) }})">
-                                <span class="material-symbols-outlined align-middle h-7">delete</span>
-                                Apagar Formulário
-                            </button>
-                        @endif
+                        </div>
                     </div>
-                </div>
                 @endforeach
             </div>
             @break
