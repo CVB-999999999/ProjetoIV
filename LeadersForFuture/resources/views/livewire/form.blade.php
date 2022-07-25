@@ -103,6 +103,13 @@
             </p>
         </div>
 
+        {{-- No Questions --}}
+        @php
+            if(sizeof($perguntas) < 1) {
+                echo('<p class="text-3xl text-center my-5">Não tem Perguntas neste Formulário</p>');
+            }
+        @endphp
+
         {{-- Impossible to anwser || Ready to anwser and Teacher || Anwsered || Form Locked --}}
         @if (($estado[0]->estado == 0) || ($estado[0]->estado ==1 && $prof) || ($estado[0]->estado == 2) || ($estado[0]->estado == 3) || Auth::user()->id_tipoUtilizador == 3)
             @foreach ($perguntas as $index => $pergunta)
