@@ -20,11 +20,6 @@
         <input wire:model="mNumber" name="number" type="text" class="border border-opacity-50 rounded border-gray-700
             w-full py-1 px-2 mb-3 dark:bg-zinc-700">
 
-        {{-- NIF --}}
-        <label for="nif" class="block font-medium"> NIF </label>
-        <input wire:model="nif" name="nif" type="text" class="border border-opacity-50 rounded border-gray-700
-            w-full py-1 px-2 mb-3 dark:bg-zinc-700">
-
         {{-- Type --}}
         <label for="type" class="block font-medium"> Tipo de Utilizador </label>
         <select wire:model="typeA" name="type" class="border border-opacity-50 rounded border-gray-700
