@@ -462,7 +462,7 @@ INNER JOIN Resposta r ON pf.id_resposta=r.id
 WHERE pf.id_formulario=@idForm
 go
 
-Create PROCEDURE [dbo].[buscaProjProf] @idProf int
+CREATE PROCEDURE [dbo].[buscaProjProf] @idProf numeric
 AS
 SELECT p.* FROM Utilizador_Projecto up, Projecto p WHERE up.numero_utilizador = @idProf and up.id_projecto = p.id;
 go
