@@ -101,29 +101,29 @@ final class AdminTable extends PowerGridComponent
                 ->title('Número')
                 ->field('id')
                 ->searchable()
-                ->makeInputRange('id')
+//                ->makeInputRange('id')
                 ->sortable(),
 
             Column::add()
                 ->title('Nome')
                 ->field('Nome')
                 ->searchable()
-                ->makeInputText('Nome')
+//                ->makeInputText('Nome')
                 ->sortable(),
 
             Column::add()
                 ->title('Tipo')
                 ->field('Tipo')
                 ->searchable()
-                ->sortable()
-                ->makeInputText('Tipo'),
+                ->sortable(),
+//                ->makeInputText('Tipo'),
 
             Column::add()
                 ->title('Email')
                 ->field('Email')
                 ->sortable()
-                ->searchable()
-                ->makeInputText('Email'),
+                ->searchable(),
+//                ->makeInputText('Email'),
         ];
     }
 
@@ -134,7 +134,7 @@ final class AdminTable extends PowerGridComponent
             Button::add('btn')
                 ->caption('Ver mais')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
-                ->route('admin.users.info', ['id'=>'id'])
+                ->route('admin.users.info', ['id' => 'id'])
                 ->target('_self')
         ];
     }
