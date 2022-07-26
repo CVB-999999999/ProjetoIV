@@ -24,7 +24,7 @@ class CriarProj extends Component
     {
         // Select Available Disciplines (Ignore Broken Ones)
         $this->disciplinas = DB::select("SELECT d.* FROM Disciplina d, cursos_disciplinas c WHERE d.cd_discip = c.cd_discip");
-        
+
         return view('livewire.criar-proj');
     }
 
@@ -39,14 +39,14 @@ class CriarProj extends Component
         }
         $this->idproj = $newid[0]->id + 1;
         $ano = explode("/", $this->ano_letivo);
-        if ($this->nome == null || $this->tema == null || $this->semestre == null || $this->ano_letivo == null || $this->disciplina == null) {
+        if ($this->nome == null || $this->tema == null || $this->ano_letivo == null || $this->disciplina == null) {
 
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
         }
         try {
-            DB::insert("INSERT INTO Projecto (id,estado,nome,tema,ano_letivo,semestre,id_Disciplina) Values (?, ?, ?, ?, ?, ?, ?)",
-                [$this->idproj, $this->estado, $this->nome, $this->tema, $ano[0], $this->semestre, $this->disciplina]);
+            DB::insert("INSERT INTO Projecto (id,estado,nome,tema,ano_letivo,id_Disciplina) Values (?, ?, ?, ?, ?, ?)",
+                [$this->idproj, $this->estado, $this->nome, $this->tema, $ano[0], $this->disciplina]);
             if (Auth::user()->id_tipoUtilizador == 1) {
                 DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)", [$this->idproj, Auth::user()->numero]);
             }
