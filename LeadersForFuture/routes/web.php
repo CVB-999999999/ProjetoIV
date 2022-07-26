@@ -17,6 +17,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/*
+->middleware(['hasPermission:x']);
+
+x = 1,2,3 -> User Permission Level
+x = 4 -> Admin and Prof
+*/
+
 // Session
 // Login
 Route::get('/login', [SessionController::class, 'login'])
@@ -56,11 +63,11 @@ Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])
 // Enable a Form
 // Permission -> Teacher/Admin
 Route::get('/form/{id}/enable', [FormController::class, 'formActivate'])
-    ->middleware(['hasPermission:1', 'hasPermission:3']);
+    ->middleware(['hasPermission:4']);
 // Add questions to a Form
 // Permission -> Teacher
 Route::get('/form/addPerguntas/{id}', [FormController::class, 'addPerguntas'])
-    ->middleware('hasPermission:1');
+    ->middleware('hasPermission:4');
 
 // Admin
 // Create Users

@@ -23,6 +23,12 @@ class HasPermissions
         if(Auth::user() == null) {
             return redirect('/login');
         }
+
+        // Admin and Teacher
+        if ($role == 4 && ($request->user()->id_tipoUtilizador == 3 || $request->user()->id_tipoUtilizador == 1)) {
+            return $next($request);
+        }
+
         // Not enough permissions
         if ($request->user()->id_tipoUtilizador != $role) {
             return redirect('/');
