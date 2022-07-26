@@ -68,9 +68,9 @@ final class FormProj extends PowerGridComponent
             $collection->push([
                 'id' => trim($queryres->id),
                 'nome' => $queryres->nome,
-                'ano_letivo' => $queryres->ano_letivo,
+                'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1),
                 'progresso' => $finished . "/" . sizeof($q),
-                'aval' => $aval
+                'aval' => $aval . "/" . sizeof($q)
             ]);
         }
 

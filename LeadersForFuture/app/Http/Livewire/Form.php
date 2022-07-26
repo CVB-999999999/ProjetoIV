@@ -154,10 +154,16 @@ class Form extends Component
 
             $allowed = true;
 
-            // Form status selection
-            if ($this->apr == null) {
+            if (trim($this->obs) == null) {
                 // None selected
-                $this->emit("openModal", "error1", ["message" => 'O campo "Estado do Formulário é um campo obrigatorio!"']);
+                $this->emit("openModal", "error1", ["message" => 'O campo "Observação" é um campo obrigatorio!']);
+                return;
+            }
+
+            // Form status selection
+            if ($this->apr == null || $this->obs == null) {
+                // None selected
+                $this->emit("openModal", "error1", ["message" => 'O campo "Estado do Formulário" é um campo obrigatorio!']);
                 return;
                 // Approved
             } elseif ($this->apr == 'true') {

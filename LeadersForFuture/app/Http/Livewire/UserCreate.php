@@ -12,7 +12,7 @@ class UserCreate extends Component
     public $lastN;
     public $emailA;
     public $typeA;
-    public $nif;
+//    public $nif;
     public $mNumber;
 
     public function render()
@@ -24,7 +24,7 @@ class UserCreate extends Component
     {
         try{
             $user = DB::selectOne("exec buscaUtiliz ?", [$this->mNumber]);
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
@@ -35,9 +35,9 @@ class UserCreate extends Component
         } else {
             $username = explode("@", $this->emailA);
             try{
-                DB::insert("INSERT INTO Utilizador (numero, password, nome, apelido, nif, id_tipoUtilizador, email, username) Values (?, ?, ?, ?, ?, ?, ?, ?)",
-                    [$this->mNumber, md5($this->emailA), $this->firstN, $this->lastN, $this->nif, $this->typeA, $this->emailA, $username[0]]);
-            }catch(\Illuminate\Database\QueryException $ex){ 
+                DB::insert("INSERT INTO Utilizador (numero, password, nome, apelido, id_tipoUtilizador, email, username) Values (?, ?, ?, ?, ?, ?, ?, ?)",
+                    [$this->mNumber, md5($this->emailA), $this->firstN, $this->lastN, $this->typeA, $this->emailA, $username[0]]);
+            }catch(\Illuminate\Database\QueryException $ex){
                 $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
                 return;
             }

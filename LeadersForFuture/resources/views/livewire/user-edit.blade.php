@@ -16,11 +16,6 @@
                 {{ $mNumber }}
             </div>
 
-            NIF
-            <div class="border border-opacity-50 rounded border-gray-700 w-1/2 py-1 px-2 mb-3 dark:bg-zinc-700">
-                {{ $nif }}
-            </div>
-
             {{-- Password --}}
             <label for="number" class="block font-medium"> Password </label>
             <input wire:model="pass" name="number" type="password" class="border border-opacity-50 rounded border-gray-700
