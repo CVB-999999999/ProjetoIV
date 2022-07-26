@@ -20,16 +20,20 @@ class CriarProj extends Component
     public $idproj;
     public $disciplina;
 
-    public function render(){
-        $this->disciplinas = DB::select("SELECT * FROM Disciplina");
+    public function render()
+    {
+        // Select Available Disciplines (Ignore Broken Ones)
+        $this->disciplinas = DB::select("SELECT d.* FROM Disciplina d, cursos_disciplinas c WHERE d.cd_discip = c.cd_discip");
+        
         return view('livewire.criar-proj');
     }
+
     public function submitForm()
     {
         $this->estado = 0;
-        try{
+        try {
             $newid = DB::select("SELECT id = max(cast(id as integer)) FROM Projecto");
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
@@ -42,15 +46,15 @@ class CriarProj extends Component
         }
         try {
             DB::insert("INSERT INTO Projecto (id,estado,nome,tema,ano_letivo,semestre,id_Disciplina) Values (?, ?, ?, ?, ?, ?, ?)",
-            [$this->idproj, $this->estado, $this->nome, $this->tema, $ano[0], $this->semestre, $this->disciplina]);
-            if(Auth::user()->id_tipoUtilizador == 1){
-                DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)",[$this->idproj, Auth::user()->numero]);
+                [$this->idproj, $this->estado, $this->nome, $this->tema, $ano[0], $this->semestre, $this->disciplina]);
+            if (Auth::user()->id_tipoUtilizador == 1) {
+                DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)", [$this->idproj, Auth::user()->numero]);
             }
-          } catch(\Illuminate\Database\QueryException $ex){ 
+        } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
             // Note any method of class PDOException can be called on $ex.
-          }
+        }
         $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
     }
 }
