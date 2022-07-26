@@ -48,6 +48,7 @@ Route::get('/form', [FormController::class, 'formSelection'])
     ->middleware('hasPermission:2');
 // Form Page
 Route::get('/form/{id}', [FormController::class, 'form'])
+    ->name('form.id')
     ->middleware(['auth']);
 // Download Form PDF
 Route::get('/downloadpdf/{id}', [FormController::class, 'generatePDF'])

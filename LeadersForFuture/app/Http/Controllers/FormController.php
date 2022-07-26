@@ -18,12 +18,7 @@ class FormController extends Controller
     // -----------------------------------------------------------------------------------------------------------------
     public function formSelection()
     {
-        $id = Auth::user()->numero;
-
-        // Gets the data to fill the form selection page
-        $forms = DB::select("exec buscaTodosDadosForms ?", [$id]);
-
-        return view('forms.form-selection', ['forms' => $forms]);
+        return view('forms.form-selection');
     }
 
     // -----------------------------------------------------------------------------------------------------------------

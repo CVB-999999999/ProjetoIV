@@ -25,7 +25,11 @@
         <nav :class="{'flex': open, 'hidden': !open}" class="flex-col flex-grow hidden pb-4 md:pb-0 md:flex
             md:justify-end md:flex-row">
             {{-- Nav Bar content Here --}}
-            <a href=/download>Manual de Instruções</a>
+            {{-- Download User Manual --}}
+            <a href="/download"
+               class="block py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
+                <span class="material-symbols-outlined align-middle h-7">help</span> Manual de Instruções
+            </a>
             {{-- DropDown --}}
             <div @click.away="open = false" class="relative z-40" x-data="{ open: false }">
 
