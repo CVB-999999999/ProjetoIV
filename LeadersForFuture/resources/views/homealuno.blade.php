@@ -7,8 +7,7 @@
 
         @if(Auth::user()->id_tipoUtilizador == 1)
             <div class="w-full p-3">
-                <strong class="dark:text-white text-lg">Listagem de de alunos afetos ao
-                    projeto: {{$proj->nome}}</strong>
+                <strong class="dark:text-white text-lg">Listagem dos utlizadores e formulários associados ao projeto: {{$proj->nome}}</strong>
 
                 @livewire('form-aluno')
             </div>
@@ -16,6 +15,7 @@
         {{-- Admin --}}
         @if(Auth::user()->id_tipoUtilizador == 3)
             <div class="w-full p-3">
+            <strong class="dark:text-white text-lg">Listagem dos utilizadores e formulários associados ao projeto: {{$proj->nome}}</strong>
                 @livewire('form-aluno-admin')
             </div>
         @endif
