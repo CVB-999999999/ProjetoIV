@@ -10,9 +10,12 @@ class AddPerguntas extends Component
 {
     public $pergunta;
     public $idform;
-
+    public $projeto;
+    public $form;
     public function render()
     {
+        $this->projeto = DB::select("SELECT p.nome from Projecto p, Formulario f WHERE ? = p.id",[$this->idform]);
+
         return view('livewire.add-perguntas');
     }
 
