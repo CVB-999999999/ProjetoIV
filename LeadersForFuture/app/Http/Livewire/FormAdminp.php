@@ -45,7 +45,7 @@ final class FormAdminp extends PowerGridComponent
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
         foreach ($query as $queryres) [
-            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo])
+            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1)])
         ];
         return $collection;
     }

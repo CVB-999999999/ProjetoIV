@@ -27,7 +27,7 @@ class FormCriar extends Component
 
         // Gets the projects
         $this->projetos = DB::select("exec buscaProjetos");
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
@@ -53,7 +53,7 @@ class FormCriar extends Component
         try{
             DB::insert("INSERT INTO Formulario (id,estado,tipo_formulario,id_projecto,ano_letivo,ano_curricular,semestre) Values (?, ?, ?, ?, ?, ?, ?)",
                 [$this->idform, $this->estado, $this->tpForm, $this->projeto, $this->ano_letivo, $this->anocurricular, $this->semestre]);
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }

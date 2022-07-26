@@ -3,19 +3,21 @@
 
     {{-- Semester and year selector --}}
     <div class="w-full min-h-screen">
+
+        <div class="mx-5 mt-3 dark:text-white text-lg">
+            Listagem de Utilizadores Afetos ao Projeto: <strong>{{$proj->nome}}</strong>
+        </div>
+
         {{-- Professor --}}
 
         @if(Auth::user()->id_tipoUtilizador == 1)
-            <div class="w-full p-3">
-                <strong class="dark:text-white text-lg">Listagem de de alunos afetos ao
-                    projeto: {{$proj->nome}}</strong>
-
+            <div class="px-3">
                 @livewire('form-aluno')
             </div>
         @endif
         {{-- Admin --}}
         @if(Auth::user()->id_tipoUtilizador == 3)
-            <div class="w-full p-3">
+            <div class="px-3">
                 @livewire('form-aluno-admin')
             </div>
         @endif

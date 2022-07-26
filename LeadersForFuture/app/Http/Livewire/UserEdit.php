@@ -24,7 +24,7 @@ class UserEdit extends Component
     {
     try{
         $user = DB::selectOne("exec buscaUtiliz ?", [$this->mNumber]);
-    }catch(\Illuminate\Database\QueryException $ex){ 
+    }catch(\Illuminate\Database\QueryException $ex){
         $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         return;
     }
@@ -39,7 +39,7 @@ class UserEdit extends Component
         $this->lastN = $user->apelido;
         $this->emailA = $user->email;
 //        $this->typeA = $user;
-        $this->nif = $user->nif;
+//        $this->nif = $user->nif;
 //        $this->pass = $user->password;
 
         return view('livewire.user-edit');
@@ -49,7 +49,7 @@ class UserEdit extends Component
     {
     try{
         DB::update('UPDATE Utilizador SET password = ? WHERE numero = ?', [$this->pass, $this->mNumber]);
-    }catch(\Illuminate\Database\QueryException $ex){ 
+    }catch(\Illuminate\Database\QueryException $ex){
         $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         return;
     }
