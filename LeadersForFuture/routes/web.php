@@ -26,6 +26,9 @@ Route::get('/login', [SessionController::class, 'login'])
 Route::get('/logout', [SessionController::class, 'logout'])
     ->middleware('auth');
 
+Route::get('/download', [AdminController::class, 'download'])
+    ->middleware('auth');
+
 // Home Page
 Route::get('/', function () {
     return view('home');

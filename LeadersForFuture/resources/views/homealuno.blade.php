@@ -8,7 +8,6 @@
         @if(Auth::user()->id_tipoUtilizador == 1)
             <div class="w-full p-3">
                 <strong class="dark:text-white text-lg">Listagem dos utlizadores e formulários associados ao projeto: {{$proj->nome}}</strong>
-
                 @livewire('form-aluno')
             </div>
         @endif
