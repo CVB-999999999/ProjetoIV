@@ -1,4 +1,5 @@
 <div>
+    Projeto {{trim($this->projeto[0]->nome)}} - Formulário {{$this->idform}}
     <form wire:submit.prevent="submitForm" method="POST" class="md:m-7 m-3">
         <div class="w-full">
             <div class="relative mx-auto dark:text-white">
