@@ -2441,6 +2441,10 @@ Ensure the default browser behavior of the `hidden` attribute.
     padding-left: 1.25rem;
   }
 
+  .md\:text-left {
+    text-align: left;
+  }
+
   .md\:text-right {
     text-align: right;
   }

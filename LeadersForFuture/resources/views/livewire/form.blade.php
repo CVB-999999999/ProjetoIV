@@ -1,5 +1,20 @@
 <div class="relative mx-auto dark:text-white mb-3">
     <form wire:submit.prevent="submitForm" method="POST" class="md:mx-5 mb-10">
+
+        <div class="p-3 my-3 mx-2 rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 text-left">
+            @foreach($dadosForm as $d)
+                <div class="md:grid md:grid-cols-2 text-center">
+                    <div class="md:text-left">
+                        Projeto: {{$d->nome}}
+                    </div>
+                    <div class="md:text-right">
+                        Tema: {{ $d->tema }}
+                    </div>
+                </div>
+                @break
+            @endforeach
+        </div>
+
         {{-- Form Status --}}
         <div class="md:grid md:grid-cols-2">
             <div class="mx-2 my-2">
@@ -84,33 +99,33 @@
                         @if(!empty($dadosCurso))
                         {{-- Course --}}
                         <span>
-                                Curso: {{ $dadosCurso[0]->nm_curso }}
-                            </span>
+                            Curso: {{ $dadosCurso[0]->nm_curso }}
+                        </span>
                         <span class="mt-2.5 md:mt-0">
-                                Grau: {{ $dadosCurso[0]->ds_grau }}
-                            </span>
+                            Grau: {{ $dadosCurso[0]->ds_grau }}
+                        </span>
                         <span class="mt-2.5 md:mt-3">
-                                Disciplina: {{ $dadosCurso[0]->ds_discip }}
-                            </span>
+                            Disciplina: {{ $dadosCurso[0]->ds_discip }}
+                        </span>
                     @endif
 
                     @foreach($dadosForm as $form)
                         {{-- Year --}}
                         <span class="mt-2.5 md:mt-3">
-                                {{ $form->ano_curricular }}ºano &nbsp; {{ $form->semestre }}º semestre
-                            </span>
+                            {{ $form->ano_curricular }}ºano &nbsp; {{ $form->semestre }}º semestre
+                        </span>
 
                         {{-- Task --}}
                         <span class="mt-2.5 md:mt-3">
-                                Tema: {{ $form->tema }}
-                            </span>
+                            Tema: {{ $form->tema }}
+                        </span>
 
                         {{-- School Year --}}
                         <span class="mt-2.5 md:mt-3">
-                                Ano Letivo: {{ $form->ano_letivo }}
-                            </span>
+                            Ano Letivo: {{ $form->ano_letivo }}
+                        </span>
                     @endforeach
-                    </span>
+                </span>
             </p>
         </div>
 
