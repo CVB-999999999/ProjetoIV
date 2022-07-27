@@ -34,7 +34,7 @@
         <div class="mt-3 border-t-2 border-gray-300 flex flex-col items-center">
             <div class="sm:w-2/3 text-center py-3">
                 <a href="https://github.com/CVB-999999999/ProjetoIV" class="text-sm font-bold mb-1 text-esce">
-                    © 2022 Carlos Vilas Boas | Paulo Garrido - Licenciatura em Engenharia Informatica
+                    © 2022 Carlos Vilas Boas e Paulo Garrido - Licenciatura em Engenharia Informatica
                 </a>
             </div>
         </div>
