@@ -46,9 +46,8 @@ final class FormAlunoAdmin extends PowerGridComponent
         }
 
         foreach ($query as $queryres) {
-            $collection->push(['id' => trim($queryres->numero), 'nome' => trim($queryres->nome) . " " . trim($queryres->apelido)]);
+            $collection->push(['id' => trim($queryres->numero), 'nome' => trim($queryres->nome) . " " . trim($queryres->apelido),'idproj' => $id]);
         }
-
         return $collection;
     }
 
@@ -77,7 +76,8 @@ final class FormAlunoAdmin extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('nome');
+            ->addColumn('nome')
+            ->addColumn('idproj');
     }
 
     /*
@@ -119,6 +119,11 @@ final class FormAlunoAdmin extends PowerGridComponent
                 ->caption('Ver mais')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                 ->route('admin.users.info', ['id' => 'id'])
+                ->target('_self'),
+            Button::add('btn')
+                ->caption('Eliminar utilizador do projeto')
+                ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
+                ->route('eliminar.user.proj', ['id' => 'id','idproj' => 'idproj'])
                 ->target('_self')
         ];
     }

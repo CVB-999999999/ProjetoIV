@@ -35,7 +35,7 @@ class UserCreate extends Component
         } else {
             $username = explode("@", $this->emailA);
             try{
-                DB::insert("INSERT INTO Utilizador (numero, password, nome, apelido, id_tipoUtilizador, email, username) Values (?, ?, ?, ?, ?, ?, ?, ?)",
+                DB::insert("INSERT INTO Utilizador (numero, password, nome, apelido, id_tipoUtilizador, email, username) Values (?, ?, ?, ?, ?, ?, ?)",
                     [$this->mNumber, md5($this->emailA), $this->firstN, $this->lastN, $this->typeA, $this->emailA, $username[0]]);
             }catch(\Illuminate\Database\QueryException $ex){
                 $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
