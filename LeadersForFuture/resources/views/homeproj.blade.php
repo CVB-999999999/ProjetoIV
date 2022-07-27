@@ -35,7 +35,7 @@
         @endif
         {{-- Admin --}}
         @if(Auth::user()->id_tipoUtilizador == 3)
-            <div class="p-3">
+            <div class="p-3 w-full">
                 <div class="md:grid md:grid-cols-2">
                     <div>
                         <strong class="dark:text-white text-lg">Listagem de projetos no sistema</strong>
