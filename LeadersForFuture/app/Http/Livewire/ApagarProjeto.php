@@ -11,6 +11,8 @@ use LivewireUI\Modal\ModalComponent;
 class ApagarProjeto extends ModalComponent
 {
     public $idU;
+    public $query;
+    public $aux;
 
     public function mount($id)
     {
@@ -19,6 +21,17 @@ class ApagarProjeto extends ModalComponent
 
     public function render()
     {
+
+        $this->query = DB::table('Formulario')->where('id_projecto', '=', $this->idU)->get();
+
+        // Verify if any form in the project is active
+        foreach ($this->query as $q) {
+            if ($q->estado != 0) {
+                $this->aux = true;
+                break;
+            }
+        }
+
         return view('livewire.apagar-projeto');
     }
 
@@ -31,18 +44,8 @@ class ApagarProjeto extends ModalComponent
     public function func()
     {
         try {
-            $query = DB::table('Formulario')->where('id_projecto', '=', $this->idU)->get();
-
-            // Verifyt if any form in the project is active
-            foreach ($query as $q) {
-                if ($q->estado != 0) {
-                    $this->emit("openModal", "error1", ["message" => 'Não é possivel apagar projetos em que os seus formulários não se encontrem no estado Bloqueado!']);
-                    return;
-                }
-            }
-
             // Delete rows in question "link" table
-            foreach ($query as $q) {
+            foreach ($this->query as $q) {
                 DB::table('PerguntasFormulario')->where('id_formulario', '=', $q->id)->delete();
             }
 

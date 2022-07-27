@@ -11,12 +11,23 @@
             </div>
         </div>
 
-        <p class="m-5 text-lg">
-            Tem a certeza que pretende eliminar de forma permanente o projeto? <br>
-            NOTA: Todos os Formulários associados a este projeto também serão apagados!
-        </p>
+        @if($aux)
+            <div class="m-5 text-lg">
+                Tem a certeza que pretende eliminar de forma permanente o projeto e os seus formulários associados?
+                <p class="capitalize text-red-700">
+                    Este projeto contem formulários ativos que podem conter respostas de alunos!!!
+                </p>
+            </div>
 
-        <button class="m-5 px-5 py-2 bg-gray-500 rounded-md" wire:click="func">Sim</button>
-        <button class="m-5 px-5 py-2 bg-red-500 rounded-md" wire:click="$emit('closeModal')">Não</button>
+            <button class="m-5 px-5 py-2 bg-gray-500 rounded-md" wire:click="func">Apagar na Mesma</button>
+            <button class="m-5 px-5 py-2 bg-red-500 rounded-md" wire:click="$emit('closeModal')">Cancelar</button>
+        @else
+            <p class="m-5 text-lg">
+                Tem a certeza que pretende eliminar de forma permanente o projeto e os seus formulários associados?
+            </p>
+
+            <button class="m-5 px-5 py-2 bg-gray-500 rounded-md" wire:click="func">Sim</button>
+            <button class="m-5 px-5 py-2 bg-red-500 rounded-md" wire:click="$emit('closeModal')">Não</button>
+        @endif
     </div>
 </div>
