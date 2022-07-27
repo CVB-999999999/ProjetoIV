@@ -48,7 +48,12 @@ class CreateProject extends Component
             }
             DB::update('exec insertProjeto ?,?,?,?,?,?', [$this->name, $this->theme, $this->cid, $date, Auth::user()->numero, $this->alunoId]);
 
-            $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
+//            $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
+            if (Auth::user()->id_tipoUtilizador == 1) {
+                return redirect('/admin/proj');
+            } elseif (Auth::user()->id_tipoUtilizador == 3) {
+                return redirect('/prof/proj');
+            }
         }
     }
 }

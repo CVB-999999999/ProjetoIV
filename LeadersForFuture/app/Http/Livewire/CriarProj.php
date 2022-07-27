@@ -55,6 +55,11 @@ class CriarProj extends Component
             return;
             // Note any method of class PDOException can be called on $ex.
         }
-        $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
+//        $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
+        if (Auth::user()->id_tipoUtilizador == 1) {
+            return redirect('/prof/proj');
+        } elseif (Auth::user()->id_tipoUtilizador == 3) {
+            return redirect('/admin/proj');
+        }
     }
 }

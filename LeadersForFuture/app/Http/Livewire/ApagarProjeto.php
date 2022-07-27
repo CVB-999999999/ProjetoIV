@@ -45,8 +45,22 @@ class ApagarProjeto extends ModalComponent
     {
         try {
             // Delete rows in question "link" table
+//            ddd($this->query);
+
             foreach ($this->query as $q) {
-                DB::table('PerguntasFormulario')->where('id_formulario', '=', $q->id)->delete();
+                $obs = DB::table('ObservacaoFormulario')->where('idFormulario', '=', trim($q["id"]))->get();
+                DB::table('ObservacaoFormulario')->where('idFormulario', '=', trim($q["id"]))->delete();
+
+                foreach ($obs as $o) {
+                    DB::table('Observacao')->where('idObservacao', '=', trim($o->idObservacao))->delete();
+                }
+
+                $fs = DB::table('PerguntasFormulario')->where('id_formulario', '=', trim($q["id"]))->get();
+                DB::table('PerguntasFormulario')->where('id_formulario', '=', trim($q["id"]))->delete();
+
+                foreach ($fs as $f) {
+                    DB::table('Resposta')->where('id', '=', trim($f->id_resposta))->delete();
+                }
             }
 
             // deletes the rows
@@ -58,7 +72,7 @@ class ApagarProjeto extends ModalComponent
 
         } catch (\Illuminate\Database\QueryException $ex) {
 
-//            ddd($ex);
+            ddd($ex);
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
