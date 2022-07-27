@@ -62,17 +62,17 @@
                     </div>
 
                     {{-- Only show view form btn to teacher --}}
-{{--                    @if(Auth::user()->id_tipoUtilizador == 1)--}}
-                        @if($form->estado == 0)
-                            <form action="/form/{{trim($form->id)}}/enable">
-                                <button class="mt-3 bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce
+                    {{--                    @if(Auth::user()->id_tipoUtilizador == 1)--}}
+                    @if($form->estado == 0)
+                        <form action="/form/{{trim($form->id)}}/enable">
+                            <button class="mt-3 bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce
                                                 hover:text-white px-4 py-2 w-full text-center" type="submit">
-                                    <span class="material-symbols-outlined align-middle h-7">lock_open</span>
-                                    Ativar Formulário
-                                </button>
-                            </form>
-                        @endif
-
+                                <span class="material-symbols-outlined align-middle h-7">lock_open</span>
+                                Ativar Formulário
+                            </button>
+                        </form>
+                    @endif
+                    @if($form->estado == 0)
                         <div>
                             <a href="/form/addPerguntas/{{$form->id}}"
                                class="mt-3 bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 block text-center">
@@ -80,17 +80,17 @@
                                 Adicionar Perguntas
                             </a>
                         </div>
-                        @if($form->estado == 0)
-                            <div>
-                                <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
+
+                        <div>
+                            <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
                                 mt-3 w-full text-center" type="submit"
-                                        onclick="Livewire.emit('openModal', 'del-questions', {{ json_encode(["id" => $form->id]) }})">
-                                    <span class="material-symbols-outlined align-middle h-7">delete</span>
-                                    Apagar Perguntas
-                                </button>
-                            </div>
-                        @endif
-{{--                    @endif--}}
+                                    onclick="Livewire.emit('openModal', 'del-questions', {{ json_encode(["id" => $form->id]) }})">
+                                <span class="material-symbols-outlined align-middle h-7">delete</span>
+                                Apagar Perguntas
+                            </button>
+                        </div>
+                    @endif
+                    {{--                    @endif--}}
                     @if($form->estado == 0)
                         <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
                                 mt-3 w-full text-center" type="submit"

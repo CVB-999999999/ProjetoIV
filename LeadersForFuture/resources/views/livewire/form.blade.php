@@ -212,6 +212,7 @@
 
     {{-- Table With the Observation History --}}
     <div class="mx-2 md:mx-7">
+        <p class="text-2xl"> Observações do Docente</p>
         <livewire:obs-table formID="{{ $formID }}"/>
     </div>
 </div>
