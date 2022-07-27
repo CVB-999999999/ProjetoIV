@@ -1,6 +1,6 @@
 <div>
-    <div class="transition duration-150 ease-in-out m-5">
-        <div class="grid grid-cols-4">
+    <div class="transition duration-150 ease-in-out m-5 dark:text-white">
+        <div class="grid grid-cols-4 p-5">
             <div class="col-span-3 text-3xl ml-5">
                 Observações do Docente
             </div>
@@ -9,7 +9,7 @@
             </div>
         </div>
 
-        <p class="m-5">
+        <p class="m-5 p-5">
             {{ $obs }}
         </p>
     </div>
