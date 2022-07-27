@@ -25,7 +25,7 @@
                         <a href="/prof/addtoproj" class="block bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce
                                 hover:text-white px-4 py-2 dark:text-white mx-2">
                             <span class="material-symbols-outlined align-middle h-7">edit_note</span>
-                            Adicionar a Projeto Existente
+                            Adicionar Utilizador a Projeto Existente
                         </a>
                     </div>
 
@@ -51,7 +51,7 @@
                         <a href="/admin/addtoproj" class="block bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce
                                 hover:text-white px-4 py-2 dark:text-white mx-2">
                             <span class="material-symbols-outlined align-middle h-7">edit_note</span>
-                            Adicionar a Projeto Existente
+                            Adicionar Utilizador a Projeto Existente
                         </a>
                     </div>
                 </div>
