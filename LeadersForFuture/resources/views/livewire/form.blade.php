@@ -15,20 +15,28 @@
             <div class="mx-2 my-2 md:text-right"> Estado do Formulário:
                 @switch($estado[0]->estado)
                     @case(0)
-                        <span class="material-symbols-outlined align-middle h-7">lock</span>
-                        Bloqueado
+                        <span class="text-orange-500">
+                            <span class="material-symbols-outlined align-middle h-7">lock</span>
+                            Bloqueado
+                        </span>
                         @break
                     @case(1)
-                        <span class="material-symbols-outlined align-middle h-7">lock_open</span>
-                        Aberto
+                        <span class="text-green-600">
+                            <span class="material-symbols-outlined align-middle h-7">lock_open</span>
+                            Aberto
+                        </span>
                         @break
                     @case(2)
-                        <span class="material-symbols-outlined align-middle h-7">history_edu</span>
-                        Em avaliação
+                        <span class="text-purple-800 dark:text-purple-400">
+                            <span class="material-symbols-outlined align-middle h-7">history_edu</span>
+                            Em avaliação
+                        </span>
                         @break
                     @case(3)
-                        <span class="material-symbols-outlined align-middle h-7">check_small</span>
-                        Terminado
+                        <span class="text-cyan-600">
+                            <span class="material-symbols-outlined align-middle h-7">check_small</span>
+                            Terminado
+                        </span>
                         @break
                     @default
                         <span class="material-symbols-outlined align-middle h-7">question_mark</span>
