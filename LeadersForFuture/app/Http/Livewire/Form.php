@@ -38,20 +38,20 @@ class Form extends Component
 
     public function render()
     {
-        try{
-        // Verifies the state of the form
-        $this->estado = DB::select("exec buscaEstado ?", [$this->formID]);
-        // Get the questions
-        $this->perguntas = DB::select("exec buscaPerguntasCondForm ?", [$this->formID]);
-        // Get the answers (if any)
-        $respostas = DB::select("exec buscaRespostasForm ?", [$this->formID]);
-        // Gets user data
-        $this->dadosUsers = DB::select("exec buscaAlunosForms1 ?", [$this->formID]);
-        // Gets project data
-        $this->dadosForm = DB::select("exec buscaDadosFormProj1 ?", [$this->formID]);
-        // Gets course data
-        $this->dadosCurso = DB::select("exec buscaCursoForm1 ?", [$this->formID]);
-        }catch(\Illuminate\Database\QueryException $ex){
+        try {
+            // Verifies the state of the form
+            $this->estado = DB::select("exec buscaEstado ?", [$this->formID]);
+            // Get the questions
+            $this->perguntas = DB::select("exec buscaPerguntasCondForm ?", [$this->formID]);
+            // Get the answers (if any)
+            $respostas = DB::select("exec buscaRespostasForm ?", [$this->formID]);
+            // Gets user data
+            $this->dadosUsers = DB::select("exec buscaAlunosForms1 ?", [$this->formID]);
+            // Gets project data
+            $this->dadosForm = DB::select("exec buscaDadosFormProj1 ?", [$this->formID]);
+            // Gets course data
+            $this->dadosCurso = DB::select("exec buscaCursoForm1 ?", [$this->formID]);
+        } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
@@ -99,9 +99,9 @@ class Form extends Component
 
             // Verify if user owns the form
             // Gets all forms that the user owns and compares with current forms id
-            try{
+            try {
                 $dadosF = DB::select("exec buscaFormsDados ?", [Auth::user()->username]);
-            }catch(\Illuminate\Database\QueryException $ex){
+            } catch (\Illuminate\Database\QueryException $ex) {
                 $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
                 return;
             }
