@@ -1,7 +1,7 @@
 <div>
     <div class="mt-3">
-        <p class="text-lg md:mx-7 mx-3"> Projeto: {{trim($this->projeto[0]->nome)}} </p>
-        <p class="text-lg md:mx-7 mx-3"> Formulário: {{$this->idform}} </p>
+        <p class="text-lg md:mx-7 mx-3"> Projeto: {{trim($projeto[0]->nome)}} </p>
+        <p class="text-lg md:mx-7 mx-3"> ID Formulário: {{$idform}} </p>
     </div>
 
     <form wire:submit.prevent="submitForm" method="POST" class="md:m-7 m-3">

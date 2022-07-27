@@ -14,7 +14,7 @@ class AddPerguntas extends Component
     public $form;
     public function render()
     {
-        $this->projeto = DB::select("SELECT p.nome from Projecto p, Formulario f WHERE ? = p.id",[$this->idform]);
+        $this->projeto = DB::select("SELECT p.nome from Projecto p, Formulario f WHERE ? = f.id and p.id = f.id_projecto",[$this->idform]);
 
         return view('livewire.add-perguntas');
     }
@@ -28,7 +28,7 @@ class AddPerguntas extends Component
         }
         try{
             $newid = DB::select("SELECT id = max(cast(id as integer)) FROM Pergunta;");
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
@@ -40,7 +40,7 @@ class AddPerguntas extends Component
 
         DB::insert("INSERT INTO PerguntasFormulario (id_formulario, id_pergunta) Values (?, ?)",
             [$this->idform, $new]);
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
