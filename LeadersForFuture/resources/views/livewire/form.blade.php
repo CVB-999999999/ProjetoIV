@@ -7,6 +7,9 @@
                    class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
                     <span class="material-symbols-outlined align-middle h-7">file_download</span>
                     Download PDF</a>
+                <div wire:loading.delay>
+                    A carregar...
+                </div>
             </div>
 
             <div class="mx-2 my-2 md:text-right"> Estado do Formulário:
@@ -199,10 +202,10 @@
                     @endif
                 </button>
 
-                {{-- Loading popup --}}
-                <div wire:loading.delay>
-                    @include('modals.loading')
-                </div>
+                {{--                --}}{{-- Loading popup --}}
+                {{--                <div wire:loading.delay>--}}
+                {{--                    @include('modals.loading')--}}
+                {{--                </div>--}}
             </div>
         @endif
     </form>

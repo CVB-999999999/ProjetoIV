@@ -64,6 +64,6 @@ class FormProf extends Component
             return;
         }
 
-        return redirect("prof/users/");
+        return redirect("prof/proj/");
     }
 }
