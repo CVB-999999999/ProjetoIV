@@ -36,7 +36,7 @@ class ApagarProjeto extends ModalComponent
             // Verifyt if any form in the project is active
             foreach ($query as $q) {
                 if ($q->estado != 0) {
-                    $this->emit("openModal", "error1", ["message" => 'Não é possivel apagar projetos que não se encontrem no estado Bloqueado!']);
+                    $this->emit("openModal", "error1", ["message" => 'Não é possivel apagar projetos em que os seus formulários não se encontrem no estado Bloqueado!']);
                     return;
                 }
             }
