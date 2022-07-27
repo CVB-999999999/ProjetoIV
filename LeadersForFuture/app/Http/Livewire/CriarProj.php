@@ -31,6 +31,11 @@ class CriarProj extends Component
     public function submitForm()
     {
         $this->estado = 0;
+
+        if (!is_numeric($this->ano_letivo)) {
+            $this->emit("openModal", "error1", ["message" => 'O ano letivo não está no formato correto! Deveria ser do tipo ANO ou ANO/ANO']);
+        }
+
         try {
             $newid = DB::select("SELECT id = max(cast(id as integer)) FROM Projecto");
         } catch (\Illuminate\Database\QueryException $ex) {

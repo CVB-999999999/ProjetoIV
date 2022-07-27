@@ -17,35 +17,42 @@ class AddToproj extends Component
     public $user;
     public $projeto;
 
-    public function render(){
-        if(Auth::user()->id_tipoUtilizador == 1){
+    public function render()
+    {
+        if (Auth::user()->id_tipoUtilizador == 1) {
             $this->projetos = DB::select("SELECT p.* FROM Projecto p, Utilizador_Projecto up WHERE up.numero_utilizador = ? AND up.id_projecto = p.id", [Auth::user()->numero]);
             $this->users = DB::select("SELECT * FROM Utilizador WHERE id_tipoUtilizador = 2");
-        }else {
+        } else {
             $this->projetos = DB::select("SELECT * FROM Projecto");
             $this->users = DB::select("SELECT * FROM Utilizador");
         }
         return view('livewire.add-toproj');
     }
+
     public function submitForm()
     {
-        
 
-        if ($this->user== null || $this->projeto == null ) {
+
+        if ($this->user == null || $this->projeto == null) {
 
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
         }
         try {
-            $isThere = DB::select('SELECT * FROM Utilizador_Projecto WHERE  id_projecto = ? AND numero_utilizador = ?',[$this->projeto, $this->user]);
-            if($isThere == null){
+            $isThere = DB::select('SELECT * FROM Utilizador_Projecto WHERE  id_projecto = ? AND numero_utilizador = ?', [$this->projeto, $this->user]);
+            if ($isThere == null) {
                 DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)",
-            [$this->projeto, $this->user]);
+                    [$this->projeto, $this->user]);
             }
-        }catch(\Illuminate\Database\QueryException $ex){ 
+        } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
-        $this->emit("openModal", "success", ["message" => 'Projeto Adicionado com sucesso!']);
+//        $this->emit("openModal", "success", ["message" => 'Projeto Adicionado com sucesso!']);
+        if (Auth::user()->id_tipoUtilizador == 1) {
+            return redirect('/prof/proj');
+        } elseif (Auth::user()->id_tipoUtilizador == 3) {
+            return redirect('/admin/proj');
+        }
     }
 }

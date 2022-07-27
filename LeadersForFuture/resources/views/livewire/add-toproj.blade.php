@@ -3,6 +3,7 @@
         <div class="w-full">
             <div class="relative mx-auto dark:text-white">
                 <div>
+                    <p class="text-2xl my-2"> Atribuição de um Projeto a um Utilizador</p>
                     <label for="tema" class="block font-medium"> Projeto </label>
                     <select wire:model="projeto" class="form-control p-3 rounded-md dark:bg-zinc-900 w-1/2 my-2"
                             name="projeto">
