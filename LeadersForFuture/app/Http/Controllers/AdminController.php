@@ -132,4 +132,9 @@ class AdminController extends Controller
         return view('prof.stats');
     }
 
+    public function discProj()
+    {
+        return view('homediscproj');
+    }
+
 }

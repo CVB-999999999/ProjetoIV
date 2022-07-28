@@ -113,6 +113,8 @@ Route::get('/admin/disc', function () {
 // Admin View user Info
 Route::get('/admin/aluno/{id}', [ProfController::class, 'homeAluno'])->name('admin.aluno')->middleware('hasPermission:3');
 
+Route::get('/admin/discproj/{cd_discip}', [AdminController::class, 'discProj'])->name('admin.discproj')->middleware('hasPermission:3');
+
 Route::get('/admin/eliminarUserProj/{id}/{idproj}', [ProfController::class, 'eliminarUserProj'])
     ->name('eliminar.user.proj')->middleware('hasPermission:3');
 Route::get('/prof/eliminarUserProj/{id}/{idproj}', [ProfController::class, 'eliminarUserProj'])

@@ -14,7 +14,7 @@ use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-final class FormDisciplinas extends PowerGridComponent
+final class FormDiscproj extends PowerGridComponent
 {
     use ActionButton;
 
@@ -37,17 +37,16 @@ final class FormDisciplinas extends PowerGridComponent
 
     public function datasource(): ?Collection
     {
+        $id = \Request::segment(3);
         $collection = collect();
-        $profnumber = Auth::user()->numero;
         try {
-            $query = DB::select("SELECT * FROM Disciplina");
+            $query = DB::select("SELECT * FROM Projecto WHERE id_Disciplina = ?", [$id]);
         } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
         foreach ($query as $queryres) [
-            $collection->push(['cd_discip' => $queryres->cd_discip, 'nome' => $queryres->ds_discip, 'sigla' => $queryres->sigla])
+            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1)])
         ];
-        //dd($query[0]->cd_discip);
         return $collection;
     }
 
@@ -78,9 +77,8 @@ final class FormDisciplinas extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('cd_discip')
             ->addColumn('nome')
-            ->addColumn('sigla');
+            ->addColumn('ano_letivo');
     }
 
     /*
@@ -101,20 +99,20 @@ final class FormDisciplinas extends PowerGridComponent
     {
         return [
             Column::add()
-                ->title('cd_discip')
-                ->field('cd_discip')
+                ->title('ID')
+                ->field('id')
                 ->searchable()
                 ->sortable(),
 
             Column::add()
-                ->title('Nome da disciplina')
+                ->title('Nome do Projeto')
                 ->field('nome')
                 ->searchable()
                 ->sortable(),
 
             Column::add()
-                ->title('Sigla')
-                ->field('sigla')
+                ->title('Ano Letivo')
+                ->field('ano_letivo')
                 ->sortable(),
         ];
     }
@@ -123,12 +121,12 @@ final class FormDisciplinas extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Ver Projetos')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Ver Mais')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
-                ->route('admin.discproj', ['cd_discip' => 'cd_discip'])
+                ->route('admin.aluno', ['id' => 'id'])
                 ->target('_self'),
             Button::add('btn')
-                ->caption('<span class="material-symbols-outlined align-middle h-7">delete</span> Eliminar Disciplina')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">delete</span> Eliminar Projeto')
                 ->class('bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
                 ->openModal('apagar-projeto', ['id' => 'id'])
         ];
