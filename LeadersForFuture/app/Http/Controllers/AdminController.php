@@ -18,6 +18,14 @@ class AdminController extends Controller
     {
         return view('admin.create-user');
     }
+    // -----------------------------------------------------------------------------------------------------------------
+    // --- ProjUser
+    // --- --- Loads the view
+    // -----------------------------------------------------------------------------------------------------------------
+    public function projUser()
+    {
+        return view('admin.ProjStudent');
+    }
 
     // -----------------------------------------------------------------------------------------------------------------
     // --- projectCreate
@@ -89,7 +97,7 @@ class AdminController extends Controller
         return view('admin.stats');
     }
     public function download(Request $request)
-    {   
+    {
         return Storage::download('public/LDF-User-Manual.pdf');
     }
     public function formCriar()
