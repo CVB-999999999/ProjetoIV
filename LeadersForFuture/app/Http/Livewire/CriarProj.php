@@ -32,38 +32,46 @@ class CriarProj extends Component
     {
         $this->estado = 0;
 
-        $this->ano_letivo = (explode("/", $this->ano_letivo))[0];
+        // Verifies if any field is empty
+        if ($this->nome == null || $this->tema == null || $this->ano_letivo == null || $this->disciplina == null) {
+            $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
+            return;
+        }
 
-        if (!is_numeric($this->ano_letivo)) {
+        // Convert YYYY/YYYY+1 to YYYY
+        $ano = explode("/", $this->ano_letivo);
+        if (!is_numeric($ano)) {
             $this->emit("openModal", "error1", ["message" => 'O ano letivo não está no formato correto! Deveria ser do tipo ANO ou ANO/ANO']);
             return;
         }
 
+        // Gets previous old max id
         try {
             $newid = DB::select("SELECT id = max(cast(id as integer)) FROM Projecto");
         } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
-        $this->idproj = $newid[0]->id + 1;
-        $ano = explode("/", $this->ano_letivo);
-        if ($this->nome == null || $this->tema == null || $this->ano_letivo == null || $this->disciplina == null) {
 
-            $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
-            return;
-        }
+        // Generates new ID
+        $this->idproj = $newid[0]->id + 1;
+
+        // Insert Project in DB
         try {
             DB::insert("INSERT INTO Projecto (id,estado,nome,tema,ano_letivo,id_Disciplina) Values (?, ?, ?, ?, ?, ?)",
                 [$this->idproj, $this->estado, $this->nome, $this->tema, $ano[0], $this->disciplina]);
+
+            // If teacher also assignes the project to him
             if (Auth::user()->id_tipoUtilizador == 1) {
                 DB::insert("INSERT INTO Utilizador_Projecto (id_projecto,numero_utilizador) Values (?, ?)", [$this->idproj, Auth::user()->numero]);
             }
         } catch (\Illuminate\Database\QueryException $ex) {
-            $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
+            $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos! Um dos campos pode ser muito grande ou utiliza caracteres inválidos']);
             return;
-            // Note any method of class PDOException can be called on $ex.
         }
 //        $this->emit("openModal", "success", ["message" => 'Projeto criado com sucesso!']);
+
+        // Redirects to correct pages
         if (Auth::user()->id_tipoUtilizador == 1) {
             return redirect('/prof/proj');
         } elseif (Auth::user()->id_tipoUtilizador == 3) {

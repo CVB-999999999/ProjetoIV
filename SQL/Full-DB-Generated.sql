@@ -50,7 +50,7 @@ go
 create table Projecto
 (
     id            nchar(50)     not null,
-    nome          nchar(50),
+    nome          varchar(100),
     id_Disciplina nvarchar(255) not null,
     tema          nvarchar(200),
     ano_letivo    int,
