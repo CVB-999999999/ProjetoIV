@@ -22,8 +22,9 @@
                    class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2">
                     <span class="material-symbols-outlined align-middle h-7">file_download</span>
                     Download PDF</a>
+
                 <div wire:loading.delay>
-                    A carregar...
+                    A processar a operação no servidor...
                 </div>
             </div>
 

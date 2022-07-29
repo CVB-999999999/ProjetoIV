@@ -19,7 +19,7 @@
         <button class="m-5 px-5 py-2 bg-red-500 rounded-md" wire:click="$emit('closeModal')">Não</button>
 
         <div wire:loading.delay>
-            A carregar...
+            A processar a operação no servidor...
         </div>
     </div>
 </div>

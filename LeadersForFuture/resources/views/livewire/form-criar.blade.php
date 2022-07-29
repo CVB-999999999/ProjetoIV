@@ -44,7 +44,7 @@
                 </button>
 
                 <div wire:loading.delay>
-                    A carregar...
+                    A processar a operação no servidor...
                 </div>
 
                 <div class="xl:grid xl:grid-cols-2">

@@ -35,7 +35,7 @@
         </button>
 
         <div wire:loading.delay>
-            A carregar...
+            A processar a operação no servidor...
         </div>
     </form>
 </div>
