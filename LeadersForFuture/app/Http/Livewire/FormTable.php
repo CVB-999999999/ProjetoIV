@@ -72,11 +72,13 @@ final class FormTable extends PowerGridComponent
                 }
             }
 
-            if (Auth::user()->id_tipoUtilizador == 3) {
 
-                $user = DB::table('Utilizador')
-                    ->where('numero', '=', $proj->numero_utilizador)
-                    ->first();
+            $user = DB::table('Utilizador')
+                ->where('numero', '=', $proj->numero_utilizador)
+                ->first();
+
+
+            if ($user->id_tipoUtilizador == 2) {
 
                 $collection->push([
                     'id' => trim($user->numero),
@@ -88,29 +90,6 @@ final class FormTable extends PowerGridComponent
                     'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
                     'ano_letivo' => $proj->ano_letivo . "/" . $proj->ano_letivo + 1,
                 ]);
-
-            } else {
-                $users = DB::table('Utilizador_Projecto')
-                    ->where('id_projecto', '=', $proj->id_projecto)
-                    ->join('Utilizador', 'numero', "=", "numero_utilizador")
-                    ->get();
-
-                foreach ($users as $user) {
-
-                    if ($user->nome != Auth::user()->nome) {
-
-                        $collection->push([
-                            'id' => trim($user->numero),
-                            'nome' => $user->nome . " " . $user->apelido,
-                            'idP' => trim($proj->id_projecto),
-                            'nomeP' => $proj->nome,
-                            'tema' => $proj->tema,
-                            'estado' => $t . "/" . sizeof($forms),
-                            'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
-                            'ano_letivo' => $proj->ano_letivo . "/" . $proj->ano_letivo + 1,
-                        ]);
-                    }
-                }
             }
         }
 
@@ -180,7 +159,7 @@ final class FormTable extends PowerGridComponent
                 ->sortable(),
 
             Column::add()
-                ->title('Utilizador')
+                ->title('Aluno')
                 ->field('nome')
                 ->searchable()
                 ->sortable(),
