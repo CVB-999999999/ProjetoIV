@@ -38,13 +38,14 @@
                         <span class="material-symbols-outlined align-middle h-7">add</span>
                         Criar Formulário
                     </button>
-                </div>
 
-                <button wire:click.prevent="proj()"
-                        class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
-                    <span class="material-symbols-outlined align-middle h-7">menu_book</span> Ver Formulários do Projeto
-                    Selecionado
-                </button>
+                    <button wire:click.prevent="proj()"
+                            class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
+                        <span class="material-symbols-outlined align-middle h-7">menu_book</span> Ver Formulários do Projeto
+                        Selecionado
+                    </button>
+
+                </div>
 
                 <div wire:loading.delay>
                     A processar a operação no servidor...

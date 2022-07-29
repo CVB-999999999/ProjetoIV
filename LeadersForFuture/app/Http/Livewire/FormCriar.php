@@ -24,7 +24,7 @@ class FormCriar extends Component
     {
         try{
         // Gets the Tipo_Formulario
-        $this->tpForms = DB::select("exec buscaTipoForm");
+//        $this->tpForms = DB::select("exec buscaTipoForm");
 
         // Gets the projects
         $this->projetos = DB::select("exec buscaProjetos");

@@ -20,6 +20,7 @@ class FormProf extends Component
     public $estado = 0;
     public $idform;
     public $profnumber;
+    public $forms = [];
 
 
     public function render()
@@ -27,7 +28,7 @@ class FormProf extends Component
         // Gets the Tipo_Formulario
         try{
         $this->profnumber = Auth::user()->numero;
-        $this->tpForms = DB::select("exec buscaTipoForm");
+//        $this->tpForms = DB::select("exec buscaTipoForm");
 
         // Gets the projects
         $this->projetos = DB::select("SELECT p.*  From Projecto p, Utilizador_Projecto up WHERE up.numero_utilizador = ? AND up.id_projecto = p.id", [$this->profnumber]);
@@ -37,6 +38,13 @@ class FormProf extends Component
         }
 
         return view('livewire.form-criar');
+    }
+
+    public function proj() {
+
+        $this->forms = DB::table('Formulario')
+            ->where('id_projecto', '=', trim($this->projeto))
+            ->get();
     }
 
     public function submitForm()
