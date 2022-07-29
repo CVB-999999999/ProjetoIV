@@ -130,7 +130,7 @@ final class FormDisciplinas extends PowerGridComponent
             Button::add('btn')
                 ->caption('<span class="material-symbols-outlined align-middle h-7">delete</span> Eliminar Disciplina')
                 ->class('bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
-                ->openModal('apagar-projeto', ['id' => 'id'])
+                ->openModal('apagar-disc', ['cd_discip' => 'cd_discip'])
         ];
     }
 }
