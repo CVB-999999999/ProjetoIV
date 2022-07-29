@@ -56,6 +56,10 @@ class Form extends Component
             return;
         }
 
+        array_multisort($this->perguntas, $respostas);
+//        array_multisort($this->perguntas);
+//        ddd($respostas);
+
         // Section to verify if user has permission to access the form
         $found = false;
 

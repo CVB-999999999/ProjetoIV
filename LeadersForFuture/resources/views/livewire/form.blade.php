@@ -144,7 +144,7 @@
                     <button type="button" class="w-full rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
                        transition duration-200 hover:bg-esce hover:text-white text-left"
                             @click="expanded = ! expanded">
-                        <label for="ta{{ $index }}">{{ $index + 1}} &nbsp; | &emsp; {{ $pergunta->pergunta }} </label>
+                        <label for="ta{{ $index }}">&emsp; {{ $pergunta->pergunta }} </label>
                     </button>
                     {{-- Text Area Placeholder --}}
                     <p x-show="expanded" x-collapse>
@@ -162,7 +162,7 @@
                     <button type="button" class="w-full rounded my-2 my-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 dark:text-white
                             transition duration-200 hover:bg-esce hover:text-white text-left"
                             @click="expanded = ! expanded">
-                        <label for="ta{{ $index }}">{{ $index + 1}} &nbsp; | &emsp; {{ $pergunta->pergunta }} </label>
+                        <label for="ta{{ $index }}">&emsp; {{ $pergunta->pergunta }} </label>
                     </button>
 
                     <p x-show="expanded" x-collapse>
