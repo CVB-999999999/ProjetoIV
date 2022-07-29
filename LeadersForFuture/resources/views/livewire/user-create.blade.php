@@ -33,5 +33,9 @@
         <button class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 my-2">
             Criar Utilizador
         </button>
+
+        <div wire:loading.delay>
+            A carregar...
+        </div>
     </form>
 </div>

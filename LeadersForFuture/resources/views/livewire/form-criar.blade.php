@@ -43,6 +43,10 @@
                     Selecionado
                 </button>
 
+                <div wire:loading.delay>
+                    A carregar...
+                </div>
+
                 <div class="xl:grid xl:grid-cols-2">
                     @foreach($forms as $index=>$form)
 

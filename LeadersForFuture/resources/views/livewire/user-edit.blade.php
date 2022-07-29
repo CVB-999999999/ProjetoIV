@@ -34,5 +34,9 @@
                 Apagar Utilizador
             </button>
         </div>
+
+        <div wire:loading.delay>
+            A carregar...
+        </div>
     </form>
 </div>

@@ -43,5 +43,9 @@
         text-white bg-zinc-600 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
             Login
         </button>
+
+        <div wire:loading.delay>
+            A carregar...
+        </div>
     </div>
 </form>
