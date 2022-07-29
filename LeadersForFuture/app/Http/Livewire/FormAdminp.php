@@ -44,9 +44,18 @@ final class FormAdminp extends PowerGridComponent
         } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
-        foreach ($query as $queryres) [
-            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1)])
-        ];
+        //ddd($query);
+        foreach ($query as $queryres) { 
+            $disc = DB::SELECT('SELECT * FROM Disciplina WHERE cd_discip = ?',[$queryres->id_Disciplina]);
+            $curso = DB::SELECT('SELECT c.nm_curso FROM Curso c, cursos_disciplinas cd, Projecto p WHERE ? = cd.cd_discip and c.cd_curso = cd.cd_curso',[$queryres->id_Disciplina]);
+            foreach($curso as $c){
+                $cursof = $c->nm_curso;
+            }
+            //dd($cursof);
+            //dd($curso[0]->nm_curso);
+            //ddd($disc);
+            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1),'tema' => $queryres->tema, 'disc' => $disc[0]->ds_discip, 'curso' => $cursof]);
+        }
         return $collection;
     }
 
@@ -78,7 +87,10 @@ final class FormAdminp extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('nome')
-            ->addColumn('ano_letivo');
+            ->addColumn('ano_letivo')
+            ->addColumn('tema')
+            ->addColumn('disc')
+            ->addColumn('curso');
     }
 
     /*
@@ -113,6 +125,19 @@ final class FormAdminp extends PowerGridComponent
             Column::add()
                 ->title('Ano Letivo')
                 ->field('ano_letivo')
+                ->sortable(),
+
+            Column::add()
+                ->title('Disciplina')
+                ->field('disc')
+                ->sortable(),
+            Column::add()
+                ->title('Tema')
+                ->field('tema')
+                ->sortable(),
+            Column::add()
+                ->title('Curso')
+                ->field('curso')
                 ->sortable(),
         ];
     }
