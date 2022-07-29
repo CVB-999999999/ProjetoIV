@@ -46,11 +46,16 @@ final class FormAdminp extends PowerGridComponent
         }
         //ddd($query);
         foreach ($query as $queryres) { 
-            $disc = DB::SELECT('SELECT * FROM Disciplina WHERE cd_discip = ?',[$queryres->id_Disciplina]);
-            $curso = DB::SELECT('SELECT c.nm_curso FROM Curso c, cursos_disciplinas cd, Projecto p WHERE ? = cd.cd_discip and c.cd_curso = cd.cd_curso',[$queryres->id_Disciplina]);
-            foreach($curso as $c){
-                $cursof = $c->nm_curso;
+            try{
+                $disc = DB::SELECT('SELECT * FROM Disciplina WHERE cd_discip = ?',[$queryres->id_Disciplina]);
+                $curso = DB::SELECT('SELECT c.nm_curso FROM Curso c, cursos_disciplinas cd, Projecto p WHERE ? = cd.cd_discip and c.cd_curso = cd.cd_curso',[$queryres->id_Disciplina]);
+                foreach($curso as $c){
+                    $cursof = $c->nm_curso;
+                }
+            }catch (\Illuminate\Database\QueryException $ex) {
+                $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             }
+            
             //dd($cursof);
             //dd($curso[0]->nm_curso);
             //ddd($disc);
