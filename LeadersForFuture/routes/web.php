@@ -89,9 +89,6 @@ Route::get('/admin/stats', [AdminController::class, 'stats'])
     ->name('admin.stats')
     ->middleware('hasPermission:3');
 
-
-
-
 // Admin Forms
 Route::get('/admin/addform', [AdminController::class, 'formCriar'])
     ->middleware('hasPermission:3');
@@ -160,9 +157,14 @@ Route::get('/prof/proj', function () {
 Route::get('/prof/aluno/{id}', [ProfController::class, 'homeAluno'])->name('prof.aluno')
     ->middleware('hasPermission:1');
 // Create Forms Prof
-Route::get('/prof/forms', [AdminController::class, 'formCriarProf'])
+Route::get('/prof/forms', [FormController::class, 'formSelection'])
+    ->name('form')
     ->middleware('hasPermission:1');
+
+Route::get('/prof/addform', [AdminController::class, 'formCriarProf'])
+    ->middleware('hasPermission:1');    
 // ?
+
 Route::get('/prof/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:1');
 // ?
