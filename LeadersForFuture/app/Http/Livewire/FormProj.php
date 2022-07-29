@@ -158,7 +158,7 @@ final class FormProj extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Ver Mais')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Visualizar Detalhes')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                 ->route('prof.aluno', ['id' => 'id'])
                 ->target('_self'),

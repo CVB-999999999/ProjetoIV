@@ -18,12 +18,6 @@ final class FormTable extends PowerGridComponent
 {
     use ActionButton;
 
-    // Changes the theme to a custom one
-    public function template(): ?string
-    {
-        return \App\Http\Livewire\CustomTailwindTemplate::class;
-    }
-
     /*
     |--------------------------------------------------------------------------
     |  Datasource
@@ -31,46 +25,95 @@ final class FormTable extends PowerGridComponent
     | Provides data to your Table using a Model or Collection
     |
     */
-    public $semestre = 1;
-    public $formularios = "";
-    public $anoLetivo;
-
     public function datasource(): ?Collection
     {
+
+        if (Auth::user()->id_tipoUtilizador == 3) {
+            $projs = DB::table('Utilizador_Projecto')
+                ->join('Projecto', 'id_projecto', '=', 'id')
+                ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
+                ->get();
+        } else {
+            $id = Auth::user()->numero;
+
+            // Gets the data to fill the form selection page
+
+            $projs = DB::table('Utilizador_Projecto')
+                ->where('numero_utilizador', '=', $id)
+                ->join('Projecto', 'id_projecto', '=', 'id')
+                ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
+                ->get();
+        }
+
         $collection = collect();
-        $profnumber = Auth::user()->numero;
 
-        $query = DB::table("Utilizador_Projecto")->where('numero_utilizador', $profnumber)->get();
+        foreach ($projs as $proj) {
+            $forms = DB::table('Formulario')
+                ->where('id_projecto', '=', $proj->id)
+                ->get('estado');
 
-        foreach ($query as $queryresult) {
-            $query2 = DB::table("Utilizador_Projecto")->where('id_projecto', $queryresult->id_projecto)->get();
+            /*$b = $a = $aval = */
+            $t = 0;
 
-            foreach ($query2 as $query2result) {
-                $query3 = DB::table("Utilizador")->where('numero', $query2result->numero_utilizador)->first();
+            foreach ($forms as $form) {
+                switch ($form->estado) {
+//                    case 0:
+//                        $b++;
+//                        break;
+//                    case 1:
+//                        $a++;
+//                        break;
+//                    case 2:
+//                        $aval++;
+//                        break;
+                    case 3:
+                        $t++;
+                        break;
+                }
+            }
 
-                if ($query2result->numero_utilizador != $profnumber) {
-                    $collection->push(['id' => trim($query2result->numero_utilizador), 'name' => trim($query3->nome) . " " . trim($query3->apelido)]);
+            if (Auth::user()->id_tipoUtilizador == 3) {
+
+                $user = DB::table('Utilizador')
+                    ->where('numero', '=', $proj->numero_utilizador)
+                    ->first();
+
+                $collection->push([
+                    'id' => trim($user->numero),
+                    'nome' => $user->nome . " " . $user->apelido,
+                    'idP' => trim($proj->id_projecto),
+                    'nomeP' => $proj->nome,
+                    'tema' => $proj->tema,
+                    'estado' => $t . "/" . sizeof($forms),
+                    'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
+                    'ano_letivo' => $proj->ano_letivo . "/" . $proj->ano_letivo + 1,
+                ]);
+
+            } else {
+                $users = DB::table('Utilizador_Projecto')
+                    ->where('id_projecto', '=', $proj->id_projecto)
+                    ->join('Utilizador', 'numero', "=", "numero_utilizador")
+                    ->get();
+
+                foreach ($users as $user) {
+
+                    if ($user->nome != Auth::user()->nome) {
+
+                        $collection->push([
+                            'id' => trim($user->numero),
+                            'nome' => $user->nome . " " . $user->apelido,
+                            'idP' => trim($proj->id_projecto),
+                            'nomeP' => $proj->nome,
+                            'tema' => $proj->tema,
+                            'estado' => $t . "/" . sizeof($forms),
+                            'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
+                            'ano_letivo' => $proj->ano_letivo . "/" . $proj->ano_letivo + 1,
+                        ]);
+                    }
                 }
             }
         }
-        //dd($query[0]);
-        /*for($i=0;$i<2;$i++){
-            $query2 = DB::table("Utilizador_Projecto")->where('id_projecto',$query[$i]->id_projecto)->get();
-            //dd($query2);
-            $query3 = DB::table("Utilizador")->where('numero',$query2[0]->numero_utilizador)->pluck('nome');
-            //dd($query3[0]);
-            //['id' => $query2[0]->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]]);
-            $collection->push(['id' => $query2[0]->numero_utilizador, 'name' => $query3[0], 'ano_letivo' => $this->anoLetivo,]);
-        }*/
-        //dd($collection);
-        /*$collection = collect([
-            ['id' => 1, 'name' => 'Paulo', 'ano_letivo' => $this->anoLetivo,],
-            ['id' => 2, 'name' => 'Name 2', 'price' => 1.68, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-            ['id' => 3, 'name' => 'Name 3', 'price' => 1.78, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-            ['id' => 4, 'name' => 'Name 4', 'price' => 1.88, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-            ['id' => 5, 'name' => 'Name 5', 'price' => 1.98, 'ano_letivo' => $this->anoLetivo, 'created_at' => now(),],
-        ]);*/
-        //dd($collection);
+
         return $collection;
     }
 
@@ -81,10 +124,11 @@ final class FormTable extends PowerGridComponent
     | Configure here relationships to be used by the Search and Table Filters.
     |
     */
-    public function setUp(): void
+    public
+    function setUp(): void
     {
-        $this->showPerPage()
-        ->showSearchInput();
+        $this->showPerPage(25)
+            ->showSearchInput();
     }
 
     /*
@@ -95,12 +139,20 @@ final class FormTable extends PowerGridComponent
     | You can pass a closure to transform/modify the data.
     |
     */
-    public function addColumns(): ?PowerGridEloquent
+    public
+    function addColumns(): ?PowerGridEloquent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
-            ->addColumn('name');
-//            ->addColumn('ano_letivo');
+            ->addColumn('nome')
+            ->addColumn('idP')
+            ->addColumn('nomeP')
+            ->addColumn('tema')
+            ->addColumn('disciplina')
+            ->addColumn('ano_letivo')
+            ->addColumn('ano_curricular')
+            ->addColumn('semestre')
+            ->addColumn('estado');
     }
 
     /*
@@ -117,7 +169,8 @@ final class FormTable extends PowerGridComponent
      *
      * @return array<int, Column>
      */
-    public function columns(): array
+    public
+    function columns(): array
     {
         return [
             Column::add()
@@ -127,27 +180,69 @@ final class FormTable extends PowerGridComponent
                 ->sortable(),
 
             Column::add()
-                ->title('Nome')
-                ->field('name')
+                ->title('Utilizador')
+                ->field('nome')
                 ->searchable()
                 ->sortable(),
 
 //            Column::add()
-//                ->title('Ano Letivo')
-//                ->field('ano_letivo')
+//                ->title('ID Projeto')
+//                ->field('idP')
+//                ->searchable()
 //                ->sortable(),
+
+            Column::add()
+                ->title('Projeto')
+                ->field('nomeP')
+                ->searchable()
+                ->sortable(),
+
+            Column::add()
+                ->title('Tema')
+                ->field('tema')
+                ->searchable()
+                ->sortable(),
+
+            Column::add()
+                ->title('Disciplina')
+                ->field('disciplina')
+                ->searchable()
+                ->sortable(),
+
+            Column::add()
+                ->title('Ano Letivo')
+                ->field('ano_letivo')
+                ->searchable()
+                ->sortable(),
+
+            Column::add()
+                ->title('Formulários Concluidos')
+                ->field('estado')
+                ->searchable()
+                ->sortable(),
         ];
     }
 
-    public function actions(): array
+    public
+    function actions(): array
     {
-        return [
-            Button::add('btn')
-                ->caption('Ver mais')
-                ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
-                ->route('prof.users.info', ['id' => 'id'])
-                ->target('_self')
-        ];
+        if (Auth::user()->id_tipoUtilizador == 1) {
+            return [
+                Button::add('btn')
+                    ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Visualizar Detalhes')
+                    ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
+                    ->route('prof.aluno', ['id' => 'idP'])
+                    ->target('_self'),
+            ];
+        } else {
+            return [
+                Button::add('btn')
+                    ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Visualizar Detalhes')
+                    ->class('block bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
+                    ->route('admin.aluno', ['id' => 'idP'])
+                    ->target('_self'),
+            ];
+        }
     }
-
 }
+

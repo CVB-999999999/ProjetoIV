@@ -17,6 +17,7 @@ class FormCriar extends Component
     public $ano_letivo;
     public $estado = 0;
     public $idform;
+    public $forms = [];
 
 
     public function render()
@@ -34,6 +35,13 @@ class FormCriar extends Component
         return view('livewire.form-criar');
     }
 
+    public function proj() {
+
+        $this->forms = DB::table('Formulario')
+            ->where('id_projecto', '=', trim($this->projeto))
+            ->get();
+    }
+
     public function submitForm()
     {
         $this->estado = 0;
@@ -45,10 +53,14 @@ class FormCriar extends Component
         $this->ano_letivo = (explode("/", $this->ano_letivo))[0];
 
         if (!is_numeric($this->ano_letivo)) {
-            $this->emit("openModal", "error1", ["message" => 'O ano letivo não está no formato correto! Deveria ser do tipo ANO ou ANO/ANO']);
+            $this->emit("openModal", "error1", ["message" => 'O Ano Letivo não está no formato correto! Deveria ser do tipo ANO ou ANO/ANO']);
+            return;
         }
 
-        //ddd($newid[0]->id + 1);
+        if (!is_numeric($this->anocurricular)) {
+            $this->emit("openModal", "error1", ["message" => 'O Ano Curricular deve ser um número!']);
+            return;
+        }
 
         if (/*$this->tpForm == null || */$this->projeto == null || $this->semestre == null || $this->anocurricular == null || $this->ano_letivo == null) {
 //            return redirect("admin/erro");
