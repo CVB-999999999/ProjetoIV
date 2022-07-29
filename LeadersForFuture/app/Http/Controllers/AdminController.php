@@ -122,14 +122,27 @@ class AdminController extends Controller
     {
         return view('admin.criar-proj');
     }
+    public function criarDisc()
+    {
+        return view('admin.criar-disciplina');
+    }
     public function addToproj()
     {
         return view('admin.add-toproj');
+    }
+    public function addTodisc()
+    {
+        return view('admin.add-todisc');
     }
 
     public function statsprof()
     {
         return view('prof.stats');
+    }
+
+    public function discProj()
+    {
+        return view('homediscproj');
     }
 
 }

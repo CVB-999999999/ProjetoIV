@@ -14,7 +14,7 @@ use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-final class FormAdminp extends PowerGridComponent
+final class FormDiscproj extends PowerGridComponent
 {
     use ActionButton;
 
@@ -37,30 +37,16 @@ final class FormAdminp extends PowerGridComponent
 
     public function datasource(): ?Collection
     {
+        $id = \Request::segment(3);
         $collection = collect();
-        $profnumber = Auth::user()->numero;
         try {
-            $query = DB::select("exec buscaProjetos");
+            $query = DB::select("SELECT * FROM Projecto WHERE id_Disciplina = ?", [$id]);
         } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
-        //ddd($query);
-        foreach ($query as $queryres) { 
-            try{
-                $disc = DB::SELECT('SELECT * FROM Disciplina WHERE cd_discip = ?',[$queryres->id_Disciplina]);
-                $curso = DB::SELECT('SELECT c.nm_curso FROM Curso c, cursos_disciplinas cd, Projecto p WHERE ? = cd.cd_discip and c.cd_curso = cd.cd_curso',[$queryres->id_Disciplina]);
-                foreach($curso as $c){
-                    $cursof = $c->nm_curso;
-                }
-            }catch (\Illuminate\Database\QueryException $ex) {
-                $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
-            }
-            
-            //dd($cursof);
-            //dd($curso[0]->nm_curso);
-            //ddd($disc);
-            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1),'tema' => $queryres->tema, 'disc' => $disc[0]->ds_discip, 'curso' => $cursof]);
-        }
+        foreach ($query as $queryres) [
+            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1)])
+        ];
         return $collection;
     }
 
@@ -92,10 +78,7 @@ final class FormAdminp extends PowerGridComponent
         return PowerGrid::eloquent()
             ->addColumn('id')
             ->addColumn('nome')
-            ->addColumn('ano_letivo')
-            ->addColumn('tema')
-            ->addColumn('disc')
-            ->addColumn('curso');
+            ->addColumn('ano_letivo');
     }
 
     /*
@@ -131,19 +114,6 @@ final class FormAdminp extends PowerGridComponent
                 ->title('Ano Letivo')
                 ->field('ano_letivo')
                 ->sortable(),
-
-            Column::add()
-                ->title('Disciplina')
-                ->field('disc')
-                ->sortable(),
-            Column::add()
-                ->title('Tema')
-                ->field('tema')
-                ->sortable(),
-            Column::add()
-                ->title('Curso')
-                ->field('curso')
-                ->sortable(),
         ];
     }
 
@@ -151,7 +121,7 @@ final class FormAdminp extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Visualizar Detalhes')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Ver Mais')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
                 ->route('admin.aluno', ['id' => 'id'])
                 ->target('_self'),

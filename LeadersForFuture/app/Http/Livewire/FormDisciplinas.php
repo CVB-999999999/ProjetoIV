@@ -14,7 +14,7 @@ use PowerComponents\LivewirePowerGrid\Traits\ActionButton;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 
-final class FormAdminp extends PowerGridComponent
+final class FormDisciplinas extends PowerGridComponent
 {
     use ActionButton;
 
@@ -40,27 +40,14 @@ final class FormAdminp extends PowerGridComponent
         $collection = collect();
         $profnumber = Auth::user()->numero;
         try {
-            $query = DB::select("exec buscaProjetos");
+            $query = DB::select("SELECT * FROM Disciplina");
         } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
-        //ddd($query);
-        foreach ($query as $queryres) { 
-            try{
-                $disc = DB::SELECT('SELECT * FROM Disciplina WHERE cd_discip = ?',[$queryres->id_Disciplina]);
-                $curso = DB::SELECT('SELECT c.nm_curso FROM Curso c, cursos_disciplinas cd, Projecto p WHERE ? = cd.cd_discip and c.cd_curso = cd.cd_curso',[$queryres->id_Disciplina]);
-                foreach($curso as $c){
-                    $cursof = $c->nm_curso;
-                }
-            }catch (\Illuminate\Database\QueryException $ex) {
-                $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
-            }
-            
-            //dd($cursof);
-            //dd($curso[0]->nm_curso);
-            //ddd($disc);
-            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1),'tema' => $queryres->tema, 'disc' => $disc[0]->ds_discip, 'curso' => $cursof]);
-        }
+        foreach ($query as $queryres) [
+            $collection->push(['cd_discip' => $queryres->cd_discip, 'nome' => $queryres->ds_discip, 'sigla' => $queryres->sigla])
+        ];
+        //dd($query[0]->cd_discip);
         return $collection;
     }
 
@@ -91,11 +78,9 @@ final class FormAdminp extends PowerGridComponent
     {
         return PowerGrid::eloquent()
             ->addColumn('id')
+            ->addColumn('cd_discip')
             ->addColumn('nome')
-            ->addColumn('ano_letivo')
-            ->addColumn('tema')
-            ->addColumn('disc')
-            ->addColumn('curso');
+            ->addColumn('sigla');
     }
 
     /*
@@ -116,33 +101,20 @@ final class FormAdminp extends PowerGridComponent
     {
         return [
             Column::add()
-                ->title('ID')
-                ->field('id')
+                ->title('cd_discip')
+                ->field('cd_discip')
                 ->searchable()
                 ->sortable(),
 
             Column::add()
-                ->title('Nome do Projeto')
+                ->title('Nome da disciplina')
                 ->field('nome')
                 ->searchable()
                 ->sortable(),
 
             Column::add()
-                ->title('Ano Letivo')
-                ->field('ano_letivo')
-                ->sortable(),
-
-            Column::add()
-                ->title('Disciplina')
-                ->field('disc')
-                ->sortable(),
-            Column::add()
-                ->title('Tema')
-                ->field('tema')
-                ->sortable(),
-            Column::add()
-                ->title('Curso')
-                ->field('curso')
+                ->title('Sigla')
+                ->field('sigla')
                 ->sortable(),
         ];
     }
@@ -151,14 +123,14 @@ final class FormAdminp extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Visualizar Detalhes')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Ver Projetos')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
-                ->route('admin.aluno', ['id' => 'id'])
+                ->route('admin.discproj', ['cd_discip' => 'cd_discip'])
                 ->target('_self'),
             Button::add('btn')
-                ->caption('<span class="material-symbols-outlined align-middle h-7">delete</span> Eliminar Projeto')
+                ->caption('<span class="material-symbols-outlined align-middle h-7">delete</span> Eliminar Disciplina')
                 ->class('bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
-                ->openModal('apagar-projeto', ['id' => 'id'])
+                ->openModal('apagar-disc', ['cd_discip' => 'cd_discip'])
         ];
     }
 }

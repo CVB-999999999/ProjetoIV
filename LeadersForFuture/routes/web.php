@@ -94,21 +94,32 @@ Route::get('/admin/forms', [AdminController::class, 'formCriar'])
 // Admin Projetos
 Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
     ->middleware('hasPermission:3');
+// Admin Criar Disc
+Route::get('/admin/adddisc', [AdminController::class, 'criarDisc'])
+    ->middleware('hasPermission:3');
 // Admin Projetos
 Route::get('/admin/addtoproj', [AdminController::class, 'addToproj'])
     ->middleware('hasPermission:3');
+    // Admin Disciplinas
+
 // Table with all projects
 Route::get('/admin/proj', function () {
     return view('homeproj');
 })->name('adminproj')->middleware('hasPermission:3');
+// Disciplines
+Route::get('/admin/disc', function () {
+    return view('homedisc');
+})->name('admindisc')->middleware('hasPermission:3');
 // Admin View user Info
 Route::get('/admin/aluno/{id}', [ProfController::class, 'homeAluno'])->name('admin.aluno')->middleware('hasPermission:3');
 // Admin View Project Per Student
 Route::get('/admin/projUser', [AdminController::class, 'projUser'])->middleware('hasPermission:3');
 
+Route::get('/admin/discproj/{cd_discip}', [AdminController::class, 'discProj'])->name('admin.discproj')->middleware('hasPermission:3');
+
 Route::get('/admin/eliminarUserProj/{id}/{idproj}', [ProfController::class, 'eliminarUserProj'])
     ->name('eliminar.user.proj')->middleware('hasPermission:3');
-    Route::get('/prof/eliminarUserProj/{id}/{idproj}', [ProfController::class, 'eliminarUserProj'])
+Route::get('/prof/eliminarUserProj/{id}/{idproj}', [ProfController::class, 'eliminarUserProj'])
     ->name('eliminar.user.projF')->middleware('hasPermission:1');
 
 // Professor
