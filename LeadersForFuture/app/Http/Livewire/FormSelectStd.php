@@ -31,13 +31,20 @@ final class FormSelectStd extends PowerGridComponent
 
         // Gets the data to fill the form selection page
 //        $forms = DB::select("exec buscaTodosDadosForms ?", [$id]);
-
-        $projs = DB::table('Utilizador_Projecto')
-            ->where('numero_utilizador', '=', $id)
-            ->join('Projecto', 'id_projecto', '=', 'id')
-            ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
-            ->get();
-
+        if(Auth::user()->id_tipoUtilizador == 3){
+            $projs = DB::table('Utilizador_Projecto')
+                //->where('numero_utilizador', '=', $id)
+                ->join('Projecto', 'id_projecto', '=', 'id')
+                ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
+                ->get();
+        } else {
+            $projs = DB::table('Utilizador_Projecto')
+                ->where('numero_utilizador', '=', $id)
+                ->join('Projecto', 'id_projecto', '=', 'id')
+                ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
+                ->get();
+        }
+        //ddd($projs);
         $collection = collect();
 
         foreach ($projs as $proj) {

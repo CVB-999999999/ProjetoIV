@@ -88,9 +88,18 @@ Route::get('/admin/users/{id}', [AdminController::class, 'userDetail'])
 Route::get('/admin/stats', [AdminController::class, 'stats'])
     ->name('admin.stats')
     ->middleware('hasPermission:3');
+
+
+
+
 // Admin Forms
-Route::get('/admin/forms', [AdminController::class, 'formCriar'])
+Route::get('/admin/addform', [AdminController::class, 'formCriar'])
     ->middleware('hasPermission:3');
+
+Route::get('/admin/forms', [FormController::class, 'formSelection'])
+    ->name('form')
+    ->middleware('hasPermission:3');
+
 // Admin Projetos
 Route::get('/admin/addproj', [AdminController::class, 'criarProj'])
     ->middleware('hasPermission:3');
