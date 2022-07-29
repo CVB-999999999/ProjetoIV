@@ -43,6 +43,15 @@
                         <img class="p-1 text-center mx-auto bg-white"
                              src="{{ URL('images/Fluxo-FormuláriosProf.png') }}" alt="Fluxo Formulários">
                     </div>
+
+                    <div>
+                        <p class="text-center text-lg my-2 dark:text-white">
+                            Diagrama de Estados
+                        </p>
+
+                        <img class="p-1 text-center mx-auto bg-white" src="{{ URL('images/Estados.png') }}"
+                             alt="Diagrama Estados">
+                    </div>
                 </div>
             </div>
             {{-- Student --}}
@@ -60,6 +69,15 @@
 
                     <img class="p-1 text-center mx-auto bg-white" src="{{ URL('images/Fluxo-FormuláriosAluno.png') }}"
                          alt="Fluxo Formulários">
+                </div>
+
+                <div>
+                    <p class="text-center text-lg my-2 dark:text-white">
+                        Diagrama de Estados
+                    </p>
+
+                    <img class="p-1 text-center mx-auto bg-white" src="{{ URL('images/Estados.png') }}"
+                         alt="Diagrama Estados">
                 </div>
             </div>
             {{-- Admin --}}
