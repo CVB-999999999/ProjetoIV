@@ -86,7 +86,7 @@ final class FormTable extends PowerGridComponent
                     'idP' => trim($proj->id_projecto),
                     'nomeP' => $proj->nome,
                     'tema' => $proj->tema,
-                    'estado' => $t . "/" . sizeof($forms),
+                    'estado' => $t . " formulário(s) em " . sizeof($forms),
                     'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
                     'ano_letivo' => $proj->ano_letivo . "/" . $proj->ano_letivo + 1,
                 ]);
@@ -195,7 +195,7 @@ final class FormTable extends PowerGridComponent
                 ->sortable(),
 
             Column::add()
-                ->title('Formulários Concluidos')
+                ->title('Formulários Validados')
                 ->field('estado')
                 ->searchable()
                 ->sortable(),
