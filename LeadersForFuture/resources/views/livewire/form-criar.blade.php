@@ -18,13 +18,16 @@
                         <option value="1">Semestre 1</option>
                         <option value="2">Semestre 2</option>
                     </select>
-                    <select wire:model="anocurricular" class="form-control p-3 rounded-md dark:bg-zinc-900 w-1/2 my-2"
-                            name="anocurricular">
-                        <option selected="Anocurricular">Ano curricular</option>
-                        <option value="1">1º Ano</option>
-                        <option value="2">2º Ano</option>
-                        <option value="3">3º Ano</option>
-                    </select>
+                    <label for="anocurricular" class="block font-medium"> Ano Curricular </label>
+                    <input wire:model="anocurricular" name="anocurricular" type="number" class="border border-opacity-50 rounded border-gray-700
+                w-1/2 py-1 px-2 mb-3 dark:bg-zinc-700">
+{{--                    <select wire:model="anocurricular" class="form-control p-3 rounded-md dark:bg-zinc-900 w-1/2 my-2"--}}
+{{--                            name="anocurricular">--}}
+{{--                        <option selected="Anocurricular">Ano curricular</option>--}}
+{{--                        <option value="1">1º Ano</option>--}}
+{{--                        <option value="2">2º Ano</option>--}}
+{{--                        <option value="3">3º Ano</option>--}}
+{{--                    </select>--}}
                     <label for="ano_letivo" class="block font-medium"> Ano Letivo </label>
                     <input wire:model="ano_letivo" name="ano_letivo" type="text" class="border border-opacity-50 rounded border-gray-700
                 w-1/2 py-1 px-2 mb-3 dark:bg-zinc-700">
