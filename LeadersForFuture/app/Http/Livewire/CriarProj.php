@@ -32,6 +32,8 @@ class CriarProj extends Component
     {
         $this->estado = 0;
 
+        $this->ano_letivo = (explode("/", $this->ano_letivo))[0];
+
         if (!is_numeric($this->ano_letivo)) {
             $this->emit("openModal", "error1", ["message" => 'O ano letivo não está no formato correto! Deveria ser do tipo ANO ou ANO/ANO']);
             return;
