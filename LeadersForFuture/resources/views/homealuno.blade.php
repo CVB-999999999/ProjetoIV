@@ -69,6 +69,15 @@
                         </a>
                     </div>
 
+                    <div>
+                        <button class="bg-zinc-400 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2
+                                mt-3 w-full text-center" type="submit"
+                                onclick="Livewire.emit('openModal', 'change-form-status', {{ json_encode(["id" => $form->id, "idP" =>$form->id_projecto]) }})">
+                            <span class="material-symbols-outlined align-middle h-7">settings</span>
+                            Alterar Estado
+                        </button>
+                    </div>
+
                     {{-- Only show view form btn to teacher --}}
                     {{--                    @if(Auth::user()->id_tipoUtilizador == 1)--}}
                     @if($form->estado == 0)
