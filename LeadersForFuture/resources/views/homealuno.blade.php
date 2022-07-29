@@ -74,7 +74,7 @@
                         <a class="bg-zinc-100 rounded hover:bg-esce hover:text-white px-4 py-2 block
                             text-center" href="/form/{{$form->id}}">
                             <span class="material-symbols-outlined align-middle h-7">description</span>
-                            Ir para o formulário
+                            Visualizar Formulário
                         </a>
                     </div>
 

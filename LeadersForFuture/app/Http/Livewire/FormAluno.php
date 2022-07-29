@@ -117,12 +117,12 @@ final class FormAluno extends PowerGridComponent
     {
         return [
             Button::add('btn')
-                ->caption('Ver mais')
+                ->caption('Visualizar Utilizador')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                 ->route('prof.users.info', ['id' => 'id'])
                 ->target('_self'),
                 Button::add('btn')
-                ->caption('Eliminar utilizador do projeto')
+                ->caption('Eliminar Utilizador do Projeto')
                 ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                 ->route('eliminar.user.projF', ['id' => 'id','idproj' => 'idproj'])
                 ->target('_self')

@@ -229,7 +229,7 @@ final class FormTable extends PowerGridComponent
         if (Auth::user()->id_tipoUtilizador == 1) {
             return [
                 Button::add('btn')
-                    ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Ver Mais')
+                    ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Visualizar Detalhes')
                     ->class('block bg-esce border border-zinc-900 text-white py-1.5 text-center rounded text-sm')
                     ->route('prof.aluno', ['id' => 'idP'])
                     ->target('_self'),
@@ -237,7 +237,7 @@ final class FormTable extends PowerGridComponent
         } else {
             return [
                 Button::add('btn')
-                    ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Ver Mais')
+                    ->caption('<span class="material-symbols-outlined align-middle h-7">info</span> Visualizar Detalhes')
                     ->class('block bg-esce border border-zinc-900 text-white py-1.5 px-5 text-center rounded text-sm')
                     ->route('admin.aluno', ['id' => 'idP'])
                     ->target('_self'),
