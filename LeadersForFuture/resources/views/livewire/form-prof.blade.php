@@ -34,9 +34,12 @@
                     <input wire:model="ano_letivo" name="ano_letivo" type="text" class="border border-opacity-50 rounded border-gray-700
                 w-1/2 py-1 px-2 mb-3 dark:bg-zinc-700">
                 </div>
-                <button class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 my-2">
-                    Criar Formulário
-                </button>
+
+                <div wire:loading.remove.delay>
+                    <button class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 my-2">
+                        Criar Formulário
+                    </button>
+                </div>
 
                 <div wire:loading.delay>
                     A processar a operação no servidor...

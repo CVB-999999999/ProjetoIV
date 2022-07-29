@@ -39,10 +39,13 @@
 
     {{-- Submit btn --}}
     <div>
-        <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm font-medium
+
+        <div wire:loading.remove.delay>
+            <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm font-medium
         text-white bg-zinc-600 hover:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
-            Login
-        </button>
+                Login
+            </button>
+        </div>
 
         <div wire:loading.delay>
             A processar a operação no servidor...

@@ -35,8 +35,10 @@
                 </select>
             </p>
 
-            <button class="m-5 px-5 py-2 bg-gray-500 rounded-md" wire:click="func">Sim</button>
-            <button class="m-5 px-5 py-2 bg-red-500 rounded-md" wire:click="$emit('closeModal')">Não</button>
+            <div wire:loading.remove.delay>
+                <button class="m-5 px-5 py-2 bg-gray-500 rounded-md" wire:click="func">Sim</button>
+                <button class="m-5 px-5 py-2 bg-red-500 rounded-md" wire:click="$emit('closeModal')">Não</button>
+            </div>
 
             <div wire:loading.delay>
                 A processar a operação no servidor...

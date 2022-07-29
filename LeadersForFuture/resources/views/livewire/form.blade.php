@@ -170,11 +170,13 @@
                         <textarea wire:model='respostas.{{ $index }}' name="ta{{ $index }}"
                                   class="border border-black p-2 w-full rounded-md dark:bg-zinc-900"
                                   rows="6"></textarea>
-                        {{-- Submit Btn --}}
+                        {{-- Save Btn --}}
+                        <span wire:loading.remove.delay>
                         <button wire:click.prevent="save({{ $index }})"
                                 class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
                             <span class="material-symbols-outlined align-middle h-7">save</span> Guardar
                         </button>
+                    </span>
                     </p>
                 </div>
             @endforeach
@@ -213,25 +215,27 @@
         @endif
 
         {{-- Submit Button --}}
-        @if(($estado[0]->estado == 1 && $aluno) || ($estado[0]->estado == 2 && $prof))
-            <div class="flex justify-center md:justify-end">
-                <button type="submit" x-data x-on:click.button="window.scrollTo(0, 0)"
-                        class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
-                    @if($prof)
-                        <span class="material-symbols-outlined align-middle h-7">publish</span>
-                        Submeter Observação
-                    @elseif($aluno)
-                        <span class="material-symbols-outlined align-middle h-7">publish</span>
-                        Submeter para Avaliação
-                    @endif
-                </button>
+        <div wire:loading.remove.delay>
+            @if(($estado[0]->estado == 1 && $aluno) || ($estado[0]->estado == 2 && $prof))
+                <div class="flex justify-center md:justify-end">
+                    <button type="submit" x-data x-on:click.button="window.scrollTo(0, 0)"
+                            class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 m-2">
+                        @if($prof)
+                            <span class="material-symbols-outlined align-middle h-7">publish</span>
+                            Submeter Observação
+                        @elseif($aluno)
+                            <span class="material-symbols-outlined align-middle h-7">publish</span>
+                            Submeter para Avaliação
+                        @endif
+                    </button>
 
-                {{--                --}}{{-- Loading popup --}}
-                {{--                <div wire:loading.delay>--}}
-                {{--                    @include('modals.loading')--}}
-                {{--                </div>--}}
-            </div>
-        @endif
+                    {{--                --}}{{-- Loading popup --}}
+                    {{--                <div wire:loading.delay>--}}
+                    {{--                    @include('modals.loading')--}}
+                    {{--                </div>--}}
+                </div>
+            @endif
+        </div>
     </form>
 
     {{-- Table With the Observation History --}}

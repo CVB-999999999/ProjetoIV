@@ -21,9 +21,13 @@
                         @endforeach
                     </select>
                 </div>
-                <button class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 my-2">
-                    Criar Disciplina
-                </button>
+
+                <div wire:loading.remove.delay>
+                    <button class="bg-zinc-200 dark:bg-zinc-900 rounded hover:bg-esce hover:text-white px-4 py-2 my-2">
+                        Criar Disciplina
+                    </button>
+                </div>
+
                 <div wire:loading.delay>
                     A processar a operação no servidor...
                 </div>
