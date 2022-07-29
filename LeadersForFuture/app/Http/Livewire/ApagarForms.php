@@ -38,11 +38,26 @@ class ApagarForms extends ModalComponent
                 return;
             }
 
-            if ($query->estado == 0) {
-                $this->emit("openModal", "error1", ["message" => 'Não é possivel apoagar formulários que não estejam no estado "Bloqueado"!']);
+            if ($query->estado != 0) {
+                $this->emit("openModal", "error1", ["message" => 'Não é possivel apagar formulários que não estejam no estado "Bloqueado"!']);
                 return;
             } else {
                 // deletes the form
+
+                $obs = DB::table('ObservacaoFormulario')->where('idFormulario', '=', trim($query->id))->get();
+                DB::table('ObservacaoFormulario')->where('idFormulario', '=', trim($query->id))->delete();
+
+                foreach ($obs as $o) {
+                    DB::table('Observacao')->where('idObservacao', '=', trim($o->idObservacao))->delete();
+                }
+
+                $fs = DB::table('PerguntasFormulario')->where('id_formulario', '=', trim($query->id))->get();
+                DB::table('PerguntasFormulario')->where('id_formulario', '=', trim($query->id))->delete();
+
+                foreach ($fs as $f) {
+                    DB::table('Resposta')->where('id', '=', trim($f->id_resposta))->delete();
+                }
+
                 $query = DB::table('Formulario')->where('id', '=', $this->idU)->delete();
             }
 
