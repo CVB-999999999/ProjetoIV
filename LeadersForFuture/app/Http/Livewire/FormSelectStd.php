@@ -37,6 +37,7 @@ final class FormSelectStd extends PowerGridComponent
                 ->join('Projecto', 'id_projecto', '=', 'id')
                 ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
                 ->get();
+           $projs = ($projs->unique('id_projecto'));
         } else {
             $projs = DB::table('Utilizador_Projecto')
                 ->where('numero_utilizador', '=', $id)
