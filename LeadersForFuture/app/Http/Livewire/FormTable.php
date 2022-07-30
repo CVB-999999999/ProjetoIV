@@ -28,57 +28,31 @@ final class FormTable extends PowerGridComponent
     public function datasource(): ?Collection
     {
 
+        $collection = collect();
+
         if (Auth::user()->id_tipoUtilizador == 3) {
             $projs = DB::table('Utilizador_Projecto')
                 ->join('Projecto', 'id_projecto', '=', 'id')
                 ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
                 ->get();
-        } else {
-            $id = Auth::user()->numero;
 
-            // Gets the data to fill the form selection page
+            foreach ($projs as $proj) {
+                $forms = DB::table('Formulario')
+                    ->where('id_projecto', '=', $proj->id)
+                    ->get('estado');
 
-            $projs = DB::table('Utilizador_Projecto')
-                ->where('numero_utilizador', '=', $id)
-                ->join('Projecto', 'id_projecto', '=', 'id')
-                ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
-                ->get();
-        }
+                $t = 0;
 
-        $collection = collect();
-
-        foreach ($projs as $proj) {
-            $forms = DB::table('Formulario')
-                ->where('id_projecto', '=', $proj->id)
-                ->get('estado');
-
-            /*$b = $a = $aval = */
-            $t = 0;
-
-            foreach ($forms as $form) {
-                switch ($form->estado) {
-//                    case 0:
-//                        $b++;
-//                        break;
-//                    case 1:
-//                        $a++;
-//                        break;
-//                    case 2:
-//                        $aval++;
-//                        break;
-                    case 3:
+                foreach ($forms as $form) {
+                    if ($form->estado == 3) {
                         $t++;
-                        break;
+                    }
                 }
-            }
 
 
-            $user = DB::table('Utilizador')
-                ->where('numero', '=', $proj->numero_utilizador)
-                ->first();
-
-
-            if ($user->id_tipoUtilizador == 2) {
+                $user = DB::table('Utilizador')
+                    ->where('numero', '=', $proj->numero_utilizador)
+                    ->first();
 
                 $collection->push([
                     'id' => trim($user->numero),
@@ -90,6 +64,60 @@ final class FormTable extends PowerGridComponent
                     'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
                     'ano_letivo' => $proj->ano_letivo . "/" . $proj->ano_letivo + 1,
                 ]);
+            }
+        } else {
+            $id = Auth::user()->numero;
+
+            // Gets projects assossiated with the teacher
+            $projsAux = DB::table('Utilizador_Projecto')
+                ->where('numero_utilizador', '=', $id)
+                ->get();
+
+            foreach ($projsAux as $pa) {
+
+                $projs = DB::table('Projecto')
+                    ->where('id', '=', $pa->id_projecto)
+                    ->join('Disciplina', 'id_disciplina', '=', 'cd_discip')
+                    ->get();
+
+                foreach ($projs as $proj) {
+                    $forms = DB::table('Formulario')
+                        ->where('id_projecto', '=', $proj->id)
+                        ->get('estado');
+
+                    $t = 0;
+
+                    foreach ($forms as $form) {
+                        if ($form->estado == 3) {
+                            $t++;
+                        }
+                    }
+
+                    $aux = DB::table('Utilizador_Projecto')
+                        ->where('id_projecto', '=', $pa->id_projecto)
+                        ->get();
+
+                    foreach ($aux as $a) {
+
+                        if ($a->numero_utilizador != Auth::user()->numero) {
+
+                            $user = DB::table('Utilizador')
+                                ->where('numero', '=', $a->numero_utilizador)
+                                ->first();
+
+                            $collection->push([
+                                'id' => trim($user->numero),
+                                'nome' => $user->nome . " " . $user->apelido,
+                                'idP' => trim($pa->id_projecto),
+                                'nomeP' => $proj->nome,
+                                'tema' => $proj->tema,
+                                'estado' => $t . " formulário(s) em " . sizeof($forms),
+                                'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
+                                'ano_letivo' => $proj->ano_letivo . "/" . $proj->ano_letivo + 1,
+                            ]);
+                        }
+                    }
+                }
             }
         }
 
