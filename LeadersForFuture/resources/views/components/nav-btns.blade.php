@@ -44,7 +44,7 @@
     </a>
     <a href="/admin/projUser"
        class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
-        <span class="material-symbols-outlined align-middle h-7">library_books</span> Projetos Atribuidos por Aluno
+        <span class="material-symbols-outlined align-middle h-7">library_books</span> Projetos Atribuidos por Utilizador
     </a>
     <a href="/admin/disc"
        class="block my-2 py-2.5 px-4 rounded transition duration-200 hover:bg-esce hover:text-white">
