@@ -52,24 +52,24 @@ class FormProf extends Component
 
         $this->idform = $newid[0]->id + 1;
 
-        $this->ano_letivo = (explode("/", $this->ano_letivo))[0];
+        $this->ano_letivo = (explode("/", $this->ano_letivo));
 
-        if (!is_numeric($this->ano_letivo)) {
+        if (!is_numeric($this->ano_letivo[0])) {
             $this->emit("openModal", "error1", ["message" => 'O ano letivo não está no formato correto! Deveria ser do tipo ANO ou ANO/ANO']);
         }
 
-        if (/*$this->tpForm == null || */$this->projeto == null || $this->semestre == null || $this->anocurricular == null || $this->ano_letivo == null) {
+        if (/*$this->tpForm == null || */$this->projeto == null || $this->semestre == null || $this->anocurricular == null || $this->ano_letivo[0] == null) {
 //            return redirect("admin/erro");
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
         }
-        try{
-        DB::insert("INSERT INTO Formulario (id,estado,id_projecto,ano_letivo,ano_curricular,semestre,titulo) Values (?, ?, ?, ?, ?, ?. ?)",
-            [$this->idform, $this->estado, $this->projeto, $this->ano_letivo, $this->anocurricular, $this->semestre, $this->titulo]);
-        }catch(\Illuminate\Database\QueryException $ex){
-            $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
-            return;
-        }
+        //try{
+        DB::insert("INSERT INTO Formulario (id,estado,id_projecto,ano_letivo,ano_curricular,semestre,titulo) Values (?, ?, ?, ?, ?, ?, ?)",
+            [$this->idform, $this->estado, $this->projeto, $this->ano_letivo[0], $this->anocurricular, $this->semestre, $this->titulo]);
+        //}catch(\Illuminate\Database\QueryException $ex){
+        //    $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
+          //  return;
+        //}
 
         return redirect("prof/proj/");
     }
