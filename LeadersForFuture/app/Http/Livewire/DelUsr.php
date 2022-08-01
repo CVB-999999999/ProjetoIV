@@ -37,13 +37,28 @@ class DelUsr extends ModalComponent
                 //$this->emit("openModal", "error1", ["message" => 'Não é possivel eliminar este utilizador. Visto que este está inscrito em projetos']);
                 $this->emit("openModal", "apagar-userproj", ['id' => $this->idU]);
             } else {
-                \App\Models\User::destroy($this->idU);
+                $obs = DB::table('Observacao')
+                    ->where('idProf', '=', $this->idU)
+                    ->get();
 
-                return redirect('/admin/users');
+                foreach ($obs as $o) {
+                    DB::table('ObservacaoFormulario')
+                        ->where('idObservacao', '=', $o->idObservacao)
+                        ->delete();
+                }
+
+                DB::table('Observacao')
+                    ->where('idProf', '=', $this->idU)
+                    ->delete();
+
+                DB::DELETE("DELETE FROM Utilizador_Projecto WHERE numero_utilizador = ?", [$this->idU]);
+                DB::DELETE("DELETE FROM Utilizador WHERE numero = ?", [$this->idU]);
+
+                return redirect('/');
             }
         } catch (\Illuminate\Database\QueryException $ex) {
 
-            ddd($ex);
+//            ddd($ex);
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
