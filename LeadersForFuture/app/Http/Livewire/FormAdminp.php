@@ -39,27 +39,46 @@ final class FormAdminp extends PowerGridComponent
     {
         $collection = collect();
         $profnumber = Auth::user()->numero;
+
         try {
             $query = DB::select("exec buscaProjetos");
+
         } catch (\Illuminate\Database\QueryException $ex) {
+
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
         }
-        //ddd($query);
-        foreach ($query as $queryres) { 
-            try{
-                $disc = DB::SELECT('SELECT * FROM Disciplina WHERE cd_discip = ?',[$queryres->id_Disciplina]);
-                $curso = DB::SELECT('SELECT c.nm_curso FROM Curso c, cursos_disciplinas cd, Projecto p WHERE ? = cd.cd_discip and c.cd_curso = cd.cd_curso',[$queryres->id_Disciplina]);
-                foreach($curso as $c){
+
+        foreach ($query as $queryres) {
+            try {
+                // Gets number of forms per project
+                $forms = DB::table('Formulario')
+                    ->where('id_projecto', '=', $queryres->id)
+                    ->count();
+                // Gets discipline name
+                $disc = DB::SELECT('SELECT * FROM Disciplina WHERE cd_discip = ?', [$queryres->id_Disciplina]);
+                // Gets course info
+                $curso = DB::SELECT('SELECT c.nm_curso FROM Curso c, cursos_disciplinas cd, Projecto p WHERE ? = cd.cd_discip and c.cd_curso = cd.cd_curso', [$queryres->id_Disciplina]);
+
+                foreach ($curso as $c) {
                     $cursof = $c->nm_curso;
                 }
-            }catch (\Illuminate\Database\QueryException $ex) {
+            } catch (\Illuminate\Database\QueryException $ex) {
                 $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             }
-            
+
             //dd($cursof);
             //dd($curso[0]->nm_curso);
             //ddd($disc);
-            $collection->push(['id' => trim($queryres->id), 'nome' => $queryres->nome, 'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1),'tema' => $queryres->tema, 'disc' => $disc[0]->ds_discip, 'curso' => $cursof]);
+
+            $collection->push([
+                'id' => trim($queryres->id),
+                'nome' => $queryres->nome,
+                'ano_letivo' => $queryres->ano_letivo . "/" . ($queryres->ano_letivo + 1),
+                'tema' => $queryres->tema,
+                'disc' => $disc[0]->ds_discip,
+                'curso' => $cursof,
+                'formN' => $forms . " Formulário(s)"
+            ]);
         }
         return $collection;
     }
@@ -95,6 +114,7 @@ final class FormAdminp extends PowerGridComponent
             ->addColumn('ano_letivo')
             ->addColumn('tema')
             ->addColumn('disc')
+            ->addColumn('formN')
             ->addColumn('curso');
     }
 
@@ -143,6 +163,10 @@ final class FormAdminp extends PowerGridComponent
             Column::add()
                 ->title('Curso')
                 ->field('curso')
+                ->sortable(),
+            Column::add()
+                ->title('Nº de Formulários')
+                ->field('formN')
                 ->sortable(),
         ];
     }
