@@ -130,7 +130,7 @@
 
 {{-- Secção de Perguntas e Respostas--}}
 @foreach ($perguntas as $index => $pergunta)
-    <p><h3> {{ $index + 1}}) {{ $pergunta->pergunta }}</h3>
+    <p><h3>{{ $pergunta->pergunta }}</h3>
     <p>{{ trim($respostas[$index]->Resposta) }}</p>
     </p>
 
