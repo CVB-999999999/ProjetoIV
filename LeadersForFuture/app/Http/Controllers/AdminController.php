@@ -98,9 +98,9 @@ class AdminController extends Controller
     }
     public function download(Request $request)
     {
-        if (Auth::user()->id_tipoUtilizador == 1) {
+        if (Auth::user()->id_tipoUtilizador == 2) {
             return Storage::download('public/LDF-User-Manual_Aluno.pdf');
-        } elseif (Auth::user()->id_tipoUtilizador == 2) {
+        } elseif (Auth::user()->id_tipoUtilizador == 1) {
             return Storage::download('public/LDF-User-Manual_Professor.pdf');
         } elseif (Auth::user()->id_tipoUtilizador == 3) {
             return Storage::download('public/LDF-User-Manual_Admin.pdf');
