@@ -11,9 +11,8 @@ use Illuminate\Support\Facades\Auth;
 class FormProf extends Component
 {
     public $projetos = [];
-    public $tpForms = [];
+    public $titulo;
     public $projeto;
-    public $tpForm;
     public $semestre;
     public $anocurricular;
     public $ano_letivo;
@@ -65,8 +64,8 @@ class FormProf extends Component
             return;
         }
         try{
-        DB::insert("INSERT INTO Formulario (id,estado,id_projecto,ano_letivo,ano_curricular,semestre) Values (?, ?, ?, ?, ?, ?)",
-            [$this->idform, $this->estado, $this->projeto, $this->ano_letivo, $this->anocurricular, $this->semestre]);
+        DB::insert("INSERT INTO Formulario (id,estado,id_projecto,ano_letivo,ano_curricular,semestre,titulo) Values (?, ?, ?, ?, ?, ?. ?)",
+            [$this->idform, $this->estado, $this->projeto, $this->ano_letivo, $this->anocurricular, $this->semestre, $this->titulo]);
         }catch(\Illuminate\Database\QueryException $ex){
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
