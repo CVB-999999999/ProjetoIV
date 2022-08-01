@@ -40,7 +40,7 @@ class CriarProj extends Component
 
         // Convert YYYY/YYYY+1 to YYYY
         $ano = explode("/", $this->ano_letivo);
-        if (!is_numeric($ano)) {
+        if (!is_numeric($ano[0])) {
             $this->emit("openModal", "error1", ["message" => 'O ano letivo não está no formato correto! Deveria ser do tipo ANO ou ANO/ANO']);
             return;
         }
