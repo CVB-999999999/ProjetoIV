@@ -22,10 +22,25 @@ class ApagarUserproj extends ModalComponent
     public function func()
     {
         try {
-            
+
+            $obs = DB::table('Observacao')
+                ->where('idProf', '=', $this->idU)
+                ->get();
+
+            foreach ($obs as $o) {
+                DB::table('ObservacaoFormulario')
+                    ->where('idObservacao', '=', $o->idObservacao)
+                    ->delete();
+            }
+
+            DB::table('Observacao')
+                ->where('idProf', '=', $this->idU)
+                ->delete();
+
             DB::DELETE("DELETE FROM Utilizador_Projecto WHERE numero_utilizador = ?", [$this->idU]);
             DB::DELETE("DELETE FROM Utilizador WHERE numero = ?", [$this->idU]);
-            return redirect(url()->previous());
+
+            return redirect('/');
 
         } catch (\Illuminate\Database\QueryException $ex) {
 
