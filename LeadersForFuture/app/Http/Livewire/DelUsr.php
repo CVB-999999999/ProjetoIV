@@ -43,7 +43,7 @@ class DelUsr extends ModalComponent
             }
         } catch (\Illuminate\Database\QueryException $ex) {
 
-//            ddd($ex);
+            ddd($ex);
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
