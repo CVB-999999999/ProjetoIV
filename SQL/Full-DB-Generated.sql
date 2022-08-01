@@ -100,6 +100,7 @@ create table Formulario
     ano_letivo      nchar(50),
     ano_curricular  int,
     semestre        bit,
+    titulo          varchar(100),
     constraint PK_Formulario
         primary key (id),
     constraint [Projecto->Formulario]
