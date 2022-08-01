@@ -72,10 +72,15 @@ final class FormSelectStd extends PowerGridComponent
                         break;
                 }
 
+                if ($form->titulo == null) {
+                    $form->titulo = "Indisponivel";
+                }
+
                 $collection->push([
                     'id' => trim($form->id),
                     'nome' => $proj->nome,
                     'tema' => $proj->tema,
+                    'temaF' => $form->titulo,
                     'estado' => $estado,
                     'disciplina' => $proj->cd_discip . " - " . $proj->ds_discip,
                     'ano_letivo' => $form->ano_letivo . "/" . $form->ano_letivo + 1,
@@ -115,6 +120,7 @@ final class FormSelectStd extends PowerGridComponent
             ->addColumn('id')
             ->addColumn('nome')
             ->addColumn('tema')
+            ->addColumn('temaF')
             ->addColumn('disciplina')
             ->addColumn('ano_letivo')
             ->addColumn('ano_curricular')
@@ -154,6 +160,11 @@ final class FormSelectStd extends PowerGridComponent
             Column::add()
                 ->title('Tema')
                 ->field('tema')
+                ->searchable()
+                ->sortable(),
+            Column::add()
+                ->title('Titulo do Formulário')
+                ->field('temaF')
                 ->searchable()
                 ->sortable(),
 

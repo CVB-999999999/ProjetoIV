@@ -12,6 +12,11 @@
                             <option value="{{ $projeto->id }}">{{ $projeto->nome }}</option>
                         @endforeach
                     </select>
+
+                    <label for="titulo" class="block font-medium"> Titulo do Formulário </label>
+                    <input wire:model="titulo" name="titulo" type="text" class="border border-opacity-50 rounded border-gray-700
+                w-1/2 py-1 px-2 mb-3 dark:bg-zinc-700">
+
                     <select wire:model="semestre" class="form-control p-3 rounded-md dark:bg-zinc-900 w-1/2 my-2"
                             name="semestre">
                         <option selected="Semestre">Semestre</option>

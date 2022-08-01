@@ -9,9 +9,8 @@ use function Livewire\str;
 class FormCriar extends Component
 {
     public $projetos = [];
-    public $tpForms = [];
+    public $titulo;
     public $projeto;
-    public $tpForm;
     public $semestre;
     public $anocurricular;
     public $ano_letivo;
@@ -22,20 +21,21 @@ class FormCriar extends Component
 
     public function render()
     {
-        try{
-        // Gets the Tipo_Formulario
+        try {
+            // Gets the Tipo_Formulario
 //        $this->tpForms = DB::select("exec buscaTipoForm");
 
-        // Gets the projects
-        $this->projetos = DB::select("exec buscaProjetos");
-        }catch(\Illuminate\Database\QueryException $ex){
+            // Gets the projects
+            $this->projetos = DB::select("exec buscaProjetos");
+        } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }
         return view('livewire.form-criar');
     }
 
-    public function proj() {
+    public function proj()
+    {
 
         $this->forms = DB::table('Formulario')
             ->where('id_projecto', '=', trim($this->projeto))
@@ -62,16 +62,16 @@ class FormCriar extends Component
             return;
         }
 
-        if (/*$this->tpForm == null || */$this->projeto == null || $this->semestre == null || $this->anocurricular == null || $this->ano_letivo == null) {
+        if (/*$this->tpForm == null || */ $this->projeto == null || $this->semestre == null || $this->anocurricular == null || $this->ano_letivo == null) {
 //            return redirect("admin/erro");
 
             $this->emit("openModal", "error1", ["message" => 'Os dados que introduziu são inválidos!']);
             return;
         }
-        try{
-            DB::insert("INSERT INTO Formulario (id,estado,id_projecto,ano_letivo,ano_curricular,semestre) Values (?, ?, ?, ?, ?, ?)",
-                [$this->idform, $this->estado, $this->projeto, $this->ano_letivo, $this->anocurricular, $this->semestre]);
-        }catch(\Illuminate\Database\QueryException $ex){
+        try {
+            DB::insert("INSERT INTO Formulario (id,estado,id_projecto,ano_letivo,ano_curricular,semestre, titulo) Values (?, ?, ?, ?, ?, ?, ?)",
+                [$this->idform, $this->estado, $this->projeto, $this->ano_letivo, $this->anocurricular, $this->semestre, $this->titulo]);
+        } catch (\Illuminate\Database\QueryException $ex) {
             $this->emit("openModal", "error1", ["message" => 'Ocorreu um erro!']);
             return;
         }

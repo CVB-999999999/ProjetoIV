@@ -44,6 +44,7 @@
 
                     <p> # {{ $index + 1 }}</p>
 
+                    <p class="rounded px-4 pb-2 w-full text-center text-2xl">{{ $form->titulo}}</p>
                     <p class="rounded px-4 pb-2 w-full text-center">Ano Letivo: {{ $form->ano_letivo }}</p>
                     <p class="rounded px-4 py-2 w-full text-center"> {{ $form->ano_curricular }}º
                         ano {{ $form->semestre + 1 }}º semestre</p>

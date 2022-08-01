@@ -3,12 +3,19 @@
 
         <div class="p-3 my-3 mx-2 rounded mt-2 mt-md-4 py-2.5 px-4 bg-zinc-200 dark:bg-zinc-900 text-left">
             @foreach($dadosForm as $d)
-                <div class="md:grid md:grid-cols-2 text-center">
+                <div class="md:grid md:grid-cols-3 text-center">
                     <div class="md:text-left">
                         Projeto: {{$d->nome}}
                     </div>
-                    <div class="md:text-right">
+                    <div class="md:text-center">
                         Tema: {{ $d->tema }}
+                    </div>
+                    <div class="md:text-right">
+                        @if($d->titulo == null)
+                            Titulo: Indisponivel
+                        @else
+                            Titulo: {{ $d->titulo }}
+                        @endif
                     </div>
                 </div>
                 @break
